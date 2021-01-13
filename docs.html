@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>chromoMap v0.3 Documentation</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.3/htmlwidgets.js"></script>
+<script src="site_libs/pymjs-1.3.2/pym.v1.js"></script>
+<script src="site_libs/widgetframe-binding-0.3.1/widgetframe.js"></script>
+<script src="site_libs/chromoMap-0.3/d3.v5.js"></script>
+<script src="site_libs/chromoMap-0.3/chromoMap-3.0.js"></script>
+<script src="site_libs/chromoMap-binding-0.3/chromoMap.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">chromoMap</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html"></a>
+</li>
+<li>
+  <a href="docs.html">Documentation</a>
+</li>
+<li>
+  <a href="tutorials.html">Tutorials</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="cite.html">Cite</a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">chromoMap v0.3 Documentation</h1>
+
+</div>
+
+
+<style>
+
+    
+h2,h3 {color: #10B85F;}
+    
+.list-group-item.active, .list-group-item.active:focus, .list-group-item.active:hover {
+    background-color: #10B85F;
+}
+.active {
+  background-color: #353436;
+  background-image: linear-gradient(to right, #353436 , #78AF9F);
+}
+
+</style>
+<p><br><br></p>
+<p><strong>NOTE</strong>: This Documentation is also available as R Vignette.</p>
+<hr>
+<div id="getting-started" class="section level2">
+<h2>Getting Started</h2>
+<p>This vignette provide you with a description of how you can use the various features of <code>chromoMap</code> to create fantastic annotation plots and visualizing the feature-associated data. If you, however, want to know more about the applications of the plot, please check the publication or contact me. I recommend using the <code>RStudio</code> application since the interactive plots can be viewed beautifully in the application’s viewer pane and it allows you to export the plot either as static image or a stand-alone HTML web page.</p>
+<div id="install-chromomap" class="section level3">
+<h3>Install <code>chromoMap</code></h3>
+<p>You can install the package by just typing the following commands:</p>
+<pre class="r"><code>install.packages(&quot;chromoMap&quot;)
+</code></pre>
+</div>
+<div id="prepare-input-data-files" class="section level3">
+<h3>Prepare Input Data Files</h3>
+<p>The <code>chromoMap</code> can be used to visualize and annotate chromosomes of any living organism. It is because it renders the chromosome based on the co-ordinate information that you will provide as input. So, if you have the genomic co-ordinates of the organism, you can create chromoMaps for it.</p>
+<p>The input data are tab-delimited text files (almost similar to the BED file format). It takes separate files for the chromosomes and the annotations. The input files <em>should not</em> have column headers (however, I have explained each column type below)</p>
+<div id="chromosome-files" class="section level4">
+<h4>Chromosome Files</h4>
+<p>This file contains the co-ordinates of the chromosomes. The columns of this file(in order) are described below (all columns are mandatory unless specified optional):</p>
+<ul>
+<li><strong>chromosome name</strong>: a character representing the chromosome/contig/region name like ‘chr1’ or ‘1’ or ‘ch1’</li>
+<li><strong>chromosome start</strong>: a numeric value to specify chromosome (or chromosome region) start position. If you are considering entire chromosome this value is typically 1.</li>
+<li><strong>chromsome end</strong>: a numeric value specifying chromosome/contig/region end position. Again, if you are considering entire chromosome, then this value is the length of chromosome.</li>
+<li><strong>centromere start (optional)</strong>: centromeres will be added automatically if you provide the its start cordinates.</li>
+</ul>
+<p>I have developed algorithm that will include both start and end coordinates of chromosomes so that users can also be able to visualize a region of chromosome (not necessarily starting at 1). You can use your imagination to visualize anything that has coordinates( like RNA as well).</p>
+Your chromosome file should look like:
+<center>
+<p><img src="images/f1.PNG" /></p>
+</center>
+</div>
+<div id="annotation-files" class="section level4">
+<h4>Annotation Files</h4>
+<p>Once you have chromosome co-ordinates in file, the next thing is to have data for annotation. annotation elements/features could be anything that has co-ordinates like genes,SNPS, etc., and associated data, like gene-expression, methylation etc. The annotation-data is also provided in the same format.</p>
+<ul>
+<li><strong>Element Name</strong>: a character specifying (uniquely) the elements. This can be identifiers,symbols etc.</li>
+<li><strong>Chromosome Name</strong>: a character specifying the chromosome name. [NOTE: the chromosome names should be consistent in chromosome and data files.]</li>
+<li><strong>Element Start</strong>: A numeric specifying element start position.</li>
+<li><strong>Element End</strong>: A numeric specifying element end position.</li>
+<li><strong>Data(optional)</strong>: A numeric or character specifying the data value.</li>
+<li><strong>Hyperlinks(optional)</strong>: a character specifying the URL of the element.</li>
+</ul>
+<p>your annotation file should look like:</p>
+<center>
+<p><img src="images/f2.PNG" /></p>
+</center>
+<p><br><br></p>
+<p>To prevent you from making some possible errors, here are a few points to care about while preparing files:</p>
+<ul>
+<li>Do not include column headers in files.</li>
+<li>Chromosomes names should be consistent in both files.</li>
+<li>Elements and chromosome names (first column of both files) should be unique.</li>
+</ul>
+<p><strong>TIP</strong>: You can use MS excel to create your files and then use save as tab-delimited option.</p>
+</div>
+<div id="chromomap-files-for-this-vignette" class="section level4">
+<h4>chromoMap files for this vignette</h4>
+<p>For the plots in this vignette, I will be using synthetic chromosome and annotation files.</p>
+<pre class="r"><code># chromosome files
+chr_file_1 = &quot;chr_file_without_centromere.txt&quot;
+chr_file_2 = &quot;chr_file_with_centromere.txt&quot;
+
+# annotation files
+
+anno_file_1 = &quot;annotation_pos.txt&quot;
+anno_file_2 = &quot;annotation_pos_and_neg.txt&quot;</code></pre>
+<p>NOTE: I have used variables to assign file names. You can directly use the file names strings in the chromoMap( ) function.</p>
+<p>Let’s have a look at the data in these files:</p>
+<pre><code>#&gt; Loading required package: htmlwidgets</code></pre>
+<p>chromosome file:</p>
+<pre class="r"><code>
+head(read.table(chr_file_1,sep = &quot;\t&quot;))
+#&gt;     V1 V2   V3
+#&gt; 1 chr1  1 1000
+#&gt; 2 chr2  1  700</code></pre>
+<p>Chromosome file with centromere:</p>
+<pre class="r"><code>
+head(read.table(chr_file_2,sep = &quot;\t&quot;))
+#&gt;     V1 V2   V3  V4
+#&gt; 1 chr1  1 1000 500
+#&gt; 2 chr2  1  700 450</code></pre>
+<p>Annotation file with positive data.</p>
+<pre class="r"><code>
+head(read.table(anno_file_1,sep = &quot;\t&quot;))
+#&gt;    V1   V2  V3  V4  V5
+#&gt; 1 An1 chr1 558 560  10
+#&gt; 2 An2 chr2 396 398  34
+#&gt; 3 An3 chr2 281 283  89
+#&gt; 4 An4 chr1 125 127  56
+#&gt; 5 An5 chr2 406 408 100
+#&gt; 6 An6 chr2 340 342  91</code></pre>
+<p>Annotation file with both positive and negative data.</p>
+<pre class="r"><code>
+head(read.table(anno_file_2,sep = &quot;\t&quot;))
+#&gt;    V1   V2  V3  V4   V5
+#&gt; 1 An1 chr1 558 560  -64
+#&gt; 2 An2 chr2 396 398   29
+#&gt; 3 An3 chr2 281 283 -137
+#&gt; 4 An4 chr1 125 127 -129
+#&gt; 5 An5 chr2 406 408  -18
+#&gt; 6 An6 chr2 340 342  149</code></pre>
+</div>
+</div>
+</div>
+<div id="my-first-chromomap" class="section level2">
+<h2>My first <code>chromoMap</code></h2>
+<p>Once you have your input files ready, begin creating chromosomes plots like a pro. The simple annotation plot can be created using the following command:</p>
+<pre class="r"><code>library(chromoMap)
+chromoMap(chr_file_1,anno_file_1)
+</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-3a62dc58eef82046a1a9" style="width:100%;height:192px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3a62dc58eef82046a1a9">{"x":{"url":"docs_files/figure-html//widgets/widget_unnamed-chunk-9.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>This will create a plot with default properties.</p>
+<p>that’s it! you have created a simple annotation plot. now hover over the annotated loci to see the magic. you should see a tooltip describing:</p>
+<ul>
+<li>the range of the selected locus in bp</li>
+<li>the count showing total elements mapped at this locus</li>
+<li>the element(s) names mapped at this locus which is clickable</li>
+</ul>
+<center>
+<p><img src="images/p2.PNG" /></p>
+</center>
+<p>If you have added <code>hyperlinks</code> to the elements, you can click the element labels in tooltip to access the web page.</p>
+<p><strong>Tool-tip Toggle</strong>: On hover, the tooltip appear on the screen as long as your pointer is over the locus. It will disappear if you move the pointer away. You can click the locus to have a stable tooltip on screen. click again on same or other locus to hide it again.</p>
+<p>If you are not satisfied with the default look of the plot(which I’m sure you wouldn’t), you can play around with some of the properties to style your plot described under the section ‘configuring <code>chromoMap</code>’ in this vignette.</p>
+<p>Now, let’s create one with centromeres.</p>
+<pre class="r"><code>library(chromoMap)
+chromoMap(chr_file_2,anno_file_1)
+</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-5ce5bd8f407f0ef940b1" style="width:672px;height:192px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5ce5bd8f407f0ef940b1">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[10,34,89,56,100,91,11,16,43,83,94,81,1,57,45,3,94,52,51,68,36,15,19,6,76,43,17,5,14,3,7,41,75,93,27,89,16,62,34,64,19,54,61,69,88,64,18,84,46,35,11,51,51,74,30,11,47,91,0,39,91,81,16,15,80,19,73,1,80,63,69,92,67,45,77,15,5,25,89,4,71,85,45,21,59,20,7,56,14,77,4,92,13,87,21,97,90,16,24,65,57,63,27,43,91,44,77,69,12,14,18,64,97,25,32,23,65,17,22,2,76,43,10,3,43,90,82,89,36,21,48,98,90,40,9,68,79,17,33,39,12,78,85,95,54,39,57,81,46,50,63,56,29,53,7,42,72,14,75,38,68,8,27,39,71,62,98,72,3,48,21,5,10,40,69,22,24,73,40,14,37,29,70,28,95,78,3,54,98,41,46,40,6,95,38,88,99,62,19,73],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap189564-chr1-56-1","cmap189564-chr2-40-1","cmap189564-chr2-29-1","cmap189564-chr1-13-1","cmap189564-chr2-41-1","cmap189564-chr2-34-1","cmap189564-chr1-67-1","cmap189564-chr2-19-1","cmap189564-chr2-5-1","cmap189564-chr1-54-1","cmap189564-chr1-87-1","cmap189564-chr2-15-1","cmap189564-chr1-64-1","cmap189564-chr2-39-1","cmap189564-chr1-85-1","cmap189564-chr2-60-1","cmap189564-chr2-54-1","cmap189564-chr1-96-1","cmap189564-chr1-69-1","cmap189564-chr1-79-1","cmap189564-chr2-62-1","cmap189564-chr1-38-1","cmap189564-chr2-26-1","cmap189564-chr1-6-1","cmap189564-chr2-49-1","cmap189564-chr2-41-1","cmap189564-chr1-47-1","cmap189564-chr2-67-1","cmap189564-chr2-30-1","cmap189564-chr2-46-1","cmap189564-chr2-2-1","cmap189564-chr1-18-1","cmap189564-chr2-61-1","cmap189564-chr1-80-1","cmap189564-chr2-55-1","cmap189564-chr2-11-1","cmap189564-chr2-66-1","cmap189564-chr1-58-1","cmap189564-chr1-98-1","cmap189564-chr1-47-1","cmap189564-chr2-7-1","cmap189564-chr2-39-1","cmap189564-chr2-57-1","cmap189564-chr1-79-1","cmap189564-chr1-96-1","cmap189564-chr2-28-1","cmap189564-chr2-25-1","cmap189564-chr1-80-1","cmap189564-chr1-19-1","cmap189564-chr2-68-1","cmap189564-chr2-4-1","cmap189564-chr2-47-1","cmap189564-chr1-99-1","cmap189564-chr2-62-1","cmap189564-chr2-36-1","cmap189564-chr1-92-1","cmap189564-chr1-60-1","cmap189564-chr1-23-1","cmap189564-chr1-16-1","cmap189564-chr1-98-1","cmap189564-chr1-55-1","cmap189564-chr2-36-1","cmap189564-chr2-40-1","cmap189564-chr1-72-1","cmap189564-chr1-25-1","cmap189564-chr1-74-1","cmap189564-chr1-99-1","cmap189564-chr1-60-1","cmap189564-chr2-68-1","cmap189564-chr2-25-1","cmap189564-chr2-66-1","cmap189564-chr1-10-1","cmap189564-chr1-77-1","cmap189564-chr2-58-1","cmap189564-chr1-62-1","cmap189564-chr1-50-1","cmap189564-chr2-37-1","cmap189564-chr2-42-1","cmap189564-chr2-66-1","cmap189564-chr2-39-1","cmap189564-chr1-29-1","cmap189564-chr1-55-1","cmap189564-chr1-86-1","cmap189564-chr2-26-1","cmap189564-chr1-25-1","cmap189564-chr2-52-1","cmap189564-chr2-9-1","cmap189564-chr2-47-1","cmap189564-chr2-19-1","cmap189564-chr1-18-1","cmap189564-chr2-25-1","cmap189564-chr2-55-1","cmap189564-chr1-95-1","cmap189564-chr2-66-1","cmap189564-chr2-52-1","cmap189564-chr2-37-1","cmap189564-chr2-68-1","cmap189564-chr2-4-1","cmap189564-chr2-49-1","cmap189564-chr1-56-1","cmap189564-chr1-78-1","cmap189564-chr1-32-1","cmap189564-chr1-39-1","cmap189564-chr2-19-1","cmap189564-chr1-88-1","cmap189564-chr1-78-1","cmap189564-chr1-50-1","cmap189564-chr1-83-1","cmap189564-chr2-36-1","cmap189564-chr1-49-1","cmap189564-chr2-58-1","cmap189564-chr2-36-1","cmap189564-chr1-59-1","cmap189564-chr1-63-1","cmap189564-chr2-69-1","cmap189564-chr2-10-1","cmap189564-chr2-40-1","cmap189564-chr1-95-1","cmap189564-chr1-8-1","cmap189564-chr2-44-1","cmap189564-chr1-48-1","cmap189564-chr1-5-1","cmap189564-chr1-21-1","cmap189564-chr1-52-1","cmap189564-chr2-37-1","cmap189564-chr2-3-1","cmap189564-chr2-18-1","cmap189564-chr2-40-1","cmap189564-chr1-80-1","cmap189564-chr1-82-1","cmap189564-chr2-13-1","cmap189564-chr2-56-1","cmap189564-chr2-46-1","cmap189564-chr2-44-1","cmap189564-chr2-61-1","cmap189564-chr1-84-1","cmap189564-chr1-81-1","cmap189564-chr1-87-1","cmap189564-chr1-35-1","cmap189564-chr1-42-1","cmap189564-chr1-10-1","cmap189564-chr2-50-1","cmap189564-chr2-38-1","cmap189564-chr2-45-1","cmap189564-chr1-19-1","cmap189564-chr1-22-1","cmap189564-chr2-39-1","cmap189564-chr2-37-1","cmap189564-chr1-57-1","cmap189564-chr1-32-1","cmap189564-chr1-53-1","cmap189564-chr1-91-1","cmap189564-chr2-50-1","cmap189564-chr1-87-1","cmap189564-chr1-23-1","cmap189564-chr1-6-1","cmap189564-chr2-7-1","cmap189564-chr1-69-1","cmap189564-chr1-33-1","cmap189564-chr1-9-1","cmap189564-chr2-23-1","cmap189564-chr2-49-1","cmap189564-chr1-60-1","cmap189564-chr2-55-1","cmap189564-chr1-38-1","cmap189564-chr1-39-1","cmap189564-chr2-12-1","cmap189564-chr1-50-1","cmap189564-chr2-42-1","cmap189564-chr2-46-1","cmap189564-chr1-38-1","cmap189564-chr1-84-1","cmap189564-chr2-65-1","cmap189564-chr1-27-1","cmap189564-chr1-14-1","cmap189564-chr2-49-1","cmap189564-chr1-96-1","cmap189564-chr1-94-1","cmap189564-chr2-39-1","cmap189564-chr2-46-1","cmap189564-chr1-19-1","cmap189564-chr1-1-1","cmap189564-chr2-54-1","cmap189564-chr2-39-1","cmap189564-chr2-52-1","cmap189564-chr2-41-1","cmap189564-chr1-48-1","cmap189564-chr2-26-1","cmap189564-chr1-57-1","cmap189564-chr2-29-1","cmap189564-chr2-45-1","cmap189564-chr2-32-1","cmap189564-chr2-48-1","cmap189564-chr2-35-1","cmap189564-chr2-23-1","cmap189564-chr2-37-1","cmap189564-chr2-44-1","cmap189564-chr1-45-1","cmap189564-chr1-39-1","cmap189564-chr2-6-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap189564-Lchr1-56-1","cmap189564-Lchr2-40-1","cmap189564-Lchr2-29-1","cmap189564-Lchr1-13-1","cmap189564-Lchr2-41-1","cmap189564-Lchr2-34-1","cmap189564-Lchr1-67-1","cmap189564-Lchr2-19-1","cmap189564-Lchr2-5-1","cmap189564-Lchr1-54-1","cmap189564-Lchr1-87-1","cmap189564-Lchr2-15-1","cmap189564-Lchr1-64-1","cmap189564-Lchr2-39-1","cmap189564-Lchr1-85-1","cmap189564-Lchr2-60-1","cmap189564-Lchr2-54-1","cmap189564-Lchr1-96-1","cmap189564-Lchr1-69-1","cmap189564-Lchr1-79-1","cmap189564-Lchr2-62-1","cmap189564-Lchr1-38-1","cmap189564-Lchr2-26-1","cmap189564-Lchr1-6-1","cmap189564-Lchr2-49-1","cmap189564-Lchr2-41-1","cmap189564-Lchr1-47-1","cmap189564-Lchr2-67-1","cmap189564-Lchr2-30-1","cmap189564-Lchr2-46-1","cmap189564-Lchr2-2-1","cmap189564-Lchr1-18-1","cmap189564-Lchr2-61-1","cmap189564-Lchr1-80-1","cmap189564-Lchr2-55-1","cmap189564-Lchr2-11-1","cmap189564-Lchr2-66-1","cmap189564-Lchr1-58-1","cmap189564-Lchr1-98-1","cmap189564-Lchr1-47-1","cmap189564-Lchr2-7-1","cmap189564-Lchr2-39-1","cmap189564-Lchr2-57-1","cmap189564-Lchr1-79-1","cmap189564-Lchr1-96-1","cmap189564-Lchr2-28-1","cmap189564-Lchr2-25-1","cmap189564-Lchr1-80-1","cmap189564-Lchr1-19-1","cmap189564-Lchr2-68-1","cmap189564-Lchr2-4-1","cmap189564-Lchr2-47-1","cmap189564-Lchr1-99-1","cmap189564-Lchr2-62-1","cmap189564-Lchr2-36-1","cmap189564-Lchr1-92-1","cmap189564-Lchr1-60-1","cmap189564-Lchr1-23-1","cmap189564-Lchr1-16-1","cmap189564-Lchr1-98-1","cmap189564-Lchr1-55-1","cmap189564-Lchr2-36-1","cmap189564-Lchr2-40-1","cmap189564-Lchr1-72-1","cmap189564-Lchr1-25-1","cmap189564-Lchr1-74-1","cmap189564-Lchr1-99-1","cmap189564-Lchr1-60-1","cmap189564-Lchr2-68-1","cmap189564-Lchr2-25-1","cmap189564-Lchr2-66-1","cmap189564-Lchr1-10-1","cmap189564-Lchr1-77-1","cmap189564-Lchr2-58-1","cmap189564-Lchr1-62-1","cmap189564-Lchr1-50-1","cmap189564-Lchr2-37-1","cmap189564-Lchr2-42-1","cmap189564-Lchr2-66-1","cmap189564-Lchr2-39-1","cmap189564-Lchr1-29-1","cmap189564-Lchr1-55-1","cmap189564-Lchr1-86-1","cmap189564-Lchr2-26-1","cmap189564-Lchr1-25-1","cmap189564-Lchr2-52-1","cmap189564-Lchr2-9-1","cmap189564-Lchr2-47-1","cmap189564-Lchr2-19-1","cmap189564-Lchr1-18-1","cmap189564-Lchr2-25-1","cmap189564-Lchr2-55-1","cmap189564-Lchr1-95-1","cmap189564-Lchr2-66-1","cmap189564-Lchr2-52-1","cmap189564-Lchr2-37-1","cmap189564-Lchr2-68-1","cmap189564-Lchr2-4-1","cmap189564-Lchr2-49-1","cmap189564-Lchr1-56-1","cmap189564-Lchr1-78-1","cmap189564-Lchr1-32-1","cmap189564-Lchr1-39-1","cmap189564-Lchr2-19-1","cmap189564-Lchr1-88-1","cmap189564-Lchr1-78-1","cmap189564-Lchr1-50-1","cmap189564-Lchr1-83-1","cmap189564-Lchr2-36-1","cmap189564-Lchr1-49-1","cmap189564-Lchr2-58-1","cmap189564-Lchr2-36-1","cmap189564-Lchr1-59-1","cmap189564-Lchr1-63-1","cmap189564-Lchr2-69-1","cmap189564-Lchr2-10-1","cmap189564-Lchr2-40-1","cmap189564-Lchr1-95-1","cmap189564-Lchr1-8-1","cmap189564-Lchr2-44-1","cmap189564-Lchr1-48-1","cmap189564-Lchr1-5-1","cmap189564-Lchr1-21-1","cmap189564-Lchr1-52-1","cmap189564-Lchr2-37-1","cmap189564-Lchr2-3-1","cmap189564-Lchr2-18-1","cmap189564-Lchr2-40-1","cmap189564-Lchr1-80-1","cmap189564-Lchr1-82-1","cmap189564-Lchr2-13-1","cmap189564-Lchr2-56-1","cmap189564-Lchr2-46-1","cmap189564-Lchr2-44-1","cmap189564-Lchr2-61-1","cmap189564-Lchr1-84-1","cmap189564-Lchr1-81-1","cmap189564-Lchr1-87-1","cmap189564-Lchr1-35-1","cmap189564-Lchr1-42-1","cmap189564-Lchr1-10-1","cmap189564-Lchr2-50-1","cmap189564-Lchr2-38-1","cmap189564-Lchr2-45-1","cmap189564-Lchr1-19-1","cmap189564-Lchr1-22-1","cmap189564-Lchr2-39-1","cmap189564-Lchr2-37-1","cmap189564-Lchr1-57-1","cmap189564-Lchr1-32-1","cmap189564-Lchr1-53-1","cmap189564-Lchr1-91-1","cmap189564-Lchr2-50-1","cmap189564-Lchr1-87-1","cmap189564-Lchr1-23-1","cmap189564-Lchr1-6-1","cmap189564-Lchr2-7-1","cmap189564-Lchr1-69-1","cmap189564-Lchr1-33-1","cmap189564-Lchr1-9-1","cmap189564-Lchr2-23-1","cmap189564-Lchr2-49-1","cmap189564-Lchr1-60-1","cmap189564-Lchr2-55-1","cmap189564-Lchr1-38-1","cmap189564-Lchr1-39-1","cmap189564-Lchr2-12-1","cmap189564-Lchr1-50-1","cmap189564-Lchr2-42-1","cmap189564-Lchr2-46-1","cmap189564-Lchr1-38-1","cmap189564-Lchr1-84-1","cmap189564-Lchr2-65-1","cmap189564-Lchr1-27-1","cmap189564-Lchr1-14-1","cmap189564-Lchr2-49-1","cmap189564-Lchr1-96-1","cmap189564-Lchr1-94-1","cmap189564-Lchr2-39-1","cmap189564-Lchr2-46-1","cmap189564-Lchr1-19-1","cmap189564-Lchr1-1-1","cmap189564-Lchr2-54-1","cmap189564-Lchr2-39-1","cmap189564-Lchr2-52-1","cmap189564-Lchr2-41-1","cmap189564-Lchr1-48-1","cmap189564-Lchr2-26-1","cmap189564-Lchr1-57-1","cmap189564-Lchr2-29-1","cmap189564-Lchr2-45-1","cmap189564-Lchr2-32-1","cmap189564-Lchr2-48-1","cmap189564-Lchr2-35-1","cmap189564-Lchr2-23-1","cmap189564-Lchr2-37-1","cmap189564-Lchr2-44-1","cmap189564-Lchr1-45-1","cmap189564-Lchr1-39-1","cmap189564-Lchr2-6-1"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"cnt_start":[500,450],"cnt_proprtion":[0.5,0.64],"p":[50,45],"q":[50,25],"seq_len":[1000,700]}],"ploidy_n":1,"title":null,"cnt":true,"ch_gap":5,"top_margin":25,"left_margin":50,"chr_width":15,"chr_length":4,"chr_col":["black",""],"heatmap":false,"ch_domain":["1","1000"],"lg_x":0,"lg_y":0,"heat_scale":"linear","labels":false,"div_id":"cmap189564","w":500,"h":200,"rng":0,"heat_col":[],"an_col":["#10B85F",""],"ch_text":[true,true],"legend":[false,true],"aggregate_func":["avg",""],"plots":["none",""],"tag_filter":[["none","0"]],"plot_height":[30,0],"plot_ticks":[4,0],"plot_color":["blue",""],"plot_y_domain":[[0,0]],"ref_line":[false,true],"refl_pos":[0,0],"refl_color":["grey",""],"refl_stroke_w":[2,0],"tagColor":["red",""],"renderHeat":[true,true],"text_font_size":[10,0],"chr_curve":5,"title_font_size":12,"label_font":9,"label_angle":-90,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["none","0"]]},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="polyploidy" class="section level2">
+<h2>Polyploidy</h2>
+<p>Biologically speaking, chromosomes occur in sets. So, just visualizing a set of chromosome(called as haploid) wouldn’t be sufficient in some scenarios. Hence, I added the feature of adding sets of chromosomes as seperate set of files. Don’t forget to set the <code>ploidy</code> argument to the number of sets you are passing.</p>
+<pre class="r"><code>library(chromoMap)
+chromoMap(c(chr_file_1,chr_file_1),c(anno_file_1,anno_file_2),
+          ploidy = 2)
+</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 2 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Number of Chromosomes in set  2 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200 
+#&gt; Number of annotations in data set  2 : 200</code></pre>
+<div id="htmlwidget-36204623217530942404" style="width:672px;height:192px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-36204623217530942404">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[10,34,89,56,100,91,11,16,43,83,94,81,1,57,45,3,94,52,51,68,36,15,19,6,76,43,17,5,14,3,7,41,75,93,27,89,16,62,34,64,19,54,61,69,88,64,18,84,46,35,11,51,51,74,30,11,47,91,0,39,91,81,16,15,80,19,73,1,80,63,69,92,67,45,77,15,5,25,89,4,71,85,45,21,59,20,7,56,14,77,4,92,13,87,21,97,90,16,24,65,57,63,27,43,91,44,77,69,12,14,18,64,97,25,32,23,65,17,22,2,76,43,10,3,43,90,82,89,36,21,48,98,90,40,9,68,79,17,33,39,12,78,85,95,54,39,57,81,46,50,63,56,29,53,7,42,72,14,75,38,68,8,27,39,71,62,98,72,3,48,21,5,10,40,69,22,24,73,40,14,37,29,70,28,95,78,3,54,98,41,46,40,6,95,38,88,99,62,19,73],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap2-chr1-56-1","cmap2-chr2-40-1","cmap2-chr2-29-1","cmap2-chr1-13-1","cmap2-chr2-41-1","cmap2-chr2-34-1","cmap2-chr1-67-1","cmap2-chr2-19-1","cmap2-chr2-5-1","cmap2-chr1-54-1","cmap2-chr1-87-1","cmap2-chr2-15-1","cmap2-chr1-64-1","cmap2-chr2-39-1","cmap2-chr1-85-1","cmap2-chr2-60-1","cmap2-chr2-54-1","cmap2-chr1-96-1","cmap2-chr1-69-1","cmap2-chr1-79-1","cmap2-chr2-62-1","cmap2-chr1-38-1","cmap2-chr2-26-1","cmap2-chr1-6-1","cmap2-chr2-49-1","cmap2-chr2-41-1","cmap2-chr1-47-1","cmap2-chr2-67-1","cmap2-chr2-30-1","cmap2-chr2-46-1","cmap2-chr2-2-1","cmap2-chr1-18-1","cmap2-chr2-61-1","cmap2-chr1-80-1","cmap2-chr2-55-1","cmap2-chr2-11-1","cmap2-chr2-66-1","cmap2-chr1-58-1","cmap2-chr1-98-1","cmap2-chr1-47-1","cmap2-chr2-7-1","cmap2-chr2-39-1","cmap2-chr2-57-1","cmap2-chr1-79-1","cmap2-chr1-96-1","cmap2-chr2-28-1","cmap2-chr2-25-1","cmap2-chr1-80-1","cmap2-chr1-19-1","cmap2-chr2-68-1","cmap2-chr2-4-1","cmap2-chr2-47-1","cmap2-chr1-99-1","cmap2-chr2-62-1","cmap2-chr2-36-1","cmap2-chr1-92-1","cmap2-chr1-60-1","cmap2-chr1-23-1","cmap2-chr1-16-1","cmap2-chr1-98-1","cmap2-chr1-55-1","cmap2-chr2-36-1","cmap2-chr2-40-1","cmap2-chr1-72-1","cmap2-chr1-25-1","cmap2-chr1-74-1","cmap2-chr1-99-1","cmap2-chr1-60-1","cmap2-chr2-68-1","cmap2-chr2-25-1","cmap2-chr2-66-1","cmap2-chr1-10-1","cmap2-chr1-77-1","cmap2-chr2-58-1","cmap2-chr1-62-1","cmap2-chr1-50-1","cmap2-chr2-37-1","cmap2-chr2-42-1","cmap2-chr2-66-1","cmap2-chr2-39-1","cmap2-chr1-29-1","cmap2-chr1-55-1","cmap2-chr1-86-1","cmap2-chr2-26-1","cmap2-chr1-25-1","cmap2-chr2-52-1","cmap2-chr2-9-1","cmap2-chr2-47-1","cmap2-chr2-19-1","cmap2-chr1-18-1","cmap2-chr2-25-1","cmap2-chr2-55-1","cmap2-chr1-95-1","cmap2-chr2-66-1","cmap2-chr2-52-1","cmap2-chr2-37-1","cmap2-chr2-68-1","cmap2-chr2-4-1","cmap2-chr2-49-1","cmap2-chr1-56-1","cmap2-chr1-78-1","cmap2-chr1-32-1","cmap2-chr1-39-1","cmap2-chr2-19-1","cmap2-chr1-88-1","cmap2-chr1-78-1","cmap2-chr1-50-1","cmap2-chr1-83-1","cmap2-chr2-36-1","cmap2-chr1-49-1","cmap2-chr2-58-1","cmap2-chr2-36-1","cmap2-chr1-59-1","cmap2-chr1-63-1","cmap2-chr2-69-1","cmap2-chr2-10-1","cmap2-chr2-40-1","cmap2-chr1-95-1","cmap2-chr1-8-1","cmap2-chr2-44-1","cmap2-chr1-48-1","cmap2-chr1-5-1","cmap2-chr1-21-1","cmap2-chr1-52-1","cmap2-chr2-37-1","cmap2-chr2-3-1","cmap2-chr2-18-1","cmap2-chr2-40-1","cmap2-chr1-80-1","cmap2-chr1-82-1","cmap2-chr2-13-1","cmap2-chr2-56-1","cmap2-chr2-46-1","cmap2-chr2-44-1","cmap2-chr2-61-1","cmap2-chr1-84-1","cmap2-chr1-81-1","cmap2-chr1-87-1","cmap2-chr1-35-1","cmap2-chr1-42-1","cmap2-chr1-10-1","cmap2-chr2-50-1","cmap2-chr2-38-1","cmap2-chr2-45-1","cmap2-chr1-19-1","cmap2-chr1-22-1","cmap2-chr2-39-1","cmap2-chr2-37-1","cmap2-chr1-57-1","cmap2-chr1-32-1","cmap2-chr1-53-1","cmap2-chr1-91-1","cmap2-chr2-50-1","cmap2-chr1-87-1","cmap2-chr1-23-1","cmap2-chr1-6-1","cmap2-chr2-7-1","cmap2-chr1-69-1","cmap2-chr1-33-1","cmap2-chr1-9-1","cmap2-chr2-23-1","cmap2-chr2-49-1","cmap2-chr1-60-1","cmap2-chr2-55-1","cmap2-chr1-38-1","cmap2-chr1-39-1","cmap2-chr2-12-1","cmap2-chr1-50-1","cmap2-chr2-42-1","cmap2-chr2-46-1","cmap2-chr1-38-1","cmap2-chr1-84-1","cmap2-chr2-65-1","cmap2-chr1-27-1","cmap2-chr1-14-1","cmap2-chr2-49-1","cmap2-chr1-96-1","cmap2-chr1-94-1","cmap2-chr2-39-1","cmap2-chr2-46-1","cmap2-chr1-19-1","cmap2-chr1-1-1","cmap2-chr2-54-1","cmap2-chr2-39-1","cmap2-chr2-52-1","cmap2-chr2-41-1","cmap2-chr1-48-1","cmap2-chr2-26-1","cmap2-chr1-57-1","cmap2-chr2-29-1","cmap2-chr2-45-1","cmap2-chr2-32-1","cmap2-chr2-48-1","cmap2-chr2-35-1","cmap2-chr2-23-1","cmap2-chr2-37-1","cmap2-chr2-44-1","cmap2-chr1-45-1","cmap2-chr1-39-1","cmap2-chr2-6-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap2-Lchr1-56-1","cmap2-Lchr2-40-1","cmap2-Lchr2-29-1","cmap2-Lchr1-13-1","cmap2-Lchr2-41-1","cmap2-Lchr2-34-1","cmap2-Lchr1-67-1","cmap2-Lchr2-19-1","cmap2-Lchr2-5-1","cmap2-Lchr1-54-1","cmap2-Lchr1-87-1","cmap2-Lchr2-15-1","cmap2-Lchr1-64-1","cmap2-Lchr2-39-1","cmap2-Lchr1-85-1","cmap2-Lchr2-60-1","cmap2-Lchr2-54-1","cmap2-Lchr1-96-1","cmap2-Lchr1-69-1","cmap2-Lchr1-79-1","cmap2-Lchr2-62-1","cmap2-Lchr1-38-1","cmap2-Lchr2-26-1","cmap2-Lchr1-6-1","cmap2-Lchr2-49-1","cmap2-Lchr2-41-1","cmap2-Lchr1-47-1","cmap2-Lchr2-67-1","cmap2-Lchr2-30-1","cmap2-Lchr2-46-1","cmap2-Lchr2-2-1","cmap2-Lchr1-18-1","cmap2-Lchr2-61-1","cmap2-Lchr1-80-1","cmap2-Lchr2-55-1","cmap2-Lchr2-11-1","cmap2-Lchr2-66-1","cmap2-Lchr1-58-1","cmap2-Lchr1-98-1","cmap2-Lchr1-47-1","cmap2-Lchr2-7-1","cmap2-Lchr2-39-1","cmap2-Lchr2-57-1","cmap2-Lchr1-79-1","cmap2-Lchr1-96-1","cmap2-Lchr2-28-1","cmap2-Lchr2-25-1","cmap2-Lchr1-80-1","cmap2-Lchr1-19-1","cmap2-Lchr2-68-1","cmap2-Lchr2-4-1","cmap2-Lchr2-47-1","cmap2-Lchr1-99-1","cmap2-Lchr2-62-1","cmap2-Lchr2-36-1","cmap2-Lchr1-92-1","cmap2-Lchr1-60-1","cmap2-Lchr1-23-1","cmap2-Lchr1-16-1","cmap2-Lchr1-98-1","cmap2-Lchr1-55-1","cmap2-Lchr2-36-1","cmap2-Lchr2-40-1","cmap2-Lchr1-72-1","cmap2-Lchr1-25-1","cmap2-Lchr1-74-1","cmap2-Lchr1-99-1","cmap2-Lchr1-60-1","cmap2-Lchr2-68-1","cmap2-Lchr2-25-1","cmap2-Lchr2-66-1","cmap2-Lchr1-10-1","cmap2-Lchr1-77-1","cmap2-Lchr2-58-1","cmap2-Lchr1-62-1","cmap2-Lchr1-50-1","cmap2-Lchr2-37-1","cmap2-Lchr2-42-1","cmap2-Lchr2-66-1","cmap2-Lchr2-39-1","cmap2-Lchr1-29-1","cmap2-Lchr1-55-1","cmap2-Lchr1-86-1","cmap2-Lchr2-26-1","cmap2-Lchr1-25-1","cmap2-Lchr2-52-1","cmap2-Lchr2-9-1","cmap2-Lchr2-47-1","cmap2-Lchr2-19-1","cmap2-Lchr1-18-1","cmap2-Lchr2-25-1","cmap2-Lchr2-55-1","cmap2-Lchr1-95-1","cmap2-Lchr2-66-1","cmap2-Lchr2-52-1","cmap2-Lchr2-37-1","cmap2-Lchr2-68-1","cmap2-Lchr2-4-1","cmap2-Lchr2-49-1","cmap2-Lchr1-56-1","cmap2-Lchr1-78-1","cmap2-Lchr1-32-1","cmap2-Lchr1-39-1","cmap2-Lchr2-19-1","cmap2-Lchr1-88-1","cmap2-Lchr1-78-1","cmap2-Lchr1-50-1","cmap2-Lchr1-83-1","cmap2-Lchr2-36-1","cmap2-Lchr1-49-1","cmap2-Lchr2-58-1","cmap2-Lchr2-36-1","cmap2-Lchr1-59-1","cmap2-Lchr1-63-1","cmap2-Lchr2-69-1","cmap2-Lchr2-10-1","cmap2-Lchr2-40-1","cmap2-Lchr1-95-1","cmap2-Lchr1-8-1","cmap2-Lchr2-44-1","cmap2-Lchr1-48-1","cmap2-Lchr1-5-1","cmap2-Lchr1-21-1","cmap2-Lchr1-52-1","cmap2-Lchr2-37-1","cmap2-Lchr2-3-1","cmap2-Lchr2-18-1","cmap2-Lchr2-40-1","cmap2-Lchr1-80-1","cmap2-Lchr1-82-1","cmap2-Lchr2-13-1","cmap2-Lchr2-56-1","cmap2-Lchr2-46-1","cmap2-Lchr2-44-1","cmap2-Lchr2-61-1","cmap2-Lchr1-84-1","cmap2-Lchr1-81-1","cmap2-Lchr1-87-1","cmap2-Lchr1-35-1","cmap2-Lchr1-42-1","cmap2-Lchr1-10-1","cmap2-Lchr2-50-1","cmap2-Lchr2-38-1","cmap2-Lchr2-45-1","cmap2-Lchr1-19-1","cmap2-Lchr1-22-1","cmap2-Lchr2-39-1","cmap2-Lchr2-37-1","cmap2-Lchr1-57-1","cmap2-Lchr1-32-1","cmap2-Lchr1-53-1","cmap2-Lchr1-91-1","cmap2-Lchr2-50-1","cmap2-Lchr1-87-1","cmap2-Lchr1-23-1","cmap2-Lchr1-6-1","cmap2-Lchr2-7-1","cmap2-Lchr1-69-1","cmap2-Lchr1-33-1","cmap2-Lchr1-9-1","cmap2-Lchr2-23-1","cmap2-Lchr2-49-1","cmap2-Lchr1-60-1","cmap2-Lchr2-55-1","cmap2-Lchr1-38-1","cmap2-Lchr1-39-1","cmap2-Lchr2-12-1","cmap2-Lchr1-50-1","cmap2-Lchr2-42-1","cmap2-Lchr2-46-1","cmap2-Lchr1-38-1","cmap2-Lchr1-84-1","cmap2-Lchr2-65-1","cmap2-Lchr1-27-1","cmap2-Lchr1-14-1","cmap2-Lchr2-49-1","cmap2-Lchr1-96-1","cmap2-Lchr1-94-1","cmap2-Lchr2-39-1","cmap2-Lchr2-46-1","cmap2-Lchr1-19-1","cmap2-Lchr1-1-1","cmap2-Lchr2-54-1","cmap2-Lchr2-39-1","cmap2-Lchr2-52-1","cmap2-Lchr2-41-1","cmap2-Lchr1-48-1","cmap2-Lchr2-26-1","cmap2-Lchr1-57-1","cmap2-Lchr2-29-1","cmap2-Lchr2-45-1","cmap2-Lchr2-32-1","cmap2-Lchr2-48-1","cmap2-Lchr2-35-1","cmap2-Lchr2-23-1","cmap2-Lchr2-37-1","cmap2-Lchr2-44-1","cmap2-Lchr1-45-1","cmap2-Lchr1-39-1","cmap2-Lchr2-6-1"]},{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[-64,29,-137,-129,-18,149,138,128,-59,28,76,-112,-127,-81,109,2,-23,143,-93,-43,55,14,113,84,-29,-69,127,-70,-49,74,10,69,88,36,93,26,21,144,-36,68,0,-44,-146,-37,-26,110,-148,99,12,-126,-21,108,-56,107,34,147,52,61,75,139,43,-48,-79,-144,125,-125,-51,-89,-82,65,-55,-95,-12,30,54,-105,91,57,8,-98,59,83,-22,115,-28,-77,-107,46,70,-62,-92,-108,-46,95,140,-73,81,-52,1,80,-58,82,-13,6,-94,104,9,-147,72,78,-83,-19,-65,90,-149,79,-110,-32,13,-53,101,33,102,-7,-130,-114,49,64,111,-139,-138,-141,22,-14,58,85,-54,124,-135,87,3,18,-76,50,-117,-97,-34,-27,-78,41,-10,119,-84,-91,-85,-40,-42,-88,63,-101,-111,71,-61,19,-38,-50,-25,25,103,24,-8,-128,44,-24,150,92,141,-68,-132,20,38,-87,-15,32,-80,94,39,142,-122,42,-136,-2,-33,-103,48,96,16,121,-60,137],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap2-chr1-56-2","cmap2-chr2-40-2","cmap2-chr2-29-2","cmap2-chr1-13-2","cmap2-chr2-41-2","cmap2-chr2-34-2","cmap2-chr1-67-2","cmap2-chr2-19-2","cmap2-chr2-5-2","cmap2-chr1-54-2","cmap2-chr1-87-2","cmap2-chr2-15-2","cmap2-chr1-64-2","cmap2-chr2-39-2","cmap2-chr1-85-2","cmap2-chr2-60-2","cmap2-chr2-54-2","cmap2-chr1-96-2","cmap2-chr1-69-2","cmap2-chr1-79-2","cmap2-chr2-62-2","cmap2-chr1-38-2","cmap2-chr2-26-2","cmap2-chr1-6-2","cmap2-chr2-49-2","cmap2-chr2-41-2","cmap2-chr1-47-2","cmap2-chr2-67-2","cmap2-chr2-30-2","cmap2-chr2-46-2","cmap2-chr2-2-2","cmap2-chr1-18-2","cmap2-chr2-61-2","cmap2-chr1-80-2","cmap2-chr2-55-2","cmap2-chr2-11-2","cmap2-chr2-66-2","cmap2-chr1-58-2","cmap2-chr1-98-2","cmap2-chr1-47-2","cmap2-chr2-7-2","cmap2-chr2-39-2","cmap2-chr2-57-2","cmap2-chr1-79-2","cmap2-chr1-96-2","cmap2-chr2-28-2","cmap2-chr2-25-2","cmap2-chr1-80-2","cmap2-chr1-19-2","cmap2-chr2-68-2","cmap2-chr2-4-2","cmap2-chr2-47-2","cmap2-chr1-99-2","cmap2-chr2-62-2","cmap2-chr2-36-2","cmap2-chr1-92-2","cmap2-chr1-60-2","cmap2-chr1-23-2","cmap2-chr1-16-2","cmap2-chr1-98-2","cmap2-chr1-55-2","cmap2-chr2-36-2","cmap2-chr2-40-2","cmap2-chr1-72-2","cmap2-chr1-25-2","cmap2-chr1-74-2","cmap2-chr1-99-2","cmap2-chr1-60-2","cmap2-chr2-68-2","cmap2-chr2-25-2","cmap2-chr2-66-2","cmap2-chr1-10-2","cmap2-chr1-77-2","cmap2-chr2-58-2","cmap2-chr1-62-2","cmap2-chr1-50-2","cmap2-chr2-37-2","cmap2-chr2-42-2","cmap2-chr2-66-2","cmap2-chr2-39-2","cmap2-chr1-29-2","cmap2-chr1-55-2","cmap2-chr1-86-2","cmap2-chr2-26-2","cmap2-chr1-25-2","cmap2-chr2-52-2","cmap2-chr2-9-2","cmap2-chr2-47-2","cmap2-chr2-19-2","cmap2-chr1-18-2","cmap2-chr2-25-2","cmap2-chr2-55-2","cmap2-chr1-95-2","cmap2-chr2-66-2","cmap2-chr2-52-2","cmap2-chr2-37-2","cmap2-chr2-68-2","cmap2-chr2-4-2","cmap2-chr2-49-2","cmap2-chr1-56-2","cmap2-chr1-78-2","cmap2-chr1-32-2","cmap2-chr1-39-2","cmap2-chr2-19-2","cmap2-chr1-88-2","cmap2-chr1-78-2","cmap2-chr1-50-2","cmap2-chr1-83-2","cmap2-chr2-36-2","cmap2-chr1-49-2","cmap2-chr2-58-2","cmap2-chr2-36-2","cmap2-chr1-59-2","cmap2-chr1-63-2","cmap2-chr2-69-2","cmap2-chr2-10-2","cmap2-chr2-40-2","cmap2-chr1-95-2","cmap2-chr1-8-2","cmap2-chr2-44-2","cmap2-chr1-48-2","cmap2-chr1-5-2","cmap2-chr1-21-2","cmap2-chr1-52-2","cmap2-chr2-37-2","cmap2-chr2-3-2","cmap2-chr2-18-2","cmap2-chr2-40-2","cmap2-chr1-80-2","cmap2-chr1-82-2","cmap2-chr2-13-2","cmap2-chr2-56-2","cmap2-chr2-46-2","cmap2-chr2-44-2","cmap2-chr2-61-2","cmap2-chr1-84-2","cmap2-chr1-81-2","cmap2-chr1-87-2","cmap2-chr1-35-2","cmap2-chr1-42-2","cmap2-chr1-10-2","cmap2-chr2-50-2","cmap2-chr2-38-2","cmap2-chr2-45-2","cmap2-chr1-19-2","cmap2-chr1-22-2","cmap2-chr2-39-2","cmap2-chr2-37-2","cmap2-chr1-57-2","cmap2-chr1-32-2","cmap2-chr1-53-2","cmap2-chr1-91-2","cmap2-chr2-50-2","cmap2-chr1-87-2","cmap2-chr1-23-2","cmap2-chr1-6-2","cmap2-chr2-7-2","cmap2-chr1-69-2","cmap2-chr1-33-2","cmap2-chr1-9-2","cmap2-chr2-23-2","cmap2-chr2-49-2","cmap2-chr1-60-2","cmap2-chr2-55-2","cmap2-chr1-38-2","cmap2-chr1-39-2","cmap2-chr2-12-2","cmap2-chr1-50-2","cmap2-chr2-42-2","cmap2-chr2-46-2","cmap2-chr1-38-2","cmap2-chr1-84-2","cmap2-chr2-65-2","cmap2-chr1-27-2","cmap2-chr1-14-2","cmap2-chr2-49-2","cmap2-chr1-96-2","cmap2-chr1-94-2","cmap2-chr2-39-2","cmap2-chr2-46-2","cmap2-chr1-19-2","cmap2-chr1-1-2","cmap2-chr2-54-2","cmap2-chr2-39-2","cmap2-chr2-52-2","cmap2-chr2-41-2","cmap2-chr1-48-2","cmap2-chr2-26-2","cmap2-chr1-57-2","cmap2-chr2-29-2","cmap2-chr2-45-2","cmap2-chr2-32-2","cmap2-chr2-48-2","cmap2-chr2-35-2","cmap2-chr2-23-2","cmap2-chr2-37-2","cmap2-chr2-44-2","cmap2-chr1-45-2","cmap2-chr1-39-2","cmap2-chr2-6-2"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap2-Lchr1-56-2","cmap2-Lchr2-40-2","cmap2-Lchr2-29-2","cmap2-Lchr1-13-2","cmap2-Lchr2-41-2","cmap2-Lchr2-34-2","cmap2-Lchr1-67-2","cmap2-Lchr2-19-2","cmap2-Lchr2-5-2","cmap2-Lchr1-54-2","cmap2-Lchr1-87-2","cmap2-Lchr2-15-2","cmap2-Lchr1-64-2","cmap2-Lchr2-39-2","cmap2-Lchr1-85-2","cmap2-Lchr2-60-2","cmap2-Lchr2-54-2","cmap2-Lchr1-96-2","cmap2-Lchr1-69-2","cmap2-Lchr1-79-2","cmap2-Lchr2-62-2","cmap2-Lchr1-38-2","cmap2-Lchr2-26-2","cmap2-Lchr1-6-2","cmap2-Lchr2-49-2","cmap2-Lchr2-41-2","cmap2-Lchr1-47-2","cmap2-Lchr2-67-2","cmap2-Lchr2-30-2","cmap2-Lchr2-46-2","cmap2-Lchr2-2-2","cmap2-Lchr1-18-2","cmap2-Lchr2-61-2","cmap2-Lchr1-80-2","cmap2-Lchr2-55-2","cmap2-Lchr2-11-2","cmap2-Lchr2-66-2","cmap2-Lchr1-58-2","cmap2-Lchr1-98-2","cmap2-Lchr1-47-2","cmap2-Lchr2-7-2","cmap2-Lchr2-39-2","cmap2-Lchr2-57-2","cmap2-Lchr1-79-2","cmap2-Lchr1-96-2","cmap2-Lchr2-28-2","cmap2-Lchr2-25-2","cmap2-Lchr1-80-2","cmap2-Lchr1-19-2","cmap2-Lchr2-68-2","cmap2-Lchr2-4-2","cmap2-Lchr2-47-2","cmap2-Lchr1-99-2","cmap2-Lchr2-62-2","cmap2-Lchr2-36-2","cmap2-Lchr1-92-2","cmap2-Lchr1-60-2","cmap2-Lchr1-23-2","cmap2-Lchr1-16-2","cmap2-Lchr1-98-2","cmap2-Lchr1-55-2","cmap2-Lchr2-36-2","cmap2-Lchr2-40-2","cmap2-Lchr1-72-2","cmap2-Lchr1-25-2","cmap2-Lchr1-74-2","cmap2-Lchr1-99-2","cmap2-Lchr1-60-2","cmap2-Lchr2-68-2","cmap2-Lchr2-25-2","cmap2-Lchr2-66-2","cmap2-Lchr1-10-2","cmap2-Lchr1-77-2","cmap2-Lchr2-58-2","cmap2-Lchr1-62-2","cmap2-Lchr1-50-2","cmap2-Lchr2-37-2","cmap2-Lchr2-42-2","cmap2-Lchr2-66-2","cmap2-Lchr2-39-2","cmap2-Lchr1-29-2","cmap2-Lchr1-55-2","cmap2-Lchr1-86-2","cmap2-Lchr2-26-2","cmap2-Lchr1-25-2","cmap2-Lchr2-52-2","cmap2-Lchr2-9-2","cmap2-Lchr2-47-2","cmap2-Lchr2-19-2","cmap2-Lchr1-18-2","cmap2-Lchr2-25-2","cmap2-Lchr2-55-2","cmap2-Lchr1-95-2","cmap2-Lchr2-66-2","cmap2-Lchr2-52-2","cmap2-Lchr2-37-2","cmap2-Lchr2-68-2","cmap2-Lchr2-4-2","cmap2-Lchr2-49-2","cmap2-Lchr1-56-2","cmap2-Lchr1-78-2","cmap2-Lchr1-32-2","cmap2-Lchr1-39-2","cmap2-Lchr2-19-2","cmap2-Lchr1-88-2","cmap2-Lchr1-78-2","cmap2-Lchr1-50-2","cmap2-Lchr1-83-2","cmap2-Lchr2-36-2","cmap2-Lchr1-49-2","cmap2-Lchr2-58-2","cmap2-Lchr2-36-2","cmap2-Lchr1-59-2","cmap2-Lchr1-63-2","cmap2-Lchr2-69-2","cmap2-Lchr2-10-2","cmap2-Lchr2-40-2","cmap2-Lchr1-95-2","cmap2-Lchr1-8-2","cmap2-Lchr2-44-2","cmap2-Lchr1-48-2","cmap2-Lchr1-5-2","cmap2-Lchr1-21-2","cmap2-Lchr1-52-2","cmap2-Lchr2-37-2","cmap2-Lchr2-3-2","cmap2-Lchr2-18-2","cmap2-Lchr2-40-2","cmap2-Lchr1-80-2","cmap2-Lchr1-82-2","cmap2-Lchr2-13-2","cmap2-Lchr2-56-2","cmap2-Lchr2-46-2","cmap2-Lchr2-44-2","cmap2-Lchr2-61-2","cmap2-Lchr1-84-2","cmap2-Lchr1-81-2","cmap2-Lchr1-87-2","cmap2-Lchr1-35-2","cmap2-Lchr1-42-2","cmap2-Lchr1-10-2","cmap2-Lchr2-50-2","cmap2-Lchr2-38-2","cmap2-Lchr2-45-2","cmap2-Lchr1-19-2","cmap2-Lchr1-22-2","cmap2-Lchr2-39-2","cmap2-Lchr2-37-2","cmap2-Lchr1-57-2","cmap2-Lchr1-32-2","cmap2-Lchr1-53-2","cmap2-Lchr1-91-2","cmap2-Lchr2-50-2","cmap2-Lchr1-87-2","cmap2-Lchr1-23-2","cmap2-Lchr1-6-2","cmap2-Lchr2-7-2","cmap2-Lchr1-69-2","cmap2-Lchr1-33-2","cmap2-Lchr1-9-2","cmap2-Lchr2-23-2","cmap2-Lchr2-49-2","cmap2-Lchr1-60-2","cmap2-Lchr2-55-2","cmap2-Lchr1-38-2","cmap2-Lchr1-39-2","cmap2-Lchr2-12-2","cmap2-Lchr1-50-2","cmap2-Lchr2-42-2","cmap2-Lchr2-46-2","cmap2-Lchr1-38-2","cmap2-Lchr1-84-2","cmap2-Lchr2-65-2","cmap2-Lchr1-27-2","cmap2-Lchr1-14-2","cmap2-Lchr2-49-2","cmap2-Lchr1-96-2","cmap2-Lchr1-94-2","cmap2-Lchr2-39-2","cmap2-Lchr2-46-2","cmap2-Lchr1-19-2","cmap2-Lchr1-1-2","cmap2-Lchr2-54-2","cmap2-Lchr2-39-2","cmap2-Lchr2-52-2","cmap2-Lchr2-41-2","cmap2-Lchr1-48-2","cmap2-Lchr2-26-2","cmap2-Lchr1-57-2","cmap2-Lchr2-29-2","cmap2-Lchr2-45-2","cmap2-Lchr2-32-2","cmap2-Lchr2-48-2","cmap2-Lchr2-35-2","cmap2-Lchr2-23-2","cmap2-Lchr2-37-2","cmap2-Lchr2-44-2","cmap2-Lchr1-45-2","cmap2-Lchr1-39-2","cmap2-Lchr2-6-2"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]},{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":2,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":50,"chr_width":15,"chr_length":4,"chr_col":["black","black"],"heatmap":false,"ch_domain":["1","1000"],"lg_x":0,"lg_y":0,"heat_scale":"linear","labels":false,"div_id":"cmap2","w":500,"h":300,"rng":[0,0],"heat_col":[],"an_col":["#10B85F","#10B85F"],"ch_text":[true,true],"legend":[false,false],"aggregate_func":["avg","avg"],"plots":["none","none"],"tag_filter":[["none","0"],["none","0"]],"plot_height":[30,30],"plot_ticks":[4,4],"plot_color":["blue","blue"],"plot_y_domain":[[0,0],[0,0]],"ref_line":[false,false],"refl_pos":[0,0],"refl_color":["grey","grey"],"refl_stroke_w":[2,2],"tagColor":["red","red"],"renderHeat":[true,true],"text_font_size":[10,10],"chr_curve":5,"title_font_size":12,"label_font":9,"label_angle":-90,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["none","0"],["none","0"]]},"evals":[],"jsHooks":[]}</script>
+<p>polyploidy turned out to be a powerful feature that can actually be used in multiple ways. The sets of chromsomes are rendered independent of each other and, hence, can differ in number and size. Using this feature you can visualize polyploid sets, haploid sets of different species on same plot, or even different samples of same species for comparison. Be creative to use this feature to your own requirement. Some interesting examples I have included in my paper.</p>
+</div>
+<div id="point-and-segment-annotation-plots" class="section level2">
+<h2>Point and Segment-annotation plots</h2>
+<p>I have provided two types of annotation algorithms that will visualize the annotations differently. Point annotation will annotate an element on a single locus, ignoring its size. While, the segment-annotation algorithm consider the size and visualize the annotation as a segment.</p>
+<p>The default is point-annotation. To use segment annotation set the argument <code>segment_annotation</code> to <code>TRUE</code>. Segment annotations will be advantageous in cases like displaying gene structure.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,segment_annotation = T)
+</code></pre>
+<p>here’s a hypothetical example(exon regions of the genes g1,g2 and g3).</p>
+<center>
+<p><img src="images/P4.jpeg" /></p>
+</center>
+</div>
+<div id="data-based-annotation-plots" class="section level2">
+<h2>Data-based annotation plots</h2>
+<p>Huge volume of biological data is being produced in today’s world. I thought it would be nice to visualize the data associated with the chromosome regions or elements/features. You can do this by creating data-based color annotation plots in <code>chromoMap</code>. Before going forward let’s know about the data types chromoMap can handle. You can use either numeric data or character/categorical data for annotations. For the type of data type you are using, you need to set the argument <code>data_type</code> to either <code>numeric</code> or <code>categorical</code>. Also, to use this category of plot, you need to set <code>data_based_color_map</code> to <code>TRUE</code>.Now let’s explore the various types of plots you can create using <code>chromoMap</code>.</p>
+<div id="chromomap-discretecolormaps" class="section level3">
+<h3>chromoMap-DiscreteColorMaps</h3>
+<p>This type of plot can be used if your annotations are categorized into groups. This plot will assign distinct colors to each group. Your annotations file’s data column should have groups assigned to each element as character value.</p>
+<p>IMPORTANT: the <code>data_colors</code> argument will specify the color for each group and must be passed as a list() of vectors. If the ploidy is 2, two vectors will be passed in list. Hence, you must pass a vector for each ploidy in a list.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          data_based_color_map = T,
+          data_type = &quot;categorical&quot;,
+          data_colors = list(c(&quot;orange&quot;,&quot;yellow&quot;)))
+</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 20</code></pre>
+<div id="htmlwidget-e4e6842b256bafead718" style="width:100%;height:288px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e4e6842b256bafead718">{"x":{"url":"docs_files/figure-html//widgets/widget_unnamed-chunk-16.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>The best thing is, it can also create a legend for each group with labels used by you as group names. [see more under ‘legends’ section]</p>
+</div>
+<div id="chromomap-heatmaps" class="section level3">
+<h3>chromoMap-HeatMaps</h3>
+<p><code>chromoMap-HeatMaps</code> are chromosome heatmaps that allow you to visualize feature associated numeric data as heat colors. In your annotations file, add numeric data in data column.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-01c1018cb04fff97bff5" style="width:100%;height:336px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-01c1018cb04fff97bff5">{"x":{"url":"docs_files/figure-html//widgets/widget_unnamed-chunk-18.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p><code>data_colors</code> can be used to set the heat colors also. It should be passed as a list of vector(s) with a vector for each ploidy.</p>
+<div id="data-aggregation" class="section level4">
+<h4>Data Aggregation</h4>
+<p>Well, remember that chromosomal locus in the plot is a range, and more than one elements can be annotated in that range. So, for the data assignment of the loci where multiple elements are mapped, there is an aggregation method that allows you to control how data is aggregated/summarized for a given locus. The data for each locus will be determined by <code>aggregate_func</code> argument which can take <code>avg</code> for average (default) ,<code>sum</code> for summation of data values of all elements mapped on that locus, <code>min</code> , <code>max</code>, and <code>count</code>.</p>
+<p>So, if you want to use the sum function:</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          aggregate_func = &quot;sum&quot;)</code></pre>
+<p>You can use the different agregate functions for each ploidy by passing the argument as vector. Hence, for polyploidy, if only one value is passed, this value will be used for all sets.Otherwise, you can specify for each set as:</p>
+<pre class="r"><code>chromoMap(c(&quot;chromosome_file_set_1.txt&quot;,&quot;chromosome_file_set_2.txt&quot;)
+          ,c(&quot;annotation_file_set_1.txt&quot;,&quot;annotation_file_set_2.txt&quot;), 
+          ploidy = 2, data_based_color_map = T,data_type = &quot;numeric&quot;
+          ,aggregate_func = c(&quot;avg&quot;,&quot;sum&quot;))</code></pre>
+<p>Note: If only one element is annotated per loci, than the loci will take the element’s data value.</p>
+</div>
+</div>
+<div id="chromomap-bar-plots" class="section level3">
+<h3>chromoMap-Bar Plots</h3>
+<p>In addition to visualizing numeric data as heat colors on the chromosomes, chromoMap allows creating data charts over the annotated loci. <code>chromoMap-Bar</code> plot can be used to visualize annotated data as barplots. You will need to use the <code>plots</code> argument to specify the type of data charts you wish to visualize.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_1,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;bar&quot;)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-d700bd5741bd58d30aa1" style="width:100%;height:336px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d700bd5741bd58d30aa1">{"x":{"url":"docs_files/figure-html//widgets/widget_unnamed-chunk-22.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>The bars represents the <code>aggregate_function</code> values for the loci. You can customize the chromoMap-Bar plots using various properties described under <code>customizing Data-Plots</code> section.</p>
+<p>You can also turn off the heatmap feature to selectively visualize the <code>chromoMap-Bar</code> plots ( applicable for all of the plots discussed in the subsequent section). For that, set the <code>heat_map</code> argument to <code>FALSE</code>.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_1,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;bar&quot;,
+          heat_map = F)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-20eca8ff04547426527c" style="width:100%;height:336px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-20eca8ff04547426527c">{"x":{"url":"docs_files/figure-html//widgets/widget_unnamed-chunk-24.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="chromomap-scatter-plots" class="section level3">
+<h3>chromoMap-Scatter Plots</h3>
+<p><code>chromoMap-Scatter</code> plots allows to visualize each value for a given annotated locus as scatter plot.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;scatter&quot;)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-6b4fa8e3e358253ab7cb" style="width:100%;height:336px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6b4fa8e3e358253ab7cb">{"x":{"url":"docs_files/figure-html//widgets/widget_unnamed-chunk-26.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p><code>chromoMap-Scatter</code> plots are also interactive as the tooltips for a scatter shows the annotated element name and value.</p>
+</div>
+<div id="epi-tags" class="section level3">
+<h3>epi-tags</h3>
+<p><code>epi-tags</code> are special plots that allow to add <code>tags</code> over annotated loci.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;tags&quot;)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-37bea153ee8eafeb59df" style="width:100%;height:336px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-37bea153ee8eafeb59df">{"x":{"url":"docs_files/figure-html//widgets/widget_unnamed-chunk-28.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<p>These <code>epi-tags</code> can be filtered based on mathematical conditions on the data (discussed in the next section.)</p>
+</div>
+</div>
+<div id="chromomap-filters" class="section level2">
+<h2>chromoMap-Filters</h2>
+<p>This feature allows to filter numeric data based on the various mathematical conditions.</p>
+<div id="tag-filters" class="section level3">
+<h3>tag-filters</h3>
+<p>Tag-filters allows you to selectively tag a locus based on mathemetical condition on the data. If the condition is satisfied, the locus will be tagged. tag-filters are passed using the <code>tag_filter</code> argument. The argument is a list of vectors where you can pass a vector for each ploidy. the vector specifies two values necessary to pass for a filter. The first value specifies the <code>operation-type</code> and the second value specifies the <code>operands</code>. Following table describes all possible operation-types along with usage example.</p>
+<p>In general, filters are specified as <code>list(c("operation-type-label","operand1","operand2"))</code></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">operation type label</th>
+<th align="left">description</th>
+<th align="left">usage example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">eq</td>
+<td align="left">equal</td>
+<td align="left">list(c(“eq”,5))</td>
+</tr>
+<tr class="even">
+<td align="left">lt</td>
+<td align="left">less than</td>
+<td align="left">list(c(“lt”,-5))</td>
+</tr>
+<tr class="odd">
+<td align="left">gt</td>
+<td align="left">greater than</td>
+<td align="left">list(c(“gt”,6))</td>
+</tr>
+<tr class="even">
+<td align="left">lte</td>
+<td align="left">less than equal</td>
+<td align="left">list(c(“lte”,6))</td>
+</tr>
+<tr class="odd">
+<td align="left">gte</td>
+<td align="left">greater than equal</td>
+<td align="left">list(c(“gte”,6))</td>
+</tr>
+<tr class="even">
+<td align="left">gtalt</td>
+<td align="left">greater than AND less than</td>
+<td align="left">list(c(“gtalt”,5,-5))</td>
+</tr>
+<tr class="odd">
+<td align="left">gtolt</td>
+<td align="left">greater than OR less than</td>
+<td align="left">list(c(“gtolt”,5,-5))</td>
+</tr>
+<tr class="even">
+<td align="left">gtealte</td>
+<td align="left">greater than equal AND less than equal</td>
+<td align="left">list(c(“gtealte”,5,-5))</td>
+</tr>
+<tr class="odd">
+<td align="left">gteolte</td>
+<td align="left">greater than equal OR less than equal</td>
+<td align="left">list(c(“gteolte”,5,-5))</td>
+</tr>
+</tbody>
+</table>
+<p>For instance, to tag the loci with negative number values:</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;tags&quot;,
+          tag_filter = list(c(&quot;lt&quot;,0)))</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-dbb46e27e74863b6e5f0" style="width:100%;height:336px;" class="widgetframe html-widget"></div>
+<script type="application/json" data-for="htmlwidget-dbb46e27e74863b6e5f0">{"x":{"url":"docs_files/figure-html//widgets/widget_unnamed-chunk-31.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="plot-filters" class="section level3">
+<h3>plot-filters</h3>
+<p>plot-filters are similar to tag-filters as they allow filtering of numeric data based on mathematical conditions, but they are visualized as condition-based coloring of <code>chromoMap-Bar</code> and <code>chromoMap-scatter</code> plots. The <code>plot_filter</code> argument allows you to pass filter conditions. It is also a list of vector(s) similar to <code>tag_filter</code> above, except that you have to pass an additional necessary option of color to it. If the condition is satisfied, this color value is assigned.</p>
+<p>So, plot-filters are specified as <code>list(c("operation-type-label","operand1","operand2","color-value"))</code></p>
+<p>Here is an example of using plot-filter on <code>chromoMap-Bar</code> plots. bars with value greater than and equal to are colored ‘green’.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_1,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;bar&quot;,
+          plot_filter = list(c(&quot;gte&quot;,50,&quot;green&quot;)))</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-232b89ec4e5bc38cefe4" style="width:672px;height:336px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-232b89ec4e5bc38cefe4">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[10,34,89,56,100,91,11,16,43,83,94,81,1,57,45,3,94,52,51,68,36,15,19,6,76,43,17,5,14,3,7,41,75,93,27,89,16,62,34,64,19,54,61,69,88,64,18,84,46,35,11,51,51,74,30,11,47,91,0,39,91,81,16,15,80,19,73,1,80,63,69,92,67,45,77,15,5,25,89,4,71,85,45,21,59,20,7,56,14,77,4,92,13,87,21,97,90,16,24,65,57,63,27,43,91,44,77,69,12,14,18,64,97,25,32,23,65,17,22,2,76,43,10,3,43,90,82,89,36,21,48,98,90,40,9,68,79,17,33,39,12,78,85,95,54,39,57,81,46,50,63,56,29,53,7,42,72,14,75,38,68,8,27,39,71,62,98,72,3,48,21,5,10,40,69,22,24,73,40,14,37,29,70,28,95,78,3,54,98,41,46,40,6,95,38,88,99,62,19,73],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap9-chr1-56-1","cmap9-chr2-40-1","cmap9-chr2-29-1","cmap9-chr1-13-1","cmap9-chr2-41-1","cmap9-chr2-34-1","cmap9-chr1-67-1","cmap9-chr2-19-1","cmap9-chr2-5-1","cmap9-chr1-54-1","cmap9-chr1-87-1","cmap9-chr2-15-1","cmap9-chr1-64-1","cmap9-chr2-39-1","cmap9-chr1-85-1","cmap9-chr2-60-1","cmap9-chr2-54-1","cmap9-chr1-96-1","cmap9-chr1-69-1","cmap9-chr1-79-1","cmap9-chr2-62-1","cmap9-chr1-38-1","cmap9-chr2-26-1","cmap9-chr1-6-1","cmap9-chr2-49-1","cmap9-chr2-41-1","cmap9-chr1-47-1","cmap9-chr2-67-1","cmap9-chr2-30-1","cmap9-chr2-46-1","cmap9-chr2-2-1","cmap9-chr1-18-1","cmap9-chr2-61-1","cmap9-chr1-80-1","cmap9-chr2-55-1","cmap9-chr2-11-1","cmap9-chr2-66-1","cmap9-chr1-58-1","cmap9-chr1-98-1","cmap9-chr1-47-1","cmap9-chr2-7-1","cmap9-chr2-39-1","cmap9-chr2-57-1","cmap9-chr1-79-1","cmap9-chr1-96-1","cmap9-chr2-28-1","cmap9-chr2-25-1","cmap9-chr1-80-1","cmap9-chr1-19-1","cmap9-chr2-68-1","cmap9-chr2-4-1","cmap9-chr2-47-1","cmap9-chr1-99-1","cmap9-chr2-62-1","cmap9-chr2-36-1","cmap9-chr1-92-1","cmap9-chr1-60-1","cmap9-chr1-23-1","cmap9-chr1-16-1","cmap9-chr1-98-1","cmap9-chr1-55-1","cmap9-chr2-36-1","cmap9-chr2-40-1","cmap9-chr1-72-1","cmap9-chr1-25-1","cmap9-chr1-74-1","cmap9-chr1-99-1","cmap9-chr1-60-1","cmap9-chr2-68-1","cmap9-chr2-25-1","cmap9-chr2-66-1","cmap9-chr1-10-1","cmap9-chr1-77-1","cmap9-chr2-58-1","cmap9-chr1-62-1","cmap9-chr1-50-1","cmap9-chr2-37-1","cmap9-chr2-42-1","cmap9-chr2-66-1","cmap9-chr2-39-1","cmap9-chr1-29-1","cmap9-chr1-55-1","cmap9-chr1-86-1","cmap9-chr2-26-1","cmap9-chr1-25-1","cmap9-chr2-52-1","cmap9-chr2-9-1","cmap9-chr2-47-1","cmap9-chr2-19-1","cmap9-chr1-18-1","cmap9-chr2-25-1","cmap9-chr2-55-1","cmap9-chr1-95-1","cmap9-chr2-66-1","cmap9-chr2-52-1","cmap9-chr2-37-1","cmap9-chr2-68-1","cmap9-chr2-4-1","cmap9-chr2-49-1","cmap9-chr1-56-1","cmap9-chr1-78-1","cmap9-chr1-32-1","cmap9-chr1-39-1","cmap9-chr2-19-1","cmap9-chr1-88-1","cmap9-chr1-78-1","cmap9-chr1-50-1","cmap9-chr1-83-1","cmap9-chr2-36-1","cmap9-chr1-49-1","cmap9-chr2-58-1","cmap9-chr2-36-1","cmap9-chr1-59-1","cmap9-chr1-63-1","cmap9-chr2-69-1","cmap9-chr2-10-1","cmap9-chr2-40-1","cmap9-chr1-95-1","cmap9-chr1-8-1","cmap9-chr2-44-1","cmap9-chr1-48-1","cmap9-chr1-5-1","cmap9-chr1-21-1","cmap9-chr1-52-1","cmap9-chr2-37-1","cmap9-chr2-3-1","cmap9-chr2-18-1","cmap9-chr2-40-1","cmap9-chr1-80-1","cmap9-chr1-82-1","cmap9-chr2-13-1","cmap9-chr2-56-1","cmap9-chr2-46-1","cmap9-chr2-44-1","cmap9-chr2-61-1","cmap9-chr1-84-1","cmap9-chr1-81-1","cmap9-chr1-87-1","cmap9-chr1-35-1","cmap9-chr1-42-1","cmap9-chr1-10-1","cmap9-chr2-50-1","cmap9-chr2-38-1","cmap9-chr2-45-1","cmap9-chr1-19-1","cmap9-chr1-22-1","cmap9-chr2-39-1","cmap9-chr2-37-1","cmap9-chr1-57-1","cmap9-chr1-32-1","cmap9-chr1-53-1","cmap9-chr1-91-1","cmap9-chr2-50-1","cmap9-chr1-87-1","cmap9-chr1-23-1","cmap9-chr1-6-1","cmap9-chr2-7-1","cmap9-chr1-69-1","cmap9-chr1-33-1","cmap9-chr1-9-1","cmap9-chr2-23-1","cmap9-chr2-49-1","cmap9-chr1-60-1","cmap9-chr2-55-1","cmap9-chr1-38-1","cmap9-chr1-39-1","cmap9-chr2-12-1","cmap9-chr1-50-1","cmap9-chr2-42-1","cmap9-chr2-46-1","cmap9-chr1-38-1","cmap9-chr1-84-1","cmap9-chr2-65-1","cmap9-chr1-27-1","cmap9-chr1-14-1","cmap9-chr2-49-1","cmap9-chr1-96-1","cmap9-chr1-94-1","cmap9-chr2-39-1","cmap9-chr2-46-1","cmap9-chr1-19-1","cmap9-chr1-1-1","cmap9-chr2-54-1","cmap9-chr2-39-1","cmap9-chr2-52-1","cmap9-chr2-41-1","cmap9-chr1-48-1","cmap9-chr2-26-1","cmap9-chr1-57-1","cmap9-chr2-29-1","cmap9-chr2-45-1","cmap9-chr2-32-1","cmap9-chr2-48-1","cmap9-chr2-35-1","cmap9-chr2-23-1","cmap9-chr2-37-1","cmap9-chr2-44-1","cmap9-chr1-45-1","cmap9-chr1-39-1","cmap9-chr2-6-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap9-Lchr1-56-1","cmap9-Lchr2-40-1","cmap9-Lchr2-29-1","cmap9-Lchr1-13-1","cmap9-Lchr2-41-1","cmap9-Lchr2-34-1","cmap9-Lchr1-67-1","cmap9-Lchr2-19-1","cmap9-Lchr2-5-1","cmap9-Lchr1-54-1","cmap9-Lchr1-87-1","cmap9-Lchr2-15-1","cmap9-Lchr1-64-1","cmap9-Lchr2-39-1","cmap9-Lchr1-85-1","cmap9-Lchr2-60-1","cmap9-Lchr2-54-1","cmap9-Lchr1-96-1","cmap9-Lchr1-69-1","cmap9-Lchr1-79-1","cmap9-Lchr2-62-1","cmap9-Lchr1-38-1","cmap9-Lchr2-26-1","cmap9-Lchr1-6-1","cmap9-Lchr2-49-1","cmap9-Lchr2-41-1","cmap9-Lchr1-47-1","cmap9-Lchr2-67-1","cmap9-Lchr2-30-1","cmap9-Lchr2-46-1","cmap9-Lchr2-2-1","cmap9-Lchr1-18-1","cmap9-Lchr2-61-1","cmap9-Lchr1-80-1","cmap9-Lchr2-55-1","cmap9-Lchr2-11-1","cmap9-Lchr2-66-1","cmap9-Lchr1-58-1","cmap9-Lchr1-98-1","cmap9-Lchr1-47-1","cmap9-Lchr2-7-1","cmap9-Lchr2-39-1","cmap9-Lchr2-57-1","cmap9-Lchr1-79-1","cmap9-Lchr1-96-1","cmap9-Lchr2-28-1","cmap9-Lchr2-25-1","cmap9-Lchr1-80-1","cmap9-Lchr1-19-1","cmap9-Lchr2-68-1","cmap9-Lchr2-4-1","cmap9-Lchr2-47-1","cmap9-Lchr1-99-1","cmap9-Lchr2-62-1","cmap9-Lchr2-36-1","cmap9-Lchr1-92-1","cmap9-Lchr1-60-1","cmap9-Lchr1-23-1","cmap9-Lchr1-16-1","cmap9-Lchr1-98-1","cmap9-Lchr1-55-1","cmap9-Lchr2-36-1","cmap9-Lchr2-40-1","cmap9-Lchr1-72-1","cmap9-Lchr1-25-1","cmap9-Lchr1-74-1","cmap9-Lchr1-99-1","cmap9-Lchr1-60-1","cmap9-Lchr2-68-1","cmap9-Lchr2-25-1","cmap9-Lchr2-66-1","cmap9-Lchr1-10-1","cmap9-Lchr1-77-1","cmap9-Lchr2-58-1","cmap9-Lchr1-62-1","cmap9-Lchr1-50-1","cmap9-Lchr2-37-1","cmap9-Lchr2-42-1","cmap9-Lchr2-66-1","cmap9-Lchr2-39-1","cmap9-Lchr1-29-1","cmap9-Lchr1-55-1","cmap9-Lchr1-86-1","cmap9-Lchr2-26-1","cmap9-Lchr1-25-1","cmap9-Lchr2-52-1","cmap9-Lchr2-9-1","cmap9-Lchr2-47-1","cmap9-Lchr2-19-1","cmap9-Lchr1-18-1","cmap9-Lchr2-25-1","cmap9-Lchr2-55-1","cmap9-Lchr1-95-1","cmap9-Lchr2-66-1","cmap9-Lchr2-52-1","cmap9-Lchr2-37-1","cmap9-Lchr2-68-1","cmap9-Lchr2-4-1","cmap9-Lchr2-49-1","cmap9-Lchr1-56-1","cmap9-Lchr1-78-1","cmap9-Lchr1-32-1","cmap9-Lchr1-39-1","cmap9-Lchr2-19-1","cmap9-Lchr1-88-1","cmap9-Lchr1-78-1","cmap9-Lchr1-50-1","cmap9-Lchr1-83-1","cmap9-Lchr2-36-1","cmap9-Lchr1-49-1","cmap9-Lchr2-58-1","cmap9-Lchr2-36-1","cmap9-Lchr1-59-1","cmap9-Lchr1-63-1","cmap9-Lchr2-69-1","cmap9-Lchr2-10-1","cmap9-Lchr2-40-1","cmap9-Lchr1-95-1","cmap9-Lchr1-8-1","cmap9-Lchr2-44-1","cmap9-Lchr1-48-1","cmap9-Lchr1-5-1","cmap9-Lchr1-21-1","cmap9-Lchr1-52-1","cmap9-Lchr2-37-1","cmap9-Lchr2-3-1","cmap9-Lchr2-18-1","cmap9-Lchr2-40-1","cmap9-Lchr1-80-1","cmap9-Lchr1-82-1","cmap9-Lchr2-13-1","cmap9-Lchr2-56-1","cmap9-Lchr2-46-1","cmap9-Lchr2-44-1","cmap9-Lchr2-61-1","cmap9-Lchr1-84-1","cmap9-Lchr1-81-1","cmap9-Lchr1-87-1","cmap9-Lchr1-35-1","cmap9-Lchr1-42-1","cmap9-Lchr1-10-1","cmap9-Lchr2-50-1","cmap9-Lchr2-38-1","cmap9-Lchr2-45-1","cmap9-Lchr1-19-1","cmap9-Lchr1-22-1","cmap9-Lchr2-39-1","cmap9-Lchr2-37-1","cmap9-Lchr1-57-1","cmap9-Lchr1-32-1","cmap9-Lchr1-53-1","cmap9-Lchr1-91-1","cmap9-Lchr2-50-1","cmap9-Lchr1-87-1","cmap9-Lchr1-23-1","cmap9-Lchr1-6-1","cmap9-Lchr2-7-1","cmap9-Lchr1-69-1","cmap9-Lchr1-33-1","cmap9-Lchr1-9-1","cmap9-Lchr2-23-1","cmap9-Lchr2-49-1","cmap9-Lchr1-60-1","cmap9-Lchr2-55-1","cmap9-Lchr1-38-1","cmap9-Lchr1-39-1","cmap9-Lchr2-12-1","cmap9-Lchr1-50-1","cmap9-Lchr2-42-1","cmap9-Lchr2-46-1","cmap9-Lchr1-38-1","cmap9-Lchr1-84-1","cmap9-Lchr2-65-1","cmap9-Lchr1-27-1","cmap9-Lchr1-14-1","cmap9-Lchr2-49-1","cmap9-Lchr1-96-1","cmap9-Lchr1-94-1","cmap9-Lchr2-39-1","cmap9-Lchr2-46-1","cmap9-Lchr1-19-1","cmap9-Lchr1-1-1","cmap9-Lchr2-54-1","cmap9-Lchr2-39-1","cmap9-Lchr2-52-1","cmap9-Lchr2-41-1","cmap9-Lchr1-48-1","cmap9-Lchr2-26-1","cmap9-Lchr1-57-1","cmap9-Lchr2-29-1","cmap9-Lchr2-45-1","cmap9-Lchr2-32-1","cmap9-Lchr2-48-1","cmap9-Lchr2-35-1","cmap9-Lchr2-23-1","cmap9-Lchr2-37-1","cmap9-Lchr2-44-1","cmap9-Lchr1-45-1","cmap9-Lchr1-39-1","cmap9-Lchr2-6-1"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":1,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":50,"chr_width":15,"chr_length":4,"chr_col":["black",""],"heatmap":true,"ch_domain":["1","1000"],"lg_x":0,"lg_y":0,"heat_scale":"linear","labels":false,"div_id":"cmap9","w":500,"h":300,"rng":[[0,100]],"heat_col":[["white","blue"]],"an_col":["#10B85F",""],"ch_text":[true,true],"legend":[false,true],"aggregate_func":["avg",""],"plots":["bar",""],"tag_filter":[["none","0"]],"plot_height":[30,0],"plot_ticks":[3,0],"plot_color":["blue",""],"plot_y_domain":[[0,0]],"ref_line":[false,true],"refl_pos":[0,0],"refl_color":["grey",""],"refl_stroke_w":[2,0],"tagColor":["red",""],"renderHeat":[true,true],"text_font_size":[10,0],"chr_curve":5,"title_font_size":12,"label_font":9,"label_angle":-90,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["gte","50","green"]]},"evals":[],"jsHooks":[]}</script>
+<p>Similarly, it can be applied for <code>chromoMap-Scatter</code> plots. The following example visualizes negative values as red on the scatter plot.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;scatter&quot;,
+          plot_filter = list(c(&quot;lt&quot;,0,&quot;red&quot;)))</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-cb2867d33e62a2847ec6" style="width:672px;height:336px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cb2867d33e62a2847ec6">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[-64,29,-137,-129,-18,149,138,128,-59,28,76,-112,-127,-81,109,2,-23,143,-93,-43,55,14,113,84,-29,-69,127,-70,-49,74,10,69,88,36,93,26,21,144,-36,68,0,-44,-146,-37,-26,110,-148,99,12,-126,-21,108,-56,107,34,147,52,61,75,139,43,-48,-79,-144,125,-125,-51,-89,-82,65,-55,-95,-12,30,54,-105,91,57,8,-98,59,83,-22,115,-28,-77,-107,46,70,-62,-92,-108,-46,95,140,-73,81,-52,1,80,-58,82,-13,6,-94,104,9,-147,72,78,-83,-19,-65,90,-149,79,-110,-32,13,-53,101,33,102,-7,-130,-114,49,64,111,-139,-138,-141,22,-14,58,85,-54,124,-135,87,3,18,-76,50,-117,-97,-34,-27,-78,41,-10,119,-84,-91,-85,-40,-42,-88,63,-101,-111,71,-61,19,-38,-50,-25,25,103,24,-8,-128,44,-24,150,92,141,-68,-132,20,38,-87,-15,32,-80,94,39,142,-122,42,-136,-2,-33,-103,48,96,16,121,-60,137],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap10-chr1-56-1","cmap10-chr2-40-1","cmap10-chr2-29-1","cmap10-chr1-13-1","cmap10-chr2-41-1","cmap10-chr2-34-1","cmap10-chr1-67-1","cmap10-chr2-19-1","cmap10-chr2-5-1","cmap10-chr1-54-1","cmap10-chr1-87-1","cmap10-chr2-15-1","cmap10-chr1-64-1","cmap10-chr2-39-1","cmap10-chr1-85-1","cmap10-chr2-60-1","cmap10-chr2-54-1","cmap10-chr1-96-1","cmap10-chr1-69-1","cmap10-chr1-79-1","cmap10-chr2-62-1","cmap10-chr1-38-1","cmap10-chr2-26-1","cmap10-chr1-6-1","cmap10-chr2-49-1","cmap10-chr2-41-1","cmap10-chr1-47-1","cmap10-chr2-67-1","cmap10-chr2-30-1","cmap10-chr2-46-1","cmap10-chr2-2-1","cmap10-chr1-18-1","cmap10-chr2-61-1","cmap10-chr1-80-1","cmap10-chr2-55-1","cmap10-chr2-11-1","cmap10-chr2-66-1","cmap10-chr1-58-1","cmap10-chr1-98-1","cmap10-chr1-47-1","cmap10-chr2-7-1","cmap10-chr2-39-1","cmap10-chr2-57-1","cmap10-chr1-79-1","cmap10-chr1-96-1","cmap10-chr2-28-1","cmap10-chr2-25-1","cmap10-chr1-80-1","cmap10-chr1-19-1","cmap10-chr2-68-1","cmap10-chr2-4-1","cmap10-chr2-47-1","cmap10-chr1-99-1","cmap10-chr2-62-1","cmap10-chr2-36-1","cmap10-chr1-92-1","cmap10-chr1-60-1","cmap10-chr1-23-1","cmap10-chr1-16-1","cmap10-chr1-98-1","cmap10-chr1-55-1","cmap10-chr2-36-1","cmap10-chr2-40-1","cmap10-chr1-72-1","cmap10-chr1-25-1","cmap10-chr1-74-1","cmap10-chr1-99-1","cmap10-chr1-60-1","cmap10-chr2-68-1","cmap10-chr2-25-1","cmap10-chr2-66-1","cmap10-chr1-10-1","cmap10-chr1-77-1","cmap10-chr2-58-1","cmap10-chr1-62-1","cmap10-chr1-50-1","cmap10-chr2-37-1","cmap10-chr2-42-1","cmap10-chr2-66-1","cmap10-chr2-39-1","cmap10-chr1-29-1","cmap10-chr1-55-1","cmap10-chr1-86-1","cmap10-chr2-26-1","cmap10-chr1-25-1","cmap10-chr2-52-1","cmap10-chr2-9-1","cmap10-chr2-47-1","cmap10-chr2-19-1","cmap10-chr1-18-1","cmap10-chr2-25-1","cmap10-chr2-55-1","cmap10-chr1-95-1","cmap10-chr2-66-1","cmap10-chr2-52-1","cmap10-chr2-37-1","cmap10-chr2-68-1","cmap10-chr2-4-1","cmap10-chr2-49-1","cmap10-chr1-56-1","cmap10-chr1-78-1","cmap10-chr1-32-1","cmap10-chr1-39-1","cmap10-chr2-19-1","cmap10-chr1-88-1","cmap10-chr1-78-1","cmap10-chr1-50-1","cmap10-chr1-83-1","cmap10-chr2-36-1","cmap10-chr1-49-1","cmap10-chr2-58-1","cmap10-chr2-36-1","cmap10-chr1-59-1","cmap10-chr1-63-1","cmap10-chr2-69-1","cmap10-chr2-10-1","cmap10-chr2-40-1","cmap10-chr1-95-1","cmap10-chr1-8-1","cmap10-chr2-44-1","cmap10-chr1-48-1","cmap10-chr1-5-1","cmap10-chr1-21-1","cmap10-chr1-52-1","cmap10-chr2-37-1","cmap10-chr2-3-1","cmap10-chr2-18-1","cmap10-chr2-40-1","cmap10-chr1-80-1","cmap10-chr1-82-1","cmap10-chr2-13-1","cmap10-chr2-56-1","cmap10-chr2-46-1","cmap10-chr2-44-1","cmap10-chr2-61-1","cmap10-chr1-84-1","cmap10-chr1-81-1","cmap10-chr1-87-1","cmap10-chr1-35-1","cmap10-chr1-42-1","cmap10-chr1-10-1","cmap10-chr2-50-1","cmap10-chr2-38-1","cmap10-chr2-45-1","cmap10-chr1-19-1","cmap10-chr1-22-1","cmap10-chr2-39-1","cmap10-chr2-37-1","cmap10-chr1-57-1","cmap10-chr1-32-1","cmap10-chr1-53-1","cmap10-chr1-91-1","cmap10-chr2-50-1","cmap10-chr1-87-1","cmap10-chr1-23-1","cmap10-chr1-6-1","cmap10-chr2-7-1","cmap10-chr1-69-1","cmap10-chr1-33-1","cmap10-chr1-9-1","cmap10-chr2-23-1","cmap10-chr2-49-1","cmap10-chr1-60-1","cmap10-chr2-55-1","cmap10-chr1-38-1","cmap10-chr1-39-1","cmap10-chr2-12-1","cmap10-chr1-50-1","cmap10-chr2-42-1","cmap10-chr2-46-1","cmap10-chr1-38-1","cmap10-chr1-84-1","cmap10-chr2-65-1","cmap10-chr1-27-1","cmap10-chr1-14-1","cmap10-chr2-49-1","cmap10-chr1-96-1","cmap10-chr1-94-1","cmap10-chr2-39-1","cmap10-chr2-46-1","cmap10-chr1-19-1","cmap10-chr1-1-1","cmap10-chr2-54-1","cmap10-chr2-39-1","cmap10-chr2-52-1","cmap10-chr2-41-1","cmap10-chr1-48-1","cmap10-chr2-26-1","cmap10-chr1-57-1","cmap10-chr2-29-1","cmap10-chr2-45-1","cmap10-chr2-32-1","cmap10-chr2-48-1","cmap10-chr2-35-1","cmap10-chr2-23-1","cmap10-chr2-37-1","cmap10-chr2-44-1","cmap10-chr1-45-1","cmap10-chr1-39-1","cmap10-chr2-6-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap10-Lchr1-56-1","cmap10-Lchr2-40-1","cmap10-Lchr2-29-1","cmap10-Lchr1-13-1","cmap10-Lchr2-41-1","cmap10-Lchr2-34-1","cmap10-Lchr1-67-1","cmap10-Lchr2-19-1","cmap10-Lchr2-5-1","cmap10-Lchr1-54-1","cmap10-Lchr1-87-1","cmap10-Lchr2-15-1","cmap10-Lchr1-64-1","cmap10-Lchr2-39-1","cmap10-Lchr1-85-1","cmap10-Lchr2-60-1","cmap10-Lchr2-54-1","cmap10-Lchr1-96-1","cmap10-Lchr1-69-1","cmap10-Lchr1-79-1","cmap10-Lchr2-62-1","cmap10-Lchr1-38-1","cmap10-Lchr2-26-1","cmap10-Lchr1-6-1","cmap10-Lchr2-49-1","cmap10-Lchr2-41-1","cmap10-Lchr1-47-1","cmap10-Lchr2-67-1","cmap10-Lchr2-30-1","cmap10-Lchr2-46-1","cmap10-Lchr2-2-1","cmap10-Lchr1-18-1","cmap10-Lchr2-61-1","cmap10-Lchr1-80-1","cmap10-Lchr2-55-1","cmap10-Lchr2-11-1","cmap10-Lchr2-66-1","cmap10-Lchr1-58-1","cmap10-Lchr1-98-1","cmap10-Lchr1-47-1","cmap10-Lchr2-7-1","cmap10-Lchr2-39-1","cmap10-Lchr2-57-1","cmap10-Lchr1-79-1","cmap10-Lchr1-96-1","cmap10-Lchr2-28-1","cmap10-Lchr2-25-1","cmap10-Lchr1-80-1","cmap10-Lchr1-19-1","cmap10-Lchr2-68-1","cmap10-Lchr2-4-1","cmap10-Lchr2-47-1","cmap10-Lchr1-99-1","cmap10-Lchr2-62-1","cmap10-Lchr2-36-1","cmap10-Lchr1-92-1","cmap10-Lchr1-60-1","cmap10-Lchr1-23-1","cmap10-Lchr1-16-1","cmap10-Lchr1-98-1","cmap10-Lchr1-55-1","cmap10-Lchr2-36-1","cmap10-Lchr2-40-1","cmap10-Lchr1-72-1","cmap10-Lchr1-25-1","cmap10-Lchr1-74-1","cmap10-Lchr1-99-1","cmap10-Lchr1-60-1","cmap10-Lchr2-68-1","cmap10-Lchr2-25-1","cmap10-Lchr2-66-1","cmap10-Lchr1-10-1","cmap10-Lchr1-77-1","cmap10-Lchr2-58-1","cmap10-Lchr1-62-1","cmap10-Lchr1-50-1","cmap10-Lchr2-37-1","cmap10-Lchr2-42-1","cmap10-Lchr2-66-1","cmap10-Lchr2-39-1","cmap10-Lchr1-29-1","cmap10-Lchr1-55-1","cmap10-Lchr1-86-1","cmap10-Lchr2-26-1","cmap10-Lchr1-25-1","cmap10-Lchr2-52-1","cmap10-Lchr2-9-1","cmap10-Lchr2-47-1","cmap10-Lchr2-19-1","cmap10-Lchr1-18-1","cmap10-Lchr2-25-1","cmap10-Lchr2-55-1","cmap10-Lchr1-95-1","cmap10-Lchr2-66-1","cmap10-Lchr2-52-1","cmap10-Lchr2-37-1","cmap10-Lchr2-68-1","cmap10-Lchr2-4-1","cmap10-Lchr2-49-1","cmap10-Lchr1-56-1","cmap10-Lchr1-78-1","cmap10-Lchr1-32-1","cmap10-Lchr1-39-1","cmap10-Lchr2-19-1","cmap10-Lchr1-88-1","cmap10-Lchr1-78-1","cmap10-Lchr1-50-1","cmap10-Lchr1-83-1","cmap10-Lchr2-36-1","cmap10-Lchr1-49-1","cmap10-Lchr2-58-1","cmap10-Lchr2-36-1","cmap10-Lchr1-59-1","cmap10-Lchr1-63-1","cmap10-Lchr2-69-1","cmap10-Lchr2-10-1","cmap10-Lchr2-40-1","cmap10-Lchr1-95-1","cmap10-Lchr1-8-1","cmap10-Lchr2-44-1","cmap10-Lchr1-48-1","cmap10-Lchr1-5-1","cmap10-Lchr1-21-1","cmap10-Lchr1-52-1","cmap10-Lchr2-37-1","cmap10-Lchr2-3-1","cmap10-Lchr2-18-1","cmap10-Lchr2-40-1","cmap10-Lchr1-80-1","cmap10-Lchr1-82-1","cmap10-Lchr2-13-1","cmap10-Lchr2-56-1","cmap10-Lchr2-46-1","cmap10-Lchr2-44-1","cmap10-Lchr2-61-1","cmap10-Lchr1-84-1","cmap10-Lchr1-81-1","cmap10-Lchr1-87-1","cmap10-Lchr1-35-1","cmap10-Lchr1-42-1","cmap10-Lchr1-10-1","cmap10-Lchr2-50-1","cmap10-Lchr2-38-1","cmap10-Lchr2-45-1","cmap10-Lchr1-19-1","cmap10-Lchr1-22-1","cmap10-Lchr2-39-1","cmap10-Lchr2-37-1","cmap10-Lchr1-57-1","cmap10-Lchr1-32-1","cmap10-Lchr1-53-1","cmap10-Lchr1-91-1","cmap10-Lchr2-50-1","cmap10-Lchr1-87-1","cmap10-Lchr1-23-1","cmap10-Lchr1-6-1","cmap10-Lchr2-7-1","cmap10-Lchr1-69-1","cmap10-Lchr1-33-1","cmap10-Lchr1-9-1","cmap10-Lchr2-23-1","cmap10-Lchr2-49-1","cmap10-Lchr1-60-1","cmap10-Lchr2-55-1","cmap10-Lchr1-38-1","cmap10-Lchr1-39-1","cmap10-Lchr2-12-1","cmap10-Lchr1-50-1","cmap10-Lchr2-42-1","cmap10-Lchr2-46-1","cmap10-Lchr1-38-1","cmap10-Lchr1-84-1","cmap10-Lchr2-65-1","cmap10-Lchr1-27-1","cmap10-Lchr1-14-1","cmap10-Lchr2-49-1","cmap10-Lchr1-96-1","cmap10-Lchr1-94-1","cmap10-Lchr2-39-1","cmap10-Lchr2-46-1","cmap10-Lchr1-19-1","cmap10-Lchr1-1-1","cmap10-Lchr2-54-1","cmap10-Lchr2-39-1","cmap10-Lchr2-52-1","cmap10-Lchr2-41-1","cmap10-Lchr1-48-1","cmap10-Lchr2-26-1","cmap10-Lchr1-57-1","cmap10-Lchr2-29-1","cmap10-Lchr2-45-1","cmap10-Lchr2-32-1","cmap10-Lchr2-48-1","cmap10-Lchr2-35-1","cmap10-Lchr2-23-1","cmap10-Lchr2-37-1","cmap10-Lchr2-44-1","cmap10-Lchr1-45-1","cmap10-Lchr1-39-1","cmap10-Lchr2-6-1"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":1,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":60,"chr_width":15,"chr_length":4,"chr_col":["black",""],"heatmap":true,"ch_domain":["1","1000"],"lg_x":0,"lg_y":50,"heat_scale":"linear","labels":false,"div_id":"cmap10","w":500,"h":300,"rng":[[-149,0,150]],"heat_col":[["red","white","blue"]],"an_col":["#10B85F",""],"ch_text":[true,true],"legend":[false,true],"aggregate_func":["avg",""],"plots":["scatter",""],"tag_filter":[["none","0"]],"plot_height":[40,0],"plot_ticks":[4,0],"plot_color":["blue",""],"plot_y_domain":[[0,0]],"ref_line":[false,true],"refl_pos":[0,0],"refl_color":["grey",""],"refl_stroke_w":[2,0],"tagColor":["red",""],"renderHeat":[true,true],"text_font_size":[10,0],"chr_curve":5,"title_font_size":12,"label_font":9,"label_angle":-90,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["lt","0","red"]]},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="customizing-chromomaps" class="section level2">
+<h2>Customizing chromoMaps</h2>
+<p><code>chromoMap</code> allows various options to customize and fine-tune your plots as desirable. This section covers all the customization options available.</p>
+<div id="width-and-height" class="section level3">
+<h3>width and height</h3>
+<p>You can configure the dimensions(width and height) of the plot by using the parameter <code>canvas_width</code> and <code>canvas_height</code>.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          canvas_width = 600,
+          canvas_height = 700)</code></pre>
+<p>When you use multiple ploidy, the plot might go off the margins. You can adjust the width and height to fit the plot to your need.</p>
+</div>
+<div id="title" class="section level3">
+<h3>Title</h3>
+<p>You can add a title to your plot by using <code>title</code> argument.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          title = &quot;my first chromoMap plot&quot;)</code></pre>
+<p>You can also adjust the font-size of the title using the <code>title_font_size</code> argument:</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          title = &quot;my first chromoMap plot&quot;,
+          title_font_size = 12)</code></pre>
+</div>
+<div id="margins" class="section level3">
+<h3>Margins</h3>
+<p>You can adjust the left and top margins through <code>top_margin</code> and <code>left_margin</code>.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          top_margin = 25,
+          left_margin = 15)</code></pre>
+</div>
+<div id="chromosome-colors" class="section level3">
+<h3>Chromosome colors</h3>
+<p>You can change the color of each set of chromosome by using <code>chr_color</code> property.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          chr_color = c(&quot;orange&quot;))</code></pre>
+<p>For polyploidy, if only one color is passed it will be taken for all sets of chromsomes. Otherwise, you can assign color to each set:</p>
+<pre class="r"><code>chromoMap(c(&quot;chromosome_file_set_1.txt&quot;,&quot;chromosome_file_set_2.txt&quot;)
+          ,c(&quot;annotation_file_set_1.txt&quot;,&quot;annotation_file_set_2.txt&quot;), 
+          ploidy = 2,
+          chr_color = c(&quot;pink&quot;,&quot;blue&quot;))</code></pre>
+<p><strong>USEFUL TIPS</strong> :</p>
+<ul>
+<li>Use hexadecimal color codes to assign beautiful color shades to embellish your plot.</li>
+<li>setting the chromosome color to white will make them appear invisible hence only colored annotations will be visible(might be helpful in some case).</li>
+</ul>
+</div>
+<div id="annotation-colors" class="section level3">
+<h3>Annotation colors</h3>
+<p>For simple annotation plot, you can change the annotation color by using <code>anno_col</code> argument.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          anno_col = c(&quot;orange&quot;))</code></pre>
+<p>For polyploidy, if you have passed one color value it will be taken for all the sets. Otherwise, you can pass distinct color values for each set:</p>
+<pre class="r"><code>chromoMap(c(&quot;chromosome_file_set_1.txt&quot;,&quot;chromosome_file_set_2.txt&quot;)
+          ,c(&quot;annotation_file_set_1.txt&quot;,&quot;annotation_file_set_2.txt&quot;), 
+          ploidy = 2,
+          anno_col = c(&quot;pink&quot;,&quot;blue&quot;))</code></pre>
+<p>NOTE: For data-based annotation plots(<code>chromoMap-DiscreteColorMaps</code> or <code>chromoMap-HeatMaps</code>), colors are controlled by <code>data_colors</code> argument which is passed as a list of vector(s).</p>
+</div>
+<div id="chromosome-width-length-and-spacing" class="section level3">
+<h3>Chromosome width, length, and spacing</h3>
+<p>Do you think chromosomes appear too thin or too short for your annotations? well, you can adjust these parameters by using <code>chr_width</code> and <code>chr_length</code> arguments.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          chr_width = 4,
+          chr_length = 5)</code></pre>
+<p>the spacing between chromosomes can be adjusted with <code>ch_gap</code> argument.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          ch_gap = 6)</code></pre>
+</div>
+<div id="chromosome-curves" class="section level3">
+<h3>Chromosome curves</h3>
+<p>The curves appearing at the telo-meres (chromosome end loci) and in centromere locus can also be adjusted using the <code>chr_curve</code> argument.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          chr_curve = 5)</code></pre>
+<p><strong>TIP</strong>: setting this property to 0 will remove the curves that render the chromosomes as rectangles.</p>
+</div>
+<div id="chromosome-text" class="section level3">
+<h3>Chromosome text</h3>
+<p>Well, the chromosome text will be taken from file you have provided. The only thing I thought might be useful is to enable or disable text individually for each ploidy. This is done by using <code>chr_text</code> parameter.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          chr_text = F) </code></pre>
+<p>For multiple ploidy pass a vector:</p>
+<pre class="r"><code>chromoMap(c(&quot;chromosome_file_set_1.txt&quot;,&quot;chromosome_file_set_2.txt&quot;)
+          ,c(&quot;annotation_file_set_1.txt&quot;,&quot;annotation_file_set_2.txt&quot;), 
+          ploidy = 2,
+          chr_text = c(T,F))</code></pre>
+<p>you can adjust the text font size using <code>text_font_size</code> parameter.</p>
+</div>
+<div id="plot-id" class="section level3">
+<h3>plot ID</h3>
+<p>The <code>id</code> argument allows to uniquely identify the plot. This feature is important when including multiple chromoMap plots in a single HTML document (like RMarkdown) as it prevent from any conflicts.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          id=&quot;my_plot_1&quot;) </code></pre>
+</div>
+</div>
+<div id="customizing-data-plots" class="section level2">
+<h2>Customizing Data Plots</h2>
+<p><code>chromoMap-Bar</code>, <code>chromoMap-Scatter</code> , and <code>epi-tag</code> plots can be customized as desired.</p>
+<div id="reference-lines" class="section level3">
+<h3>Reference Lines</h3>
+<p>You can add a horizontal reference line to the data-plots. Set the <code>ref_line</code> argument to <code>TRUE</code>. The reference line is attached to the axis-scale. By default, the line is attached at the beginning of the axis(position:0). You can adjust the <code>refl_pos</code> argument to bring the line to desirable position.</p>
+<p><strong>TIP</strong>:For the line to be at the middle of axis, set <code>refl_pos</code> argument to exactly half of <code>plot_height</code>.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_1,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;bar&quot;,
+          ref_line = T,
+          refl_pos = 15)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-8806c33dc9bcc186e6c5" style="width:672px;height:336px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8806c33dc9bcc186e6c5">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[10,34,89,56,100,91,11,16,43,83,94,81,1,57,45,3,94,52,51,68,36,15,19,6,76,43,17,5,14,3,7,41,75,93,27,89,16,62,34,64,19,54,61,69,88,64,18,84,46,35,11,51,51,74,30,11,47,91,0,39,91,81,16,15,80,19,73,1,80,63,69,92,67,45,77,15,5,25,89,4,71,85,45,21,59,20,7,56,14,77,4,92,13,87,21,97,90,16,24,65,57,63,27,43,91,44,77,69,12,14,18,64,97,25,32,23,65,17,22,2,76,43,10,3,43,90,82,89,36,21,48,98,90,40,9,68,79,17,33,39,12,78,85,95,54,39,57,81,46,50,63,56,29,53,7,42,72,14,75,38,68,8,27,39,71,62,98,72,3,48,21,5,10,40,69,22,24,73,40,14,37,29,70,28,95,78,3,54,98,41,46,40,6,95,38,88,99,62,19,73],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap21-chr1-56-1","cmap21-chr2-40-1","cmap21-chr2-29-1","cmap21-chr1-13-1","cmap21-chr2-41-1","cmap21-chr2-34-1","cmap21-chr1-67-1","cmap21-chr2-19-1","cmap21-chr2-5-1","cmap21-chr1-54-1","cmap21-chr1-87-1","cmap21-chr2-15-1","cmap21-chr1-64-1","cmap21-chr2-39-1","cmap21-chr1-85-1","cmap21-chr2-60-1","cmap21-chr2-54-1","cmap21-chr1-96-1","cmap21-chr1-69-1","cmap21-chr1-79-1","cmap21-chr2-62-1","cmap21-chr1-38-1","cmap21-chr2-26-1","cmap21-chr1-6-1","cmap21-chr2-49-1","cmap21-chr2-41-1","cmap21-chr1-47-1","cmap21-chr2-67-1","cmap21-chr2-30-1","cmap21-chr2-46-1","cmap21-chr2-2-1","cmap21-chr1-18-1","cmap21-chr2-61-1","cmap21-chr1-80-1","cmap21-chr2-55-1","cmap21-chr2-11-1","cmap21-chr2-66-1","cmap21-chr1-58-1","cmap21-chr1-98-1","cmap21-chr1-47-1","cmap21-chr2-7-1","cmap21-chr2-39-1","cmap21-chr2-57-1","cmap21-chr1-79-1","cmap21-chr1-96-1","cmap21-chr2-28-1","cmap21-chr2-25-1","cmap21-chr1-80-1","cmap21-chr1-19-1","cmap21-chr2-68-1","cmap21-chr2-4-1","cmap21-chr2-47-1","cmap21-chr1-99-1","cmap21-chr2-62-1","cmap21-chr2-36-1","cmap21-chr1-92-1","cmap21-chr1-60-1","cmap21-chr1-23-1","cmap21-chr1-16-1","cmap21-chr1-98-1","cmap21-chr1-55-1","cmap21-chr2-36-1","cmap21-chr2-40-1","cmap21-chr1-72-1","cmap21-chr1-25-1","cmap21-chr1-74-1","cmap21-chr1-99-1","cmap21-chr1-60-1","cmap21-chr2-68-1","cmap21-chr2-25-1","cmap21-chr2-66-1","cmap21-chr1-10-1","cmap21-chr1-77-1","cmap21-chr2-58-1","cmap21-chr1-62-1","cmap21-chr1-50-1","cmap21-chr2-37-1","cmap21-chr2-42-1","cmap21-chr2-66-1","cmap21-chr2-39-1","cmap21-chr1-29-1","cmap21-chr1-55-1","cmap21-chr1-86-1","cmap21-chr2-26-1","cmap21-chr1-25-1","cmap21-chr2-52-1","cmap21-chr2-9-1","cmap21-chr2-47-1","cmap21-chr2-19-1","cmap21-chr1-18-1","cmap21-chr2-25-1","cmap21-chr2-55-1","cmap21-chr1-95-1","cmap21-chr2-66-1","cmap21-chr2-52-1","cmap21-chr2-37-1","cmap21-chr2-68-1","cmap21-chr2-4-1","cmap21-chr2-49-1","cmap21-chr1-56-1","cmap21-chr1-78-1","cmap21-chr1-32-1","cmap21-chr1-39-1","cmap21-chr2-19-1","cmap21-chr1-88-1","cmap21-chr1-78-1","cmap21-chr1-50-1","cmap21-chr1-83-1","cmap21-chr2-36-1","cmap21-chr1-49-1","cmap21-chr2-58-1","cmap21-chr2-36-1","cmap21-chr1-59-1","cmap21-chr1-63-1","cmap21-chr2-69-1","cmap21-chr2-10-1","cmap21-chr2-40-1","cmap21-chr1-95-1","cmap21-chr1-8-1","cmap21-chr2-44-1","cmap21-chr1-48-1","cmap21-chr1-5-1","cmap21-chr1-21-1","cmap21-chr1-52-1","cmap21-chr2-37-1","cmap21-chr2-3-1","cmap21-chr2-18-1","cmap21-chr2-40-1","cmap21-chr1-80-1","cmap21-chr1-82-1","cmap21-chr2-13-1","cmap21-chr2-56-1","cmap21-chr2-46-1","cmap21-chr2-44-1","cmap21-chr2-61-1","cmap21-chr1-84-1","cmap21-chr1-81-1","cmap21-chr1-87-1","cmap21-chr1-35-1","cmap21-chr1-42-1","cmap21-chr1-10-1","cmap21-chr2-50-1","cmap21-chr2-38-1","cmap21-chr2-45-1","cmap21-chr1-19-1","cmap21-chr1-22-1","cmap21-chr2-39-1","cmap21-chr2-37-1","cmap21-chr1-57-1","cmap21-chr1-32-1","cmap21-chr1-53-1","cmap21-chr1-91-1","cmap21-chr2-50-1","cmap21-chr1-87-1","cmap21-chr1-23-1","cmap21-chr1-6-1","cmap21-chr2-7-1","cmap21-chr1-69-1","cmap21-chr1-33-1","cmap21-chr1-9-1","cmap21-chr2-23-1","cmap21-chr2-49-1","cmap21-chr1-60-1","cmap21-chr2-55-1","cmap21-chr1-38-1","cmap21-chr1-39-1","cmap21-chr2-12-1","cmap21-chr1-50-1","cmap21-chr2-42-1","cmap21-chr2-46-1","cmap21-chr1-38-1","cmap21-chr1-84-1","cmap21-chr2-65-1","cmap21-chr1-27-1","cmap21-chr1-14-1","cmap21-chr2-49-1","cmap21-chr1-96-1","cmap21-chr1-94-1","cmap21-chr2-39-1","cmap21-chr2-46-1","cmap21-chr1-19-1","cmap21-chr1-1-1","cmap21-chr2-54-1","cmap21-chr2-39-1","cmap21-chr2-52-1","cmap21-chr2-41-1","cmap21-chr1-48-1","cmap21-chr2-26-1","cmap21-chr1-57-1","cmap21-chr2-29-1","cmap21-chr2-45-1","cmap21-chr2-32-1","cmap21-chr2-48-1","cmap21-chr2-35-1","cmap21-chr2-23-1","cmap21-chr2-37-1","cmap21-chr2-44-1","cmap21-chr1-45-1","cmap21-chr1-39-1","cmap21-chr2-6-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap21-Lchr1-56-1","cmap21-Lchr2-40-1","cmap21-Lchr2-29-1","cmap21-Lchr1-13-1","cmap21-Lchr2-41-1","cmap21-Lchr2-34-1","cmap21-Lchr1-67-1","cmap21-Lchr2-19-1","cmap21-Lchr2-5-1","cmap21-Lchr1-54-1","cmap21-Lchr1-87-1","cmap21-Lchr2-15-1","cmap21-Lchr1-64-1","cmap21-Lchr2-39-1","cmap21-Lchr1-85-1","cmap21-Lchr2-60-1","cmap21-Lchr2-54-1","cmap21-Lchr1-96-1","cmap21-Lchr1-69-1","cmap21-Lchr1-79-1","cmap21-Lchr2-62-1","cmap21-Lchr1-38-1","cmap21-Lchr2-26-1","cmap21-Lchr1-6-1","cmap21-Lchr2-49-1","cmap21-Lchr2-41-1","cmap21-Lchr1-47-1","cmap21-Lchr2-67-1","cmap21-Lchr2-30-1","cmap21-Lchr2-46-1","cmap21-Lchr2-2-1","cmap21-Lchr1-18-1","cmap21-Lchr2-61-1","cmap21-Lchr1-80-1","cmap21-Lchr2-55-1","cmap21-Lchr2-11-1","cmap21-Lchr2-66-1","cmap21-Lchr1-58-1","cmap21-Lchr1-98-1","cmap21-Lchr1-47-1","cmap21-Lchr2-7-1","cmap21-Lchr2-39-1","cmap21-Lchr2-57-1","cmap21-Lchr1-79-1","cmap21-Lchr1-96-1","cmap21-Lchr2-28-1","cmap21-Lchr2-25-1","cmap21-Lchr1-80-1","cmap21-Lchr1-19-1","cmap21-Lchr2-68-1","cmap21-Lchr2-4-1","cmap21-Lchr2-47-1","cmap21-Lchr1-99-1","cmap21-Lchr2-62-1","cmap21-Lchr2-36-1","cmap21-Lchr1-92-1","cmap21-Lchr1-60-1","cmap21-Lchr1-23-1","cmap21-Lchr1-16-1","cmap21-Lchr1-98-1","cmap21-Lchr1-55-1","cmap21-Lchr2-36-1","cmap21-Lchr2-40-1","cmap21-Lchr1-72-1","cmap21-Lchr1-25-1","cmap21-Lchr1-74-1","cmap21-Lchr1-99-1","cmap21-Lchr1-60-1","cmap21-Lchr2-68-1","cmap21-Lchr2-25-1","cmap21-Lchr2-66-1","cmap21-Lchr1-10-1","cmap21-Lchr1-77-1","cmap21-Lchr2-58-1","cmap21-Lchr1-62-1","cmap21-Lchr1-50-1","cmap21-Lchr2-37-1","cmap21-Lchr2-42-1","cmap21-Lchr2-66-1","cmap21-Lchr2-39-1","cmap21-Lchr1-29-1","cmap21-Lchr1-55-1","cmap21-Lchr1-86-1","cmap21-Lchr2-26-1","cmap21-Lchr1-25-1","cmap21-Lchr2-52-1","cmap21-Lchr2-9-1","cmap21-Lchr2-47-1","cmap21-Lchr2-19-1","cmap21-Lchr1-18-1","cmap21-Lchr2-25-1","cmap21-Lchr2-55-1","cmap21-Lchr1-95-1","cmap21-Lchr2-66-1","cmap21-Lchr2-52-1","cmap21-Lchr2-37-1","cmap21-Lchr2-68-1","cmap21-Lchr2-4-1","cmap21-Lchr2-49-1","cmap21-Lchr1-56-1","cmap21-Lchr1-78-1","cmap21-Lchr1-32-1","cmap21-Lchr1-39-1","cmap21-Lchr2-19-1","cmap21-Lchr1-88-1","cmap21-Lchr1-78-1","cmap21-Lchr1-50-1","cmap21-Lchr1-83-1","cmap21-Lchr2-36-1","cmap21-Lchr1-49-1","cmap21-Lchr2-58-1","cmap21-Lchr2-36-1","cmap21-Lchr1-59-1","cmap21-Lchr1-63-1","cmap21-Lchr2-69-1","cmap21-Lchr2-10-1","cmap21-Lchr2-40-1","cmap21-Lchr1-95-1","cmap21-Lchr1-8-1","cmap21-Lchr2-44-1","cmap21-Lchr1-48-1","cmap21-Lchr1-5-1","cmap21-Lchr1-21-1","cmap21-Lchr1-52-1","cmap21-Lchr2-37-1","cmap21-Lchr2-3-1","cmap21-Lchr2-18-1","cmap21-Lchr2-40-1","cmap21-Lchr1-80-1","cmap21-Lchr1-82-1","cmap21-Lchr2-13-1","cmap21-Lchr2-56-1","cmap21-Lchr2-46-1","cmap21-Lchr2-44-1","cmap21-Lchr2-61-1","cmap21-Lchr1-84-1","cmap21-Lchr1-81-1","cmap21-Lchr1-87-1","cmap21-Lchr1-35-1","cmap21-Lchr1-42-1","cmap21-Lchr1-10-1","cmap21-Lchr2-50-1","cmap21-Lchr2-38-1","cmap21-Lchr2-45-1","cmap21-Lchr1-19-1","cmap21-Lchr1-22-1","cmap21-Lchr2-39-1","cmap21-Lchr2-37-1","cmap21-Lchr1-57-1","cmap21-Lchr1-32-1","cmap21-Lchr1-53-1","cmap21-Lchr1-91-1","cmap21-Lchr2-50-1","cmap21-Lchr1-87-1","cmap21-Lchr1-23-1","cmap21-Lchr1-6-1","cmap21-Lchr2-7-1","cmap21-Lchr1-69-1","cmap21-Lchr1-33-1","cmap21-Lchr1-9-1","cmap21-Lchr2-23-1","cmap21-Lchr2-49-1","cmap21-Lchr1-60-1","cmap21-Lchr2-55-1","cmap21-Lchr1-38-1","cmap21-Lchr1-39-1","cmap21-Lchr2-12-1","cmap21-Lchr1-50-1","cmap21-Lchr2-42-1","cmap21-Lchr2-46-1","cmap21-Lchr1-38-1","cmap21-Lchr1-84-1","cmap21-Lchr2-65-1","cmap21-Lchr1-27-1","cmap21-Lchr1-14-1","cmap21-Lchr2-49-1","cmap21-Lchr1-96-1","cmap21-Lchr1-94-1","cmap21-Lchr2-39-1","cmap21-Lchr2-46-1","cmap21-Lchr1-19-1","cmap21-Lchr1-1-1","cmap21-Lchr2-54-1","cmap21-Lchr2-39-1","cmap21-Lchr2-52-1","cmap21-Lchr2-41-1","cmap21-Lchr1-48-1","cmap21-Lchr2-26-1","cmap21-Lchr1-57-1","cmap21-Lchr2-29-1","cmap21-Lchr2-45-1","cmap21-Lchr2-32-1","cmap21-Lchr2-48-1","cmap21-Lchr2-35-1","cmap21-Lchr2-23-1","cmap21-Lchr2-37-1","cmap21-Lchr2-44-1","cmap21-Lchr1-45-1","cmap21-Lchr1-39-1","cmap21-Lchr2-6-1"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":1,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":50,"chr_width":15,"chr_length":4,"chr_col":["black",""],"heatmap":true,"ch_domain":["1","1000"],"lg_x":0,"lg_y":0,"heat_scale":"linear","labels":false,"div_id":"cmap21","w":500,"h":300,"rng":[[0,100]],"heat_col":[["white","blue"]],"an_col":["#10B85F",""],"ch_text":[true,true],"legend":[false,true],"aggregate_func":["avg",""],"plots":["bar",""],"tag_filter":[["none","0"]],"plot_height":[30,0],"plot_ticks":[3,0],"plot_color":["blue",""],"plot_y_domain":[[0,0]],"ref_line":[true,true],"refl_pos":[15,0],"refl_color":["grey",""],"refl_stroke_w":[2,0],"tagColor":["red",""],"renderHeat":[true,true],"text_font_size":[10,0],"chr_curve":5,"title_font_size":12,"label_font":9,"label_angle":-90,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["none","0"]]},"evals":[],"jsHooks":[]}</script>
+<p>Reference line in scatter plot:</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;scatter&quot;,
+          ref_line = T,
+          refl_pos = 20)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200</code></pre>
+<div id="htmlwidget-64c89cd2f04d07cd406f" style="width:672px;height:336px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-64c89cd2f04d07cd406f">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[-64,29,-137,-129,-18,149,138,128,-59,28,76,-112,-127,-81,109,2,-23,143,-93,-43,55,14,113,84,-29,-69,127,-70,-49,74,10,69,88,36,93,26,21,144,-36,68,0,-44,-146,-37,-26,110,-148,99,12,-126,-21,108,-56,107,34,147,52,61,75,139,43,-48,-79,-144,125,-125,-51,-89,-82,65,-55,-95,-12,30,54,-105,91,57,8,-98,59,83,-22,115,-28,-77,-107,46,70,-62,-92,-108,-46,95,140,-73,81,-52,1,80,-58,82,-13,6,-94,104,9,-147,72,78,-83,-19,-65,90,-149,79,-110,-32,13,-53,101,33,102,-7,-130,-114,49,64,111,-139,-138,-141,22,-14,58,85,-54,124,-135,87,3,18,-76,50,-117,-97,-34,-27,-78,41,-10,119,-84,-91,-85,-40,-42,-88,63,-101,-111,71,-61,19,-38,-50,-25,25,103,24,-8,-128,44,-24,150,92,141,-68,-132,20,38,-87,-15,32,-80,94,39,142,-122,42,-136,-2,-33,-103,48,96,16,121,-60,137],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap22-chr1-56-1","cmap22-chr2-40-1","cmap22-chr2-29-1","cmap22-chr1-13-1","cmap22-chr2-41-1","cmap22-chr2-34-1","cmap22-chr1-67-1","cmap22-chr2-19-1","cmap22-chr2-5-1","cmap22-chr1-54-1","cmap22-chr1-87-1","cmap22-chr2-15-1","cmap22-chr1-64-1","cmap22-chr2-39-1","cmap22-chr1-85-1","cmap22-chr2-60-1","cmap22-chr2-54-1","cmap22-chr1-96-1","cmap22-chr1-69-1","cmap22-chr1-79-1","cmap22-chr2-62-1","cmap22-chr1-38-1","cmap22-chr2-26-1","cmap22-chr1-6-1","cmap22-chr2-49-1","cmap22-chr2-41-1","cmap22-chr1-47-1","cmap22-chr2-67-1","cmap22-chr2-30-1","cmap22-chr2-46-1","cmap22-chr2-2-1","cmap22-chr1-18-1","cmap22-chr2-61-1","cmap22-chr1-80-1","cmap22-chr2-55-1","cmap22-chr2-11-1","cmap22-chr2-66-1","cmap22-chr1-58-1","cmap22-chr1-98-1","cmap22-chr1-47-1","cmap22-chr2-7-1","cmap22-chr2-39-1","cmap22-chr2-57-1","cmap22-chr1-79-1","cmap22-chr1-96-1","cmap22-chr2-28-1","cmap22-chr2-25-1","cmap22-chr1-80-1","cmap22-chr1-19-1","cmap22-chr2-68-1","cmap22-chr2-4-1","cmap22-chr2-47-1","cmap22-chr1-99-1","cmap22-chr2-62-1","cmap22-chr2-36-1","cmap22-chr1-92-1","cmap22-chr1-60-1","cmap22-chr1-23-1","cmap22-chr1-16-1","cmap22-chr1-98-1","cmap22-chr1-55-1","cmap22-chr2-36-1","cmap22-chr2-40-1","cmap22-chr1-72-1","cmap22-chr1-25-1","cmap22-chr1-74-1","cmap22-chr1-99-1","cmap22-chr1-60-1","cmap22-chr2-68-1","cmap22-chr2-25-1","cmap22-chr2-66-1","cmap22-chr1-10-1","cmap22-chr1-77-1","cmap22-chr2-58-1","cmap22-chr1-62-1","cmap22-chr1-50-1","cmap22-chr2-37-1","cmap22-chr2-42-1","cmap22-chr2-66-1","cmap22-chr2-39-1","cmap22-chr1-29-1","cmap22-chr1-55-1","cmap22-chr1-86-1","cmap22-chr2-26-1","cmap22-chr1-25-1","cmap22-chr2-52-1","cmap22-chr2-9-1","cmap22-chr2-47-1","cmap22-chr2-19-1","cmap22-chr1-18-1","cmap22-chr2-25-1","cmap22-chr2-55-1","cmap22-chr1-95-1","cmap22-chr2-66-1","cmap22-chr2-52-1","cmap22-chr2-37-1","cmap22-chr2-68-1","cmap22-chr2-4-1","cmap22-chr2-49-1","cmap22-chr1-56-1","cmap22-chr1-78-1","cmap22-chr1-32-1","cmap22-chr1-39-1","cmap22-chr2-19-1","cmap22-chr1-88-1","cmap22-chr1-78-1","cmap22-chr1-50-1","cmap22-chr1-83-1","cmap22-chr2-36-1","cmap22-chr1-49-1","cmap22-chr2-58-1","cmap22-chr2-36-1","cmap22-chr1-59-1","cmap22-chr1-63-1","cmap22-chr2-69-1","cmap22-chr2-10-1","cmap22-chr2-40-1","cmap22-chr1-95-1","cmap22-chr1-8-1","cmap22-chr2-44-1","cmap22-chr1-48-1","cmap22-chr1-5-1","cmap22-chr1-21-1","cmap22-chr1-52-1","cmap22-chr2-37-1","cmap22-chr2-3-1","cmap22-chr2-18-1","cmap22-chr2-40-1","cmap22-chr1-80-1","cmap22-chr1-82-1","cmap22-chr2-13-1","cmap22-chr2-56-1","cmap22-chr2-46-1","cmap22-chr2-44-1","cmap22-chr2-61-1","cmap22-chr1-84-1","cmap22-chr1-81-1","cmap22-chr1-87-1","cmap22-chr1-35-1","cmap22-chr1-42-1","cmap22-chr1-10-1","cmap22-chr2-50-1","cmap22-chr2-38-1","cmap22-chr2-45-1","cmap22-chr1-19-1","cmap22-chr1-22-1","cmap22-chr2-39-1","cmap22-chr2-37-1","cmap22-chr1-57-1","cmap22-chr1-32-1","cmap22-chr1-53-1","cmap22-chr1-91-1","cmap22-chr2-50-1","cmap22-chr1-87-1","cmap22-chr1-23-1","cmap22-chr1-6-1","cmap22-chr2-7-1","cmap22-chr1-69-1","cmap22-chr1-33-1","cmap22-chr1-9-1","cmap22-chr2-23-1","cmap22-chr2-49-1","cmap22-chr1-60-1","cmap22-chr2-55-1","cmap22-chr1-38-1","cmap22-chr1-39-1","cmap22-chr2-12-1","cmap22-chr1-50-1","cmap22-chr2-42-1","cmap22-chr2-46-1","cmap22-chr1-38-1","cmap22-chr1-84-1","cmap22-chr2-65-1","cmap22-chr1-27-1","cmap22-chr1-14-1","cmap22-chr2-49-1","cmap22-chr1-96-1","cmap22-chr1-94-1","cmap22-chr2-39-1","cmap22-chr2-46-1","cmap22-chr1-19-1","cmap22-chr1-1-1","cmap22-chr2-54-1","cmap22-chr2-39-1","cmap22-chr2-52-1","cmap22-chr2-41-1","cmap22-chr1-48-1","cmap22-chr2-26-1","cmap22-chr1-57-1","cmap22-chr2-29-1","cmap22-chr2-45-1","cmap22-chr2-32-1","cmap22-chr2-48-1","cmap22-chr2-35-1","cmap22-chr2-23-1","cmap22-chr2-37-1","cmap22-chr2-44-1","cmap22-chr1-45-1","cmap22-chr1-39-1","cmap22-chr2-6-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap22-Lchr1-56-1","cmap22-Lchr2-40-1","cmap22-Lchr2-29-1","cmap22-Lchr1-13-1","cmap22-Lchr2-41-1","cmap22-Lchr2-34-1","cmap22-Lchr1-67-1","cmap22-Lchr2-19-1","cmap22-Lchr2-5-1","cmap22-Lchr1-54-1","cmap22-Lchr1-87-1","cmap22-Lchr2-15-1","cmap22-Lchr1-64-1","cmap22-Lchr2-39-1","cmap22-Lchr1-85-1","cmap22-Lchr2-60-1","cmap22-Lchr2-54-1","cmap22-Lchr1-96-1","cmap22-Lchr1-69-1","cmap22-Lchr1-79-1","cmap22-Lchr2-62-1","cmap22-Lchr1-38-1","cmap22-Lchr2-26-1","cmap22-Lchr1-6-1","cmap22-Lchr2-49-1","cmap22-Lchr2-41-1","cmap22-Lchr1-47-1","cmap22-Lchr2-67-1","cmap22-Lchr2-30-1","cmap22-Lchr2-46-1","cmap22-Lchr2-2-1","cmap22-Lchr1-18-1","cmap22-Lchr2-61-1","cmap22-Lchr1-80-1","cmap22-Lchr2-55-1","cmap22-Lchr2-11-1","cmap22-Lchr2-66-1","cmap22-Lchr1-58-1","cmap22-Lchr1-98-1","cmap22-Lchr1-47-1","cmap22-Lchr2-7-1","cmap22-Lchr2-39-1","cmap22-Lchr2-57-1","cmap22-Lchr1-79-1","cmap22-Lchr1-96-1","cmap22-Lchr2-28-1","cmap22-Lchr2-25-1","cmap22-Lchr1-80-1","cmap22-Lchr1-19-1","cmap22-Lchr2-68-1","cmap22-Lchr2-4-1","cmap22-Lchr2-47-1","cmap22-Lchr1-99-1","cmap22-Lchr2-62-1","cmap22-Lchr2-36-1","cmap22-Lchr1-92-1","cmap22-Lchr1-60-1","cmap22-Lchr1-23-1","cmap22-Lchr1-16-1","cmap22-Lchr1-98-1","cmap22-Lchr1-55-1","cmap22-Lchr2-36-1","cmap22-Lchr2-40-1","cmap22-Lchr1-72-1","cmap22-Lchr1-25-1","cmap22-Lchr1-74-1","cmap22-Lchr1-99-1","cmap22-Lchr1-60-1","cmap22-Lchr2-68-1","cmap22-Lchr2-25-1","cmap22-Lchr2-66-1","cmap22-Lchr1-10-1","cmap22-Lchr1-77-1","cmap22-Lchr2-58-1","cmap22-Lchr1-62-1","cmap22-Lchr1-50-1","cmap22-Lchr2-37-1","cmap22-Lchr2-42-1","cmap22-Lchr2-66-1","cmap22-Lchr2-39-1","cmap22-Lchr1-29-1","cmap22-Lchr1-55-1","cmap22-Lchr1-86-1","cmap22-Lchr2-26-1","cmap22-Lchr1-25-1","cmap22-Lchr2-52-1","cmap22-Lchr2-9-1","cmap22-Lchr2-47-1","cmap22-Lchr2-19-1","cmap22-Lchr1-18-1","cmap22-Lchr2-25-1","cmap22-Lchr2-55-1","cmap22-Lchr1-95-1","cmap22-Lchr2-66-1","cmap22-Lchr2-52-1","cmap22-Lchr2-37-1","cmap22-Lchr2-68-1","cmap22-Lchr2-4-1","cmap22-Lchr2-49-1","cmap22-Lchr1-56-1","cmap22-Lchr1-78-1","cmap22-Lchr1-32-1","cmap22-Lchr1-39-1","cmap22-Lchr2-19-1","cmap22-Lchr1-88-1","cmap22-Lchr1-78-1","cmap22-Lchr1-50-1","cmap22-Lchr1-83-1","cmap22-Lchr2-36-1","cmap22-Lchr1-49-1","cmap22-Lchr2-58-1","cmap22-Lchr2-36-1","cmap22-Lchr1-59-1","cmap22-Lchr1-63-1","cmap22-Lchr2-69-1","cmap22-Lchr2-10-1","cmap22-Lchr2-40-1","cmap22-Lchr1-95-1","cmap22-Lchr1-8-1","cmap22-Lchr2-44-1","cmap22-Lchr1-48-1","cmap22-Lchr1-5-1","cmap22-Lchr1-21-1","cmap22-Lchr1-52-1","cmap22-Lchr2-37-1","cmap22-Lchr2-3-1","cmap22-Lchr2-18-1","cmap22-Lchr2-40-1","cmap22-Lchr1-80-1","cmap22-Lchr1-82-1","cmap22-Lchr2-13-1","cmap22-Lchr2-56-1","cmap22-Lchr2-46-1","cmap22-Lchr2-44-1","cmap22-Lchr2-61-1","cmap22-Lchr1-84-1","cmap22-Lchr1-81-1","cmap22-Lchr1-87-1","cmap22-Lchr1-35-1","cmap22-Lchr1-42-1","cmap22-Lchr1-10-1","cmap22-Lchr2-50-1","cmap22-Lchr2-38-1","cmap22-Lchr2-45-1","cmap22-Lchr1-19-1","cmap22-Lchr1-22-1","cmap22-Lchr2-39-1","cmap22-Lchr2-37-1","cmap22-Lchr1-57-1","cmap22-Lchr1-32-1","cmap22-Lchr1-53-1","cmap22-Lchr1-91-1","cmap22-Lchr2-50-1","cmap22-Lchr1-87-1","cmap22-Lchr1-23-1","cmap22-Lchr1-6-1","cmap22-Lchr2-7-1","cmap22-Lchr1-69-1","cmap22-Lchr1-33-1","cmap22-Lchr1-9-1","cmap22-Lchr2-23-1","cmap22-Lchr2-49-1","cmap22-Lchr1-60-1","cmap22-Lchr2-55-1","cmap22-Lchr1-38-1","cmap22-Lchr1-39-1","cmap22-Lchr2-12-1","cmap22-Lchr1-50-1","cmap22-Lchr2-42-1","cmap22-Lchr2-46-1","cmap22-Lchr1-38-1","cmap22-Lchr1-84-1","cmap22-Lchr2-65-1","cmap22-Lchr1-27-1","cmap22-Lchr1-14-1","cmap22-Lchr2-49-1","cmap22-Lchr1-96-1","cmap22-Lchr1-94-1","cmap22-Lchr2-39-1","cmap22-Lchr2-46-1","cmap22-Lchr1-19-1","cmap22-Lchr1-1-1","cmap22-Lchr2-54-1","cmap22-Lchr2-39-1","cmap22-Lchr2-52-1","cmap22-Lchr2-41-1","cmap22-Lchr1-48-1","cmap22-Lchr2-26-1","cmap22-Lchr1-57-1","cmap22-Lchr2-29-1","cmap22-Lchr2-45-1","cmap22-Lchr2-32-1","cmap22-Lchr2-48-1","cmap22-Lchr2-35-1","cmap22-Lchr2-23-1","cmap22-Lchr2-37-1","cmap22-Lchr2-44-1","cmap22-Lchr1-45-1","cmap22-Lchr1-39-1","cmap22-Lchr2-6-1"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":1,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":60,"chr_width":15,"chr_length":4,"chr_col":["black",""],"heatmap":true,"ch_domain":["1","1000"],"lg_x":0,"lg_y":50,"heat_scale":"linear","labels":false,"div_id":"cmap22","w":500,"h":300,"rng":[[-149,0,150]],"heat_col":[["red","white","blue"]],"an_col":["#10B85F",""],"ch_text":[true,true],"legend":[false,true],"aggregate_func":["avg",""],"plots":["scatter",""],"tag_filter":[["none","0"]],"plot_height":[40,0],"plot_ticks":[4,0],"plot_color":["blue",""],"plot_y_domain":[[0,0]],"ref_line":[true,true],"refl_pos":[20,0],"refl_color":["grey",""],"refl_stroke_w":[2,0],"tagColor":["red",""],"renderHeat":[true,true],"text_font_size":[10,0],"chr_curve":5,"title_font_size":12,"label_font":9,"label_angle":-90,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["none","0"]]},"evals":[],"jsHooks":[]}</script>
+<p>You can change the color and stroke-size of the reference line using <code>refl_color</code> and <code>refl_stroke_w</code> arguments respectively.</p>
+</div>
+<div id="plot-height" class="section level3">
+<h3>Plot height</h3>
+<p>Change the plot height using <code>plot_height</code> parameter.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;scatter&quot;,
+          plot_height = 50)</code></pre>
+</div>
+<div id="plot-colors" class="section level3">
+<h3>Plot Colors</h3>
+<p>Change the plot colors (bar and scatter colors) using the <code>plot_color</code> parameter.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;scatter&quot;,
+          plot_color = &quot;orange&quot;)</code></pre>
+<p>For the epi-tag plots, you need to use <code>tagColor</code> argument that will change the tag-head colors.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;tags&quot;,
+          tagColor = &quot;orange&quot;)</code></pre>
+</div>
+<div id="plot-y-axis-range-and-ticks" class="section level3">
+<h3>Plot y-axis range and ticks</h3>
+<p>You can change the range of y-axis of the plots using <code>plot_y_domain</code> argument. It is passed as list of vector(s), a vector for each ploidy. You can also change the number of ticks of the scale using the <code>plot_ticks</code> argument.</p>
+<pre class="r"><code>chromoMap(chr_file_1,anno_file_2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = &quot;scatter&quot;,
+          plot_ticks = 3,
+          plot_y_domain = list(c(-5,5)))</code></pre>
+</div>
+</div>
+<div id="vertical-grid-lines" class="section level2">
+<h2>Vertical Grid Lines</h2>
+<p>vertical grid lines can be used to highlight specific regions of the chromosomes. You can add any number of grid-lines to the plot. Set the <code>vertical_grid</code> argument to <code>TRUE</code>. You can add multiple grid lines by specifying a vector of positions of the lines. The following example demonstrate the use of grid lines where 5 grid lines are added at positions 0,50,100,250, and 400. The plot also demonstrate the use of other customization options.</p>
+<pre class="r"><code>chromoMap(c(chr_file_1,chr_file_1),c(anno_file_1,anno_file_2),
+          ploidy = 2
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          plots = c(&quot;bar&quot;,&quot;scatter&quot;),
+          plot_height = 40,
+          plot_color = c(&quot;green&quot;,&quot;red&quot;),
+          ref_line = T,
+          refl_pos = 20,
+          vertical_grid = T,
+          grid_array = c(0,50,100,250,400))</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 2 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Number of Chromosomes in set  2 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 200 
+#&gt; Number of annotations in data set  2 : 200</code></pre>
+<div id="htmlwidget-1251c240dcce9be3282e" style="width:672px;height:336px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1251c240dcce9be3282e">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[10,34,89,56,100,91,11,16,43,83,94,81,1,57,45,3,94,52,51,68,36,15,19,6,76,43,17,5,14,3,7,41,75,93,27,89,16,62,34,64,19,54,61,69,88,64,18,84,46,35,11,51,51,74,30,11,47,91,0,39,91,81,16,15,80,19,73,1,80,63,69,92,67,45,77,15,5,25,89,4,71,85,45,21,59,20,7,56,14,77,4,92,13,87,21,97,90,16,24,65,57,63,27,43,91,44,77,69,12,14,18,64,97,25,32,23,65,17,22,2,76,43,10,3,43,90,82,89,36,21,48,98,90,40,9,68,79,17,33,39,12,78,85,95,54,39,57,81,46,50,63,56,29,53,7,42,72,14,75,38,68,8,27,39,71,62,98,72,3,48,21,5,10,40,69,22,24,73,40,14,37,29,70,28,95,78,3,54,98,41,46,40,6,95,38,88,99,62,19,73],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap23-chr1-56-1","cmap23-chr2-40-1","cmap23-chr2-29-1","cmap23-chr1-13-1","cmap23-chr2-41-1","cmap23-chr2-34-1","cmap23-chr1-67-1","cmap23-chr2-19-1","cmap23-chr2-5-1","cmap23-chr1-54-1","cmap23-chr1-87-1","cmap23-chr2-15-1","cmap23-chr1-64-1","cmap23-chr2-39-1","cmap23-chr1-85-1","cmap23-chr2-60-1","cmap23-chr2-54-1","cmap23-chr1-96-1","cmap23-chr1-69-1","cmap23-chr1-79-1","cmap23-chr2-62-1","cmap23-chr1-38-1","cmap23-chr2-26-1","cmap23-chr1-6-1","cmap23-chr2-49-1","cmap23-chr2-41-1","cmap23-chr1-47-1","cmap23-chr2-67-1","cmap23-chr2-30-1","cmap23-chr2-46-1","cmap23-chr2-2-1","cmap23-chr1-18-1","cmap23-chr2-61-1","cmap23-chr1-80-1","cmap23-chr2-55-1","cmap23-chr2-11-1","cmap23-chr2-66-1","cmap23-chr1-58-1","cmap23-chr1-98-1","cmap23-chr1-47-1","cmap23-chr2-7-1","cmap23-chr2-39-1","cmap23-chr2-57-1","cmap23-chr1-79-1","cmap23-chr1-96-1","cmap23-chr2-28-1","cmap23-chr2-25-1","cmap23-chr1-80-1","cmap23-chr1-19-1","cmap23-chr2-68-1","cmap23-chr2-4-1","cmap23-chr2-47-1","cmap23-chr1-99-1","cmap23-chr2-62-1","cmap23-chr2-36-1","cmap23-chr1-92-1","cmap23-chr1-60-1","cmap23-chr1-23-1","cmap23-chr1-16-1","cmap23-chr1-98-1","cmap23-chr1-55-1","cmap23-chr2-36-1","cmap23-chr2-40-1","cmap23-chr1-72-1","cmap23-chr1-25-1","cmap23-chr1-74-1","cmap23-chr1-99-1","cmap23-chr1-60-1","cmap23-chr2-68-1","cmap23-chr2-25-1","cmap23-chr2-66-1","cmap23-chr1-10-1","cmap23-chr1-77-1","cmap23-chr2-58-1","cmap23-chr1-62-1","cmap23-chr1-50-1","cmap23-chr2-37-1","cmap23-chr2-42-1","cmap23-chr2-66-1","cmap23-chr2-39-1","cmap23-chr1-29-1","cmap23-chr1-55-1","cmap23-chr1-86-1","cmap23-chr2-26-1","cmap23-chr1-25-1","cmap23-chr2-52-1","cmap23-chr2-9-1","cmap23-chr2-47-1","cmap23-chr2-19-1","cmap23-chr1-18-1","cmap23-chr2-25-1","cmap23-chr2-55-1","cmap23-chr1-95-1","cmap23-chr2-66-1","cmap23-chr2-52-1","cmap23-chr2-37-1","cmap23-chr2-68-1","cmap23-chr2-4-1","cmap23-chr2-49-1","cmap23-chr1-56-1","cmap23-chr1-78-1","cmap23-chr1-32-1","cmap23-chr1-39-1","cmap23-chr2-19-1","cmap23-chr1-88-1","cmap23-chr1-78-1","cmap23-chr1-50-1","cmap23-chr1-83-1","cmap23-chr2-36-1","cmap23-chr1-49-1","cmap23-chr2-58-1","cmap23-chr2-36-1","cmap23-chr1-59-1","cmap23-chr1-63-1","cmap23-chr2-69-1","cmap23-chr2-10-1","cmap23-chr2-40-1","cmap23-chr1-95-1","cmap23-chr1-8-1","cmap23-chr2-44-1","cmap23-chr1-48-1","cmap23-chr1-5-1","cmap23-chr1-21-1","cmap23-chr1-52-1","cmap23-chr2-37-1","cmap23-chr2-3-1","cmap23-chr2-18-1","cmap23-chr2-40-1","cmap23-chr1-80-1","cmap23-chr1-82-1","cmap23-chr2-13-1","cmap23-chr2-56-1","cmap23-chr2-46-1","cmap23-chr2-44-1","cmap23-chr2-61-1","cmap23-chr1-84-1","cmap23-chr1-81-1","cmap23-chr1-87-1","cmap23-chr1-35-1","cmap23-chr1-42-1","cmap23-chr1-10-1","cmap23-chr2-50-1","cmap23-chr2-38-1","cmap23-chr2-45-1","cmap23-chr1-19-1","cmap23-chr1-22-1","cmap23-chr2-39-1","cmap23-chr2-37-1","cmap23-chr1-57-1","cmap23-chr1-32-1","cmap23-chr1-53-1","cmap23-chr1-91-1","cmap23-chr2-50-1","cmap23-chr1-87-1","cmap23-chr1-23-1","cmap23-chr1-6-1","cmap23-chr2-7-1","cmap23-chr1-69-1","cmap23-chr1-33-1","cmap23-chr1-9-1","cmap23-chr2-23-1","cmap23-chr2-49-1","cmap23-chr1-60-1","cmap23-chr2-55-1","cmap23-chr1-38-1","cmap23-chr1-39-1","cmap23-chr2-12-1","cmap23-chr1-50-1","cmap23-chr2-42-1","cmap23-chr2-46-1","cmap23-chr1-38-1","cmap23-chr1-84-1","cmap23-chr2-65-1","cmap23-chr1-27-1","cmap23-chr1-14-1","cmap23-chr2-49-1","cmap23-chr1-96-1","cmap23-chr1-94-1","cmap23-chr2-39-1","cmap23-chr2-46-1","cmap23-chr1-19-1","cmap23-chr1-1-1","cmap23-chr2-54-1","cmap23-chr2-39-1","cmap23-chr2-52-1","cmap23-chr2-41-1","cmap23-chr1-48-1","cmap23-chr2-26-1","cmap23-chr1-57-1","cmap23-chr2-29-1","cmap23-chr2-45-1","cmap23-chr2-32-1","cmap23-chr2-48-1","cmap23-chr2-35-1","cmap23-chr2-23-1","cmap23-chr2-37-1","cmap23-chr2-44-1","cmap23-chr1-45-1","cmap23-chr1-39-1","cmap23-chr2-6-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap23-Lchr1-56-1","cmap23-Lchr2-40-1","cmap23-Lchr2-29-1","cmap23-Lchr1-13-1","cmap23-Lchr2-41-1","cmap23-Lchr2-34-1","cmap23-Lchr1-67-1","cmap23-Lchr2-19-1","cmap23-Lchr2-5-1","cmap23-Lchr1-54-1","cmap23-Lchr1-87-1","cmap23-Lchr2-15-1","cmap23-Lchr1-64-1","cmap23-Lchr2-39-1","cmap23-Lchr1-85-1","cmap23-Lchr2-60-1","cmap23-Lchr2-54-1","cmap23-Lchr1-96-1","cmap23-Lchr1-69-1","cmap23-Lchr1-79-1","cmap23-Lchr2-62-1","cmap23-Lchr1-38-1","cmap23-Lchr2-26-1","cmap23-Lchr1-6-1","cmap23-Lchr2-49-1","cmap23-Lchr2-41-1","cmap23-Lchr1-47-1","cmap23-Lchr2-67-1","cmap23-Lchr2-30-1","cmap23-Lchr2-46-1","cmap23-Lchr2-2-1","cmap23-Lchr1-18-1","cmap23-Lchr2-61-1","cmap23-Lchr1-80-1","cmap23-Lchr2-55-1","cmap23-Lchr2-11-1","cmap23-Lchr2-66-1","cmap23-Lchr1-58-1","cmap23-Lchr1-98-1","cmap23-Lchr1-47-1","cmap23-Lchr2-7-1","cmap23-Lchr2-39-1","cmap23-Lchr2-57-1","cmap23-Lchr1-79-1","cmap23-Lchr1-96-1","cmap23-Lchr2-28-1","cmap23-Lchr2-25-1","cmap23-Lchr1-80-1","cmap23-Lchr1-19-1","cmap23-Lchr2-68-1","cmap23-Lchr2-4-1","cmap23-Lchr2-47-1","cmap23-Lchr1-99-1","cmap23-Lchr2-62-1","cmap23-Lchr2-36-1","cmap23-Lchr1-92-1","cmap23-Lchr1-60-1","cmap23-Lchr1-23-1","cmap23-Lchr1-16-1","cmap23-Lchr1-98-1","cmap23-Lchr1-55-1","cmap23-Lchr2-36-1","cmap23-Lchr2-40-1","cmap23-Lchr1-72-1","cmap23-Lchr1-25-1","cmap23-Lchr1-74-1","cmap23-Lchr1-99-1","cmap23-Lchr1-60-1","cmap23-Lchr2-68-1","cmap23-Lchr2-25-1","cmap23-Lchr2-66-1","cmap23-Lchr1-10-1","cmap23-Lchr1-77-1","cmap23-Lchr2-58-1","cmap23-Lchr1-62-1","cmap23-Lchr1-50-1","cmap23-Lchr2-37-1","cmap23-Lchr2-42-1","cmap23-Lchr2-66-1","cmap23-Lchr2-39-1","cmap23-Lchr1-29-1","cmap23-Lchr1-55-1","cmap23-Lchr1-86-1","cmap23-Lchr2-26-1","cmap23-Lchr1-25-1","cmap23-Lchr2-52-1","cmap23-Lchr2-9-1","cmap23-Lchr2-47-1","cmap23-Lchr2-19-1","cmap23-Lchr1-18-1","cmap23-Lchr2-25-1","cmap23-Lchr2-55-1","cmap23-Lchr1-95-1","cmap23-Lchr2-66-1","cmap23-Lchr2-52-1","cmap23-Lchr2-37-1","cmap23-Lchr2-68-1","cmap23-Lchr2-4-1","cmap23-Lchr2-49-1","cmap23-Lchr1-56-1","cmap23-Lchr1-78-1","cmap23-Lchr1-32-1","cmap23-Lchr1-39-1","cmap23-Lchr2-19-1","cmap23-Lchr1-88-1","cmap23-Lchr1-78-1","cmap23-Lchr1-50-1","cmap23-Lchr1-83-1","cmap23-Lchr2-36-1","cmap23-Lchr1-49-1","cmap23-Lchr2-58-1","cmap23-Lchr2-36-1","cmap23-Lchr1-59-1","cmap23-Lchr1-63-1","cmap23-Lchr2-69-1","cmap23-Lchr2-10-1","cmap23-Lchr2-40-1","cmap23-Lchr1-95-1","cmap23-Lchr1-8-1","cmap23-Lchr2-44-1","cmap23-Lchr1-48-1","cmap23-Lchr1-5-1","cmap23-Lchr1-21-1","cmap23-Lchr1-52-1","cmap23-Lchr2-37-1","cmap23-Lchr2-3-1","cmap23-Lchr2-18-1","cmap23-Lchr2-40-1","cmap23-Lchr1-80-1","cmap23-Lchr1-82-1","cmap23-Lchr2-13-1","cmap23-Lchr2-56-1","cmap23-Lchr2-46-1","cmap23-Lchr2-44-1","cmap23-Lchr2-61-1","cmap23-Lchr1-84-1","cmap23-Lchr1-81-1","cmap23-Lchr1-87-1","cmap23-Lchr1-35-1","cmap23-Lchr1-42-1","cmap23-Lchr1-10-1","cmap23-Lchr2-50-1","cmap23-Lchr2-38-1","cmap23-Lchr2-45-1","cmap23-Lchr1-19-1","cmap23-Lchr1-22-1","cmap23-Lchr2-39-1","cmap23-Lchr2-37-1","cmap23-Lchr1-57-1","cmap23-Lchr1-32-1","cmap23-Lchr1-53-1","cmap23-Lchr1-91-1","cmap23-Lchr2-50-1","cmap23-Lchr1-87-1","cmap23-Lchr1-23-1","cmap23-Lchr1-6-1","cmap23-Lchr2-7-1","cmap23-Lchr1-69-1","cmap23-Lchr1-33-1","cmap23-Lchr1-9-1","cmap23-Lchr2-23-1","cmap23-Lchr2-49-1","cmap23-Lchr1-60-1","cmap23-Lchr2-55-1","cmap23-Lchr1-38-1","cmap23-Lchr1-39-1","cmap23-Lchr2-12-1","cmap23-Lchr1-50-1","cmap23-Lchr2-42-1","cmap23-Lchr2-46-1","cmap23-Lchr1-38-1","cmap23-Lchr1-84-1","cmap23-Lchr2-65-1","cmap23-Lchr1-27-1","cmap23-Lchr1-14-1","cmap23-Lchr2-49-1","cmap23-Lchr1-96-1","cmap23-Lchr1-94-1","cmap23-Lchr2-39-1","cmap23-Lchr2-46-1","cmap23-Lchr1-19-1","cmap23-Lchr1-1-1","cmap23-Lchr2-54-1","cmap23-Lchr2-39-1","cmap23-Lchr2-52-1","cmap23-Lchr2-41-1","cmap23-Lchr1-48-1","cmap23-Lchr2-26-1","cmap23-Lchr1-57-1","cmap23-Lchr2-29-1","cmap23-Lchr2-45-1","cmap23-Lchr2-32-1","cmap23-Lchr2-48-1","cmap23-Lchr2-35-1","cmap23-Lchr2-23-1","cmap23-Lchr2-37-1","cmap23-Lchr2-44-1","cmap23-Lchr1-45-1","cmap23-Lchr1-39-1","cmap23-Lchr2-6-1"]},{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20","An21","An22","An23","An24","An25","An26","An27","An28","An29","An30","An31","An32","An33","An34","An35","An36","An37","An38","An39","An40","An41","An42","An43","An44","An45","An46","An47","An48","An49","An50","An51","An52","An53","An54","An55","An56","An57","An58","An59","An60","An61","An62","An63","An64","An65","An66","An67","An68","An69","An70","An71","An72","An73","An74","An75","An76","An77","An78","An79","An80","An81","An82","An83","An84","An85","An86","An87","An88","An89","An90","An91","An92","An93","An94","An95","An96","An97","An98","An99","An100","An101","An102","An103","An104","An105","An106","An107","An108","An109","An110","An111","An112","An113","An114","An115","An116","An117","An118","An119","An120","An121","An122","An123","An124","An125","An126","An127","An128","An129","An130","An131","An132","An133","An134","An135","An136","An137","An138","An139","An140","An141","An142","An143","An144","An145","An146","An147","An148","An149","An150","An151","An152","An153","An154","An155","An156","An157","An158","An159","An160","An161","An162","An163","An164","An165","An166","An167","An168","An169","An170","An171","An172","An173","An174","An175","An176","An177","An178","An179","An180","An181","An182","An183","An184","An185","An186","An187","An188","An189","An190","An191","An192","An193","An194","An195","An196","An197","An198","An199","An200"],"data":[-64,29,-137,-129,-18,149,138,128,-59,28,76,-112,-127,-81,109,2,-23,143,-93,-43,55,14,113,84,-29,-69,127,-70,-49,74,10,69,88,36,93,26,21,144,-36,68,0,-44,-146,-37,-26,110,-148,99,12,-126,-21,108,-56,107,34,147,52,61,75,139,43,-48,-79,-144,125,-125,-51,-89,-82,65,-55,-95,-12,30,54,-105,91,57,8,-98,59,83,-22,115,-28,-77,-107,46,70,-62,-92,-108,-46,95,140,-73,81,-52,1,80,-58,82,-13,6,-94,104,9,-147,72,78,-83,-19,-65,90,-149,79,-110,-32,13,-53,101,33,102,-7,-130,-114,49,64,111,-139,-138,-141,22,-14,58,85,-54,124,-135,87,3,18,-76,50,-117,-97,-34,-27,-78,41,-10,119,-84,-91,-85,-40,-42,-88,63,-101,-111,71,-61,19,-38,-50,-25,25,103,24,-8,-128,44,-24,150,92,141,-68,-132,20,38,-87,-15,32,-80,94,39,142,-122,42,-136,-2,-33,-103,48,96,16,121,-60,137],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap23-chr1-56-2","cmap23-chr2-40-2","cmap23-chr2-29-2","cmap23-chr1-13-2","cmap23-chr2-41-2","cmap23-chr2-34-2","cmap23-chr1-67-2","cmap23-chr2-19-2","cmap23-chr2-5-2","cmap23-chr1-54-2","cmap23-chr1-87-2","cmap23-chr2-15-2","cmap23-chr1-64-2","cmap23-chr2-39-2","cmap23-chr1-85-2","cmap23-chr2-60-2","cmap23-chr2-54-2","cmap23-chr1-96-2","cmap23-chr1-69-2","cmap23-chr1-79-2","cmap23-chr2-62-2","cmap23-chr1-38-2","cmap23-chr2-26-2","cmap23-chr1-6-2","cmap23-chr2-49-2","cmap23-chr2-41-2","cmap23-chr1-47-2","cmap23-chr2-67-2","cmap23-chr2-30-2","cmap23-chr2-46-2","cmap23-chr2-2-2","cmap23-chr1-18-2","cmap23-chr2-61-2","cmap23-chr1-80-2","cmap23-chr2-55-2","cmap23-chr2-11-2","cmap23-chr2-66-2","cmap23-chr1-58-2","cmap23-chr1-98-2","cmap23-chr1-47-2","cmap23-chr2-7-2","cmap23-chr2-39-2","cmap23-chr2-57-2","cmap23-chr1-79-2","cmap23-chr1-96-2","cmap23-chr2-28-2","cmap23-chr2-25-2","cmap23-chr1-80-2","cmap23-chr1-19-2","cmap23-chr2-68-2","cmap23-chr2-4-2","cmap23-chr2-47-2","cmap23-chr1-99-2","cmap23-chr2-62-2","cmap23-chr2-36-2","cmap23-chr1-92-2","cmap23-chr1-60-2","cmap23-chr1-23-2","cmap23-chr1-16-2","cmap23-chr1-98-2","cmap23-chr1-55-2","cmap23-chr2-36-2","cmap23-chr2-40-2","cmap23-chr1-72-2","cmap23-chr1-25-2","cmap23-chr1-74-2","cmap23-chr1-99-2","cmap23-chr1-60-2","cmap23-chr2-68-2","cmap23-chr2-25-2","cmap23-chr2-66-2","cmap23-chr1-10-2","cmap23-chr1-77-2","cmap23-chr2-58-2","cmap23-chr1-62-2","cmap23-chr1-50-2","cmap23-chr2-37-2","cmap23-chr2-42-2","cmap23-chr2-66-2","cmap23-chr2-39-2","cmap23-chr1-29-2","cmap23-chr1-55-2","cmap23-chr1-86-2","cmap23-chr2-26-2","cmap23-chr1-25-2","cmap23-chr2-52-2","cmap23-chr2-9-2","cmap23-chr2-47-2","cmap23-chr2-19-2","cmap23-chr1-18-2","cmap23-chr2-25-2","cmap23-chr2-55-2","cmap23-chr1-95-2","cmap23-chr2-66-2","cmap23-chr2-52-2","cmap23-chr2-37-2","cmap23-chr2-68-2","cmap23-chr2-4-2","cmap23-chr2-49-2","cmap23-chr1-56-2","cmap23-chr1-78-2","cmap23-chr1-32-2","cmap23-chr1-39-2","cmap23-chr2-19-2","cmap23-chr1-88-2","cmap23-chr1-78-2","cmap23-chr1-50-2","cmap23-chr1-83-2","cmap23-chr2-36-2","cmap23-chr1-49-2","cmap23-chr2-58-2","cmap23-chr2-36-2","cmap23-chr1-59-2","cmap23-chr1-63-2","cmap23-chr2-69-2","cmap23-chr2-10-2","cmap23-chr2-40-2","cmap23-chr1-95-2","cmap23-chr1-8-2","cmap23-chr2-44-2","cmap23-chr1-48-2","cmap23-chr1-5-2","cmap23-chr1-21-2","cmap23-chr1-52-2","cmap23-chr2-37-2","cmap23-chr2-3-2","cmap23-chr2-18-2","cmap23-chr2-40-2","cmap23-chr1-80-2","cmap23-chr1-82-2","cmap23-chr2-13-2","cmap23-chr2-56-2","cmap23-chr2-46-2","cmap23-chr2-44-2","cmap23-chr2-61-2","cmap23-chr1-84-2","cmap23-chr1-81-2","cmap23-chr1-87-2","cmap23-chr1-35-2","cmap23-chr1-42-2","cmap23-chr1-10-2","cmap23-chr2-50-2","cmap23-chr2-38-2","cmap23-chr2-45-2","cmap23-chr1-19-2","cmap23-chr1-22-2","cmap23-chr2-39-2","cmap23-chr2-37-2","cmap23-chr1-57-2","cmap23-chr1-32-2","cmap23-chr1-53-2","cmap23-chr1-91-2","cmap23-chr2-50-2","cmap23-chr1-87-2","cmap23-chr1-23-2","cmap23-chr1-6-2","cmap23-chr2-7-2","cmap23-chr1-69-2","cmap23-chr1-33-2","cmap23-chr1-9-2","cmap23-chr2-23-2","cmap23-chr2-49-2","cmap23-chr1-60-2","cmap23-chr2-55-2","cmap23-chr1-38-2","cmap23-chr1-39-2","cmap23-chr2-12-2","cmap23-chr1-50-2","cmap23-chr2-42-2","cmap23-chr2-46-2","cmap23-chr1-38-2","cmap23-chr1-84-2","cmap23-chr2-65-2","cmap23-chr1-27-2","cmap23-chr1-14-2","cmap23-chr2-49-2","cmap23-chr1-96-2","cmap23-chr1-94-2","cmap23-chr2-39-2","cmap23-chr2-46-2","cmap23-chr1-19-2","cmap23-chr1-1-2","cmap23-chr2-54-2","cmap23-chr2-39-2","cmap23-chr2-52-2","cmap23-chr2-41-2","cmap23-chr1-48-2","cmap23-chr2-26-2","cmap23-chr1-57-2","cmap23-chr2-29-2","cmap23-chr2-45-2","cmap23-chr2-32-2","cmap23-chr2-48-2","cmap23-chr2-35-2","cmap23-chr2-23-2","cmap23-chr2-37-2","cmap23-chr2-44-2","cmap23-chr1-45-2","cmap23-chr1-39-2","cmap23-chr2-6-2"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781,611,371,251,51,481,401,461,661,291,451,11,171,601,791,541,101,651,571,971,461,61,381,561,781,951,271,241,791,181,671,31,461,981,611,351,911,591,221,151,971,541,351,391,711,241,731,981,591,671,241,651,91,761,571,611,491,361,411,651,381,281,541,851,251,241,511,81,461,181,171,241,541,941,651,511,361,671,31,481,551,771,311,381,181,871,771,491,821,351,481,571,351,581,621,681,91,391,941,71,431,471,41,201,511,361,21,171,391,791,811,121,551,451,431,601,831,801,861,341,411,91,491,371,441,181,211,381,361,561,311,521,901,491,861,221,51,61,681,321,81,221,481,591,541,371,381,111,491,411,451,371,831,641,261,131,481,951,931,381,451,181,1,531,381,511,401,471,251,561,281,441,311,471,341,221,361,431,441,381,51],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790,620,380,260,60,490,410,470,670,300,460,20,180,610,800,550,110,660,580,980,470,70,390,570,790,960,280,250,800,190,680,40,470,990,620,360,920,600,230,160,980,550,360,400,720,250,740,990,600,680,250,660,100,770,580,620,500,370,420,660,390,290,550,860,260,250,520,90,470,190,180,250,550,950,660,520,370,680,40,490,560,780,320,390,190,880,780,500,830,360,490,580,360,590,630,690,100,400,950,80,440,480,50,210,520,370,30,180,400,800,820,130,560,460,440,610,840,810,870,350,420,100,500,380,450,190,220,390,370,570,320,530,910,500,870,230,60,70,690,330,90,230,490,600,550,380,390,120,500,420,460,380,840,650,270,140,490,960,940,390,460,190,10,540,390,520,410,480,260,570,290,450,320,480,350,230,370,440,450,390,60],"label":["cmap23-Lchr1-56-2","cmap23-Lchr2-40-2","cmap23-Lchr2-29-2","cmap23-Lchr1-13-2","cmap23-Lchr2-41-2","cmap23-Lchr2-34-2","cmap23-Lchr1-67-2","cmap23-Lchr2-19-2","cmap23-Lchr2-5-2","cmap23-Lchr1-54-2","cmap23-Lchr1-87-2","cmap23-Lchr2-15-2","cmap23-Lchr1-64-2","cmap23-Lchr2-39-2","cmap23-Lchr1-85-2","cmap23-Lchr2-60-2","cmap23-Lchr2-54-2","cmap23-Lchr1-96-2","cmap23-Lchr1-69-2","cmap23-Lchr1-79-2","cmap23-Lchr2-62-2","cmap23-Lchr1-38-2","cmap23-Lchr2-26-2","cmap23-Lchr1-6-2","cmap23-Lchr2-49-2","cmap23-Lchr2-41-2","cmap23-Lchr1-47-2","cmap23-Lchr2-67-2","cmap23-Lchr2-30-2","cmap23-Lchr2-46-2","cmap23-Lchr2-2-2","cmap23-Lchr1-18-2","cmap23-Lchr2-61-2","cmap23-Lchr1-80-2","cmap23-Lchr2-55-2","cmap23-Lchr2-11-2","cmap23-Lchr2-66-2","cmap23-Lchr1-58-2","cmap23-Lchr1-98-2","cmap23-Lchr1-47-2","cmap23-Lchr2-7-2","cmap23-Lchr2-39-2","cmap23-Lchr2-57-2","cmap23-Lchr1-79-2","cmap23-Lchr1-96-2","cmap23-Lchr2-28-2","cmap23-Lchr2-25-2","cmap23-Lchr1-80-2","cmap23-Lchr1-19-2","cmap23-Lchr2-68-2","cmap23-Lchr2-4-2","cmap23-Lchr2-47-2","cmap23-Lchr1-99-2","cmap23-Lchr2-62-2","cmap23-Lchr2-36-2","cmap23-Lchr1-92-2","cmap23-Lchr1-60-2","cmap23-Lchr1-23-2","cmap23-Lchr1-16-2","cmap23-Lchr1-98-2","cmap23-Lchr1-55-2","cmap23-Lchr2-36-2","cmap23-Lchr2-40-2","cmap23-Lchr1-72-2","cmap23-Lchr1-25-2","cmap23-Lchr1-74-2","cmap23-Lchr1-99-2","cmap23-Lchr1-60-2","cmap23-Lchr2-68-2","cmap23-Lchr2-25-2","cmap23-Lchr2-66-2","cmap23-Lchr1-10-2","cmap23-Lchr1-77-2","cmap23-Lchr2-58-2","cmap23-Lchr1-62-2","cmap23-Lchr1-50-2","cmap23-Lchr2-37-2","cmap23-Lchr2-42-2","cmap23-Lchr2-66-2","cmap23-Lchr2-39-2","cmap23-Lchr1-29-2","cmap23-Lchr1-55-2","cmap23-Lchr1-86-2","cmap23-Lchr2-26-2","cmap23-Lchr1-25-2","cmap23-Lchr2-52-2","cmap23-Lchr2-9-2","cmap23-Lchr2-47-2","cmap23-Lchr2-19-2","cmap23-Lchr1-18-2","cmap23-Lchr2-25-2","cmap23-Lchr2-55-2","cmap23-Lchr1-95-2","cmap23-Lchr2-66-2","cmap23-Lchr2-52-2","cmap23-Lchr2-37-2","cmap23-Lchr2-68-2","cmap23-Lchr2-4-2","cmap23-Lchr2-49-2","cmap23-Lchr1-56-2","cmap23-Lchr1-78-2","cmap23-Lchr1-32-2","cmap23-Lchr1-39-2","cmap23-Lchr2-19-2","cmap23-Lchr1-88-2","cmap23-Lchr1-78-2","cmap23-Lchr1-50-2","cmap23-Lchr1-83-2","cmap23-Lchr2-36-2","cmap23-Lchr1-49-2","cmap23-Lchr2-58-2","cmap23-Lchr2-36-2","cmap23-Lchr1-59-2","cmap23-Lchr1-63-2","cmap23-Lchr2-69-2","cmap23-Lchr2-10-2","cmap23-Lchr2-40-2","cmap23-Lchr1-95-2","cmap23-Lchr1-8-2","cmap23-Lchr2-44-2","cmap23-Lchr1-48-2","cmap23-Lchr1-5-2","cmap23-Lchr1-21-2","cmap23-Lchr1-52-2","cmap23-Lchr2-37-2","cmap23-Lchr2-3-2","cmap23-Lchr2-18-2","cmap23-Lchr2-40-2","cmap23-Lchr1-80-2","cmap23-Lchr1-82-2","cmap23-Lchr2-13-2","cmap23-Lchr2-56-2","cmap23-Lchr2-46-2","cmap23-Lchr2-44-2","cmap23-Lchr2-61-2","cmap23-Lchr1-84-2","cmap23-Lchr1-81-2","cmap23-Lchr1-87-2","cmap23-Lchr1-35-2","cmap23-Lchr1-42-2","cmap23-Lchr1-10-2","cmap23-Lchr2-50-2","cmap23-Lchr2-38-2","cmap23-Lchr2-45-2","cmap23-Lchr1-19-2","cmap23-Lchr1-22-2","cmap23-Lchr2-39-2","cmap23-Lchr2-37-2","cmap23-Lchr1-57-2","cmap23-Lchr1-32-2","cmap23-Lchr1-53-2","cmap23-Lchr1-91-2","cmap23-Lchr2-50-2","cmap23-Lchr1-87-2","cmap23-Lchr1-23-2","cmap23-Lchr1-6-2","cmap23-Lchr2-7-2","cmap23-Lchr1-69-2","cmap23-Lchr1-33-2","cmap23-Lchr1-9-2","cmap23-Lchr2-23-2","cmap23-Lchr2-49-2","cmap23-Lchr1-60-2","cmap23-Lchr2-55-2","cmap23-Lchr1-38-2","cmap23-Lchr1-39-2","cmap23-Lchr2-12-2","cmap23-Lchr1-50-2","cmap23-Lchr2-42-2","cmap23-Lchr2-46-2","cmap23-Lchr1-38-2","cmap23-Lchr1-84-2","cmap23-Lchr2-65-2","cmap23-Lchr1-27-2","cmap23-Lchr1-14-2","cmap23-Lchr2-49-2","cmap23-Lchr1-96-2","cmap23-Lchr1-94-2","cmap23-Lchr2-39-2","cmap23-Lchr2-46-2","cmap23-Lchr1-19-2","cmap23-Lchr1-1-2","cmap23-Lchr2-54-2","cmap23-Lchr2-39-2","cmap23-Lchr2-52-2","cmap23-Lchr2-41-2","cmap23-Lchr1-48-2","cmap23-Lchr2-26-2","cmap23-Lchr1-57-2","cmap23-Lchr2-29-2","cmap23-Lchr2-45-2","cmap23-Lchr2-32-2","cmap23-Lchr2-48-2","cmap23-Lchr2-35-2","cmap23-Lchr2-23-2","cmap23-Lchr2-37-2","cmap23-Lchr2-44-2","cmap23-Lchr1-45-2","cmap23-Lchr1-39-2","cmap23-Lchr2-6-2"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]},{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":2,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":60,"chr_width":15,"chr_length":4,"chr_col":["black","black"],"heatmap":true,"ch_domain":["1","1000"],"lg_x":0,"lg_y":0,"heat_scale":"linear","labels":false,"div_id":"cmap23","w":500,"h":400,"rng":[[0,100],[-149,0,150]],"heat_col":[["white","blue"],["red","white","blue"]],"an_col":["#10B85F","#10B85F"],"ch_text":[true,true],"legend":[false,false],"aggregate_func":["avg","avg"],"plots":["bar","scatter"],"tag_filter":[["none","0"],["none","0"]],"plot_height":[40,40],"plot_ticks":[4,4],"plot_color":["green","red"],"plot_y_domain":[[0,0],[0,0]],"ref_line":[true,true],"refl_pos":[20,20],"refl_color":["grey","grey"],"refl_stroke_w":[2,2],"tagColor":["red","red"],"renderHeat":[true,true],"text_font_size":[10,10],"chr_curve":5,"title_font_size":12,"label_font":9,"label_angle":-90,"vertical_grid":true,"grid_array":[0,50,100,250,400],"grid_color":"grey","plot_filter":[["none","0"],["none","0"]]},"evals":[],"jsHooks":[]}</script>
+<p>You can also change the grid lines color using the <code>grid_color</code> argument.</p>
+</div>
+<div id="legends" class="section level2">
+<h2>Legends</h2>
+<p>legends are provided for data-based annotation plots (<code>chromoMap-DiscreteColorMaps</code> and <code>chromoMap-HeatMaps</code>). It is hidden by default. Use <code>legend</code> option to enable it.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          data_based_color_map = T,
+          data_type = &quot;categorical&quot;,
+          legend = T) </code></pre>
+<p>For polyploidy, you can enable or disable the legend independently for each set.</p>
+<pre class="r"><code>chromoMap(c(&quot;chromosome_file_set_1.txt&quot;,&quot;chromosome_file_set_2.txt&quot;)
+          ,c(&quot;annotation_file_set_1.txt&quot;,&quot;annotation_file_set_2.txt&quot;), 
+          ploidy = 2,
+          data_based_color_map = T,
+          data_type = &quot;numeric&quot;,
+          legend = c(F,T))</code></pre>
+<div id="positioning-legends" class="section level3">
+<h3>positioning legends</h3>
+<p>I know, the legends in your plot are present weirdly?. I have made the postion of legends independent of the plot and hence you can position it anywhere in the plot you want using the y and x direction length. Consider the orgin to be the bottom right corner of the plot now tweak the <code>lg_x</code> and/or <code>lg_y</code> arguments to adjust the positioning of the legend.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          data_based_color_map = T,
+          data_type = &quot;categorical&quot;,
+          legend = T, lg_x = 100,
+          lg_y = 250)</code></pre>
+</div>
+</div>
+<div id="labellings" class="section level2">
+<h2>Labellings</h2>
+<p>This feature I added at the end thought might be useful in some scenarios. This will show the labels (element names) on top of locus. It is disabled by default, to enable it use <code>label</code> argument.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          labels=T)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 20</code></pre>
+<div id="htmlwidget-9bccc542d30dbc92d833" style="width:672px;height:288px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9bccc542d30dbc92d833">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20"],"data":["type2","type2","type1","type2","type1","type2","type2","type2","type2","type2","type2","type2","type1","type1","type2","type2","type2","type2","type1","type2"],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap1254-chr1-56-1","cmap1254-chr2-40-1","cmap1254-chr2-29-1","cmap1254-chr1-13-1","cmap1254-chr2-41-1","cmap1254-chr2-34-1","cmap1254-chr1-67-1","cmap1254-chr2-19-1","cmap1254-chr2-5-1","cmap1254-chr1-54-1","cmap1254-chr1-87-1","cmap1254-chr2-15-1","cmap1254-chr1-64-1","cmap1254-chr2-39-1","cmap1254-chr1-85-1","cmap1254-chr2-60-1","cmap1254-chr2-54-1","cmap1254-chr1-96-1","cmap1254-chr1-69-1","cmap1254-chr1-79-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790],"label":["cmap1254-Lchr1-56-1","cmap1254-Lchr2-40-1","cmap1254-Lchr2-29-1","cmap1254-Lchr1-13-1","cmap1254-Lchr2-41-1","cmap1254-Lchr2-34-1","cmap1254-Lchr1-67-1","cmap1254-Lchr2-19-1","cmap1254-Lchr2-5-1","cmap1254-Lchr1-54-1","cmap1254-Lchr1-87-1","cmap1254-Lchr2-15-1","cmap1254-Lchr1-64-1","cmap1254-Lchr2-39-1","cmap1254-Lchr1-85-1","cmap1254-Lchr2-60-1","cmap1254-Lchr2-54-1","cmap1254-Lchr1-96-1","cmap1254-Lchr1-69-1","cmap1254-Lchr1-79-1"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":1,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":50,"chr_width":15,"chr_length":4,"chr_col":["black",""],"heatmap":false,"ch_domain":["1","1000"],"lg_x":0,"lg_y":0,"heat_scale":"linear","labels":true,"div_id":"cmap1254","w":500,"h":250,"rng":0,"heat_col":[],"an_col":["#10B85F",""],"ch_text":[true,true],"legend":[false,true],"aggregate_func":["avg",""],"plots":["none",""],"tag_filter":[["none","0"]],"plot_height":[30,0],"plot_ticks":[4,0],"plot_color":["blue",""],"plot_y_domain":[[0,0]],"ref_line":[false,true],"refl_pos":[0,0],"refl_color":["grey",""],"refl_stroke_w":[2,0],"tagColor":["red",""],"renderHeat":[true,true],"text_font_size":[10,0],"chr_curve":5,"title_font_size":12,"label_font":9,"label_angle":-90,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["none","0"]]},"evals":[],"jsHooks":[]}</script>
+<p>You can change the labels angle and font-size using <code>label_angle</code> and <code>label_font</code> arguments respectively.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          labels=T,
+          label_font = 12,
+          label_angle = -65)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 20</code></pre>
+<div id="htmlwidget-84af9ef1c3b938072599" style="width:672px;height:288px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-84af9ef1c3b938072599">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20"],"data":["type2","type2","type1","type2","type1","type2","type2","type2","type2","type2","type2","type2","type1","type1","type2","type2","type2","type2","type1","type2"],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap1925-chr1-56-1","cmap1925-chr2-40-1","cmap1925-chr2-29-1","cmap1925-chr1-13-1","cmap1925-chr2-41-1","cmap1925-chr2-34-1","cmap1925-chr1-67-1","cmap1925-chr2-19-1","cmap1925-chr2-5-1","cmap1925-chr1-54-1","cmap1925-chr1-87-1","cmap1925-chr2-15-1","cmap1925-chr1-64-1","cmap1925-chr2-39-1","cmap1925-chr1-85-1","cmap1925-chr2-60-1","cmap1925-chr2-54-1","cmap1925-chr1-96-1","cmap1925-chr1-69-1","cmap1925-chr1-79-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790],"label":["cmap1925-Lchr1-56-1","cmap1925-Lchr2-40-1","cmap1925-Lchr2-29-1","cmap1925-Lchr1-13-1","cmap1925-Lchr2-41-1","cmap1925-Lchr2-34-1","cmap1925-Lchr1-67-1","cmap1925-Lchr2-19-1","cmap1925-Lchr2-5-1","cmap1925-Lchr1-54-1","cmap1925-Lchr1-87-1","cmap1925-Lchr2-15-1","cmap1925-Lchr1-64-1","cmap1925-Lchr2-39-1","cmap1925-Lchr1-85-1","cmap1925-Lchr2-60-1","cmap1925-Lchr2-54-1","cmap1925-Lchr1-96-1","cmap1925-Lchr1-69-1","cmap1925-Lchr1-79-1"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":1,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":50,"chr_width":15,"chr_length":4,"chr_col":["black",""],"heatmap":false,"ch_domain":["1","1000"],"lg_x":0,"lg_y":0,"heat_scale":"linear","labels":true,"div_id":"cmap1925","w":500,"h":250,"rng":0,"heat_col":[],"an_col":["#10B85F",""],"ch_text":[true,true],"legend":[false,true],"aggregate_func":["avg",""],"plots":["none",""],"tag_filter":[["none","0"]],"plot_height":[30,0],"plot_ticks":[4,0],"plot_color":["blue",""],"plot_y_domain":[[0,0]],"ref_line":[false,true],"refl_pos":[0,0],"refl_color":["grey",""],"refl_stroke_w":[2,0],"tagColor":["red",""],"renderHeat":[true,true],"text_font_size":[10,0],"chr_curve":5,"title_font_size":12,"label_font":10,"label_angle":-65,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["none","0"]]},"evals":[],"jsHooks":[]}</script>
+<p><strong>TIP</strong>: To make the labels non-overlapping, tweak the chromosome length and width properties like shown in the following example.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          labels=T,
+          label_angle = -65,
+          chr_length = 6,
+          chr_width = 25,
+          canvas_width = 800)</code></pre>
+<pre><code>#&gt; ********************************** __ __ ************
+#&gt; ** __**|__ * __* __ * __ __ * __ *|  |  |* __ * __ **
+#&gt; **|__**|  |*|  *|__|*|  |  |*|__|*|  |  |*|_ |*|__|**
+#&gt; ***********************************************|   **
+#&gt; *****************************************************
+#&gt; OUTPUT: 
+#&gt; Number of Chromosome sets: 1 
+#&gt; Number of Chromosomes in set  1 : 2 
+#&gt; Processing data.. 
+#&gt; Number of annotations in data set  1 : 20</code></pre>
+<div id="htmlwidget-74137d6625ea0baa4bea" style="width:672px;height:288px;" class="chromoMap html-widget"></div>
+<script type="application/json" data-for="htmlwidget-74137d6625ea0baa4bea">{"x":{"chData":[{"name":["An1","An2","An3","An4","An5","An6","An7","An8","An9","An10","An11","An12","An13","An14","An15","An16","An17","An18","An19","An20"],"data":["type2","type2","type1","type2","type1","type2","type2","type2","type2","type2","type2","type2","type1","type1","type2","type2","type2","type2","type1","type2"],"hlink":["http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://","http://"],"loci":["cmap17445-chr1-56-1","cmap17445-chr2-40-1","cmap17445-chr2-29-1","cmap17445-chr1-13-1","cmap17445-chr2-41-1","cmap17445-chr2-34-1","cmap17445-chr1-67-1","cmap17445-chr2-19-1","cmap17445-chr2-5-1","cmap17445-chr1-54-1","cmap17445-chr1-87-1","cmap17445-chr2-15-1","cmap17445-chr1-64-1","cmap17445-chr2-39-1","cmap17445-chr1-85-1","cmap17445-chr2-60-1","cmap17445-chr2-54-1","cmap17445-chr1-96-1","cmap17445-chr1-69-1","cmap17445-chr1-79-1"],"loci_start":[551,391,281,121,401,331,661,181,41,531,861,141,631,381,841,591,531,951,681,781],"loci_end":[560,400,290,130,410,340,670,190,50,540,870,150,640,390,850,600,540,960,690,790],"label":["cmap17445-Lchr1-56-1","cmap17445-Lchr2-40-1","cmap17445-Lchr2-29-1","cmap17445-Lchr1-13-1","cmap17445-Lchr2-41-1","cmap17445-Lchr2-34-1","cmap17445-Lchr1-67-1","cmap17445-Lchr2-19-1","cmap17445-Lchr2-5-1","cmap17445-Lchr1-54-1","cmap17445-Lchr1-87-1","cmap17445-Lchr2-15-1","cmap17445-Lchr1-64-1","cmap17445-Lchr2-39-1","cmap17445-Lchr1-85-1","cmap17445-Lchr2-60-1","cmap17445-Lchr2-54-1","cmap17445-Lchr1-96-1","cmap17445-Lchr1-69-1","cmap17445-Lchr1-79-1"]}],"nLoci":[{"name":["chr1","chr2"],"start":[1,1],"end":[1000,700],"ch_average":[1.001001001001,0.700700700700701],"n":[100,70],"seq_len":[1000,700]}],"ploidy_n":1,"title":null,"cnt":false,"ch_gap":5,"top_margin":25,"left_margin":50,"chr_width":25,"chr_length":7,"chr_col":["black",""],"heatmap":false,"ch_domain":["1","1000"],"lg_x":0,"lg_y":0,"heat_scale":"linear","labels":true,"div_id":"cmap17445","w":900,"h":250,"rng":0,"heat_col":[],"an_col":["#10B85F",""],"ch_text":[true,true],"legend":[false,true],"aggregate_func":["avg",""],"plots":["none",""],"tag_filter":[["none","0"]],"plot_height":[30,0],"plot_ticks":[4,0],"plot_color":["blue",""],"plot_y_domain":[[0,0]],"ref_line":[false,true],"refl_pos":[0,0],"refl_color":["grey",""],"refl_stroke_w":[2,0],"tagColor":["red",""],"renderHeat":[true,true],"text_font_size":[10,0],"chr_curve":5,"title_font_size":12,"label_font":10,"label_angle":-65,"vertical_grid":false,"grid_array":[0,5,20,45,100],"grid_color":"grey","plot_filter":[["none","0"]]},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="hyperlinks" class="section level2">
+<h2>Hyperlinks</h2>
+<p>This feature will allow you to add hyperlinks with elements. Add hyperlinks in annotations file and don’t forget to use <code>hlinks</code> argument to enable it.</p>
+<pre class="r"><code>chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;,
+          hlinks=T)</code></pre>
+</div>
+<div id="exporting-chromomaps" class="section level2">
+<h2>Exporting chromoMaps</h2>
+<p>The <code>RStudio</code> allows the option to export the graphics, shown in its viewer’s pane ,as either a static image or a web page. Use this feature to either save chromoMaps as static images and include them into your documents or papers, or export interactive plots as standalone-html to include them as supplementary materials in publications.</p>
+</div>
+<div id="including-chromomaps-in-shiny-applications" class="section level2">
+<h2>Including chromoMaps in Shiny Applications</h2>
+<p>You can include chromoMaps in Shiny application by using the function <code>chromoMapOutput()</code> in the UI part of the code and <code>renderChromoMap()</code> in the server part of the code.</p>
+<div id="shiny-application-example" class="section level4">
+<h4>Shiny Application example</h4>
+<pre class="r"><code>library(shiny)
+library(chromoMap)
+
+# Define UI for application that draws chromoMap
+ui &lt;- fluidPage(
+   
+   # Application title
+   titlePanel(&quot;An example of chromoMap in Shiny&quot;),
+   
+   # you can use GUI controls for your chromoMap
+   sidebarLayout(
+      sidebarPanel(
+         #some code
+      ),
+      
+      # Show a plot of the generated distribution
+      mainPanel(
+         chromoMapOutput(&quot;myChromoMap&quot;)
+      )
+   )
+)
+
+# Define server logic required to draw chromoMap
+server &lt;- function(input, output) {
+   
+   output$myChromoMap &lt;- renderChromoMap({
+     chromoMap(&quot;chromosome_file.txt&quot;,&quot;annotation_file.txt&quot;)
+   })
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+</code></pre>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
