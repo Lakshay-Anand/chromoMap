@@ -11,7 +11,7 @@
 
 
 
-<title>Tutorials</title>
+<title>chromoMap App</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -315,14 +315,200 @@ $(document).ready(function () {
 </div>
 
 
-<p><br><br><br></p>
+<style>
+
+body{background-color:#212529;color:white;}
+
+#btnn{
+background-color:#8ED6FB;
+color:black;
+border: solid #8ED6FB;
+border-radius:5px;
+padding:5px;
+decoration:none;
+}
+
+.inptt{
+color:black;
+background:transparent;
+color:white;
+border:none;
+font-size:15px;
+width:600px;
+
+}
+input[type=text] {
+        word-wrap: break-word;
+        word-break: break-all;
+        height: 80px;
+    }
+
+.cpybtn{
+background-color:#8ED6FB;
+color:white;
+border: solid #8ED6FB;
+border-radius:50%;
+padding:15px;
+font-size:15px;
+}
+
+.cpybtn:hover{
+opacity:0.9;
+}
+
+input:focus, textarea:focus, select:focus{
+        outline: none;
+    }
+</style>
+<script>
+function copyText(idd) {
+  var copyText = document.getElementById(idd);
+  copyText.select();
+  copyText.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  
+}
+
+
+
+</script>
+<br> <br>
 <center>
-<p><font color="grey"></p>
-<div id="boo-sorry-for-the-inconvenience-the-contents-are-on-its-way" class="section level2">
-<h2>Boo! Sorry for the inconvenience, the contents are on its way! :)</h2>
-</font>
+<h1>
+Introducing <font color="#8ED6FB"> chromoMap App</font>
+</h1>
+<p><br> <img  src="images/cmpapp.gif" /> <br> <br><br><br></p>
+<h2>
+a graphical user-interface for <font color="#8ED6FB">chromoMap</font>.
+</h2>
 </center>
+<br><br><br>
+<center>
+<ul class="special_box">
+<li>
+<p><font size="5"> A containerized <font color="#8ED6FB">web application</font>, <br> developed using <font color="#8ED6FB">R Shiny</font>*<br> framework, that can <br> be run locally on your computer.</font></p>
+</li>
+<li>
+<p>available at <br><br></p>
+<p><img src="images/docker.png" style="width:150px;height:150px;"></p>
+<p><br> <a href="https://hub.docker.com/r/lakshay57/chromomap-app/tags?page=1&ordering=last_updated" class="clinks" target="_blank" ><font size="4">Docker Hub</font></a></p>
+</li>
+</ul>
+</center>
+<p><br><br><br><br><br><br><br><br></p>
+<center>
+<h2>
+<font color="#8ED6FB"> Set up</font> and <font color="#8ED6FB"> install</font> chromoMap App on your computer in a few steps…
+</h2>
+</center>
+<p><br><br><br><br><br><br></p>
+<div class="row">
+<h2>
+<font color="#8ED6FB">Step 1:</font> Install chromoMap App from Docker
+</h2>
+<h3>
+You need to <a href="https://docs.docker.com/get-docker/" target="_blank">install Docker</a> before you can install the chromoMap App. Docker is available for all platforms. Once Docker is installed, open your command prompt and get the chromoMap App using the following commands.
+</h3>
+<br>
+<ul class="special_box">
+<li>
+<input type="text" value="docker pull lakshay57/chromomap-app:v1.0.3" id="code1" class="inptt">
+</li>
+<li>
+<button onclick="copyText(&#39;code1&#39;)" class="cpybtn">
+Copy
+</button>
+</li>
+</ul>
 </div>
+<br><br><br>
+<div class="row">
+<h2>
+<font color="#8ED6FB">Step 2:</font> Run the chromoMap App
+</h2>
+<h3>
+You can run the chromoMap App by typing following command on command prompt.
+</h3>
+<br>
+<ul class="special_box">
+<li>
+<input type="text" value="docker run -d --rm -p 4596:3838 lakshay57/chromomap-app:v1.0.3" id="code2" class="inptt">
+</li>
+<li>
+<button onclick="copyText(&#39;code2&#39;)" class="cpybtn">
+Copy
+</button>
+</li>
+</ul>
+<br><br>
+<h3>
+the port number ‘4596’ that is used above is arbitrary, you can choose any number. In fact, if the command gives error message of ‘port is unavailable’ , you must change it any other port number. <br> If the command is successful, the App is running and can be accessed from any web browser by connecting at the above used port at localhost. <br> Open your browser and type the following in address bar (make sure to change your port number, if you had changed before)
+</h3>
+<br><br>
+<ul class="special_box">
+<li>
+<input type="text" value="localhost:4596" id="code3" class="inptt">
+</li>
+<li>
+<button onclick="copyText(&#39;code3&#39;)" class="cpybtn">
+Copy
+</button>
+</li>
+</ul>
+<br><br>
+<h3>
+and voila! the App is running.
+</h3>
+</div>
+<br><br><br>
+<div class="row">
+<br>
+<h2>
+<font color="#8ED6FB">Step 3:</font> close the App
+</h2>
+<h3>
+The App will be running as long as container is running. The App is not closed when you close the browser window. You can access anytime by again visiting the same address where the App is hosted. However, in order to kill the App, you need to kill the container that is hosting the App. <br> Firstly, check the running containers by typing:
+</h3>
+<br>
+<ul class="special_box">
+<li>
+<input type="text" value="docker ps" id="code4" class="inptt">
+</li>
+<li>
+<button onclick="copyText(&#39;code4&#39;)" class="cpybtn">
+Copy
+</button>
+</li>
+</ul>
+<br><br>
+<h3>
+You need to use the container ID to close the container. It is listed as first column. Now, run the following command to kill the container.
+</h3>
+<br><br>
+<ul class="special_box">
+<li>
+<input type="text" value="docker kill <container-id>" id="code5" class="inptt">
+</li>
+<li>
+<button onclick="copyText(&#39;code5&#39;)" class="cpybtn">
+Copy
+</button>
+</li>
+</ul>
+</div>
+<br><br><br><br><br><br><br>
+<hr>
+<center>
+<h4>
+Copyright 2021. Lakshay Anand
+</h4>
+<p><br></p>
+<p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a></p>
+<br>
+<h5>
+*the App is developed using the <a href="https://shiny.rstudio.com/" target="_blank">R Shiny framework</a>, along with some other third-party packages like <a href="https://deanattali.com/shinyjs/" target="_blank">shinyjs</a> and <a href="https://deanattali.com/blog/colourpicker-package/" target="_blank">colourpicker</a>.
+</h5>
+</center>
 
 
 
