@@ -9,8 +9,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta property="og:image" content="images/web_preview2.png" />
-  <meta property="og:title" content="An R package to create interactive genome visualizations, annotate genomic features, and visualize multi-omics data." />
 
 
 <title>chromoMap v0.3</title>
@@ -21,6 +19,15 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -35,11 +42,6 @@
     </style>
 
 <style type="text/css">code{white-space: pre;}</style>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 <script type="text/javascript">
 if (window.hljs) {
   hljs.configure({languages: []});
@@ -52,32 +54,6 @@ if (window.hljs) {
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
 
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
@@ -89,10 +65,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -109,40 +81,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -170,7 +115,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -182,7 +127,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -193,10 +138,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -208,7 +166,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -309,7 +266,7 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -393,8 +350,9 @@ decoration:none;
 <center>
 <ul class="special_box">
 <li>
-<p><font size="5"> version</font> <br><br><img src="https://www.r-pkg.org/badges/version/chromoMap" alt="0.3"><br><br> <img src="https://cranlogs.r-pkg.org/badges/grand-total/chromoMap"></p>
-<a href="" class="clinks">release notes</a>
+<p><font size="5"> version</font> <br><br><img src="https://www.r-pkg.org/badges/version/chromoMap" alt="0.3"><br><br> <img src="https://cranlogs.r-pkg.org/badges/grand-total/chromoMap"> <br> <a href="about.html" class="clinks">release notes</a> <br></p>
+<span class="__dimensions_badge_embed__" data-doi="10.1101/605600" data-style="large_rectangle"></span>
+<script async src="https://badges.dimensions.ai/badge.js" charset="utf-8"></script>
 </li>
 <li>
 <p>build with <br> <br><br></p>
@@ -458,6 +416,9 @@ what’s New?
 </li>
 <li>
 <p><img src="images/filters.svg" alt="" style="width:100px;height:100px;"><br><br> <font size="4">Data Filters</font></p>
+</li>
+<li>
+<p><img src="images/links-logo.svg" alt="" style="width:100px;height:100px;"><br><br> <font size="4">Links</font></p>
 </li>
 </ul>
 </center>
@@ -526,6 +487,16 @@ Prominent Features
 </li>
 <li>
 <p><font size="4"> Allows conditional-coloring of bar/scatter plots based on mathematical conditions on the data.</font> <a href="docs.html#chromoMap-Filters" class="clinks"> learn more</a></p>
+</li>
+</ul>
+</center>
+<center>
+<ul class="special_box">
+<li>
+<p><font size="6" color="#8ED6FB">chromLinks</font></p>
+</li>
+<li>
+<p><font size="4"> visualize connections or links between loci.</font> <a href="docs.html#chromLinks_Plots" class="clinks"> learn more</a></p>
 </li>
 </ul>
 </center>
@@ -611,7 +582,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
