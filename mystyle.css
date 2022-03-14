@@ -348,6 +348,10 @@ h1{
 	background-size: cover;
 	position: absolute;
 	
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
 	
   }
 
