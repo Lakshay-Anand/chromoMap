@@ -97,7 +97,7 @@ section {
   }
 
   .divider{
-	  min-height: 700px;
+	  min-height: 1000px;
 	  border: none;
   }
 
@@ -347,12 +347,9 @@ h1{
 	background-position: center;
 	background-size: cover;
 	position: absolute;
-	
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	
-	
   }
 
   .sec0 {
@@ -529,37 +526,10 @@ h1{
   }
   #spin1:after {
 	content:"Genomic Features";
-	  -webkit-animation: spintext 35s linear infinite;
-	  -moz-animation: spintext 35s linear infinite;
 	animation: spintext 35s linear infinite;
   }
 
-  @-moz-keyframes spintext {
-	0% { content:"Genomic Features"; }
-	10% { content:"Genes"; }
-	20% { content:"Exons"; }
-	30% { content:"SNPs"; }
-	40% { content:"CNVs"; }
-	50% { content: "Methylated Loci"; }
-	60% { content: "TEs"; }
-	70% { content: "Promoters"; }
-	80% { content: "Enhancers"; }
-	90% { content: "SSR"; }
-  }
-
-@-webkit-keyframes spintext {
-	0% { content:"Genomic Features"; }
-	10% { content:"Genes"; }
-	20% { content:"Exons"; }
-	30% { content:"SNPs"; }
-	40% { content:"CNVs"; }
-	50% { content: "Methylated Loci"; }
-	60% { content: "TEs"; }
-	70% { content: "Promoters"; }
-	80% { content: "Enhancers"; }
-	90% { content: "SSR"; }
-  }
-@keyframes spintext {
+  @keyframes spintext {
 	0% { content:"Genomic Features"; }
 	10% { content:"Genes"; }
 	20% { content:"Exons"; }
@@ -578,30 +548,10 @@ h1{
   }
   #spin2:after {
 	content:"Multi-Omics";
-	  -webkit-animation: spintext2 30s linear infinite;
-	  -moz-animation: spintext2 30s linear infinite;
 	animation: spintext2 30s linear infinite;
   }
 
-  @-moz-keyframes spintext2 {
-	0% { content:"Multi-Omics"; }
-	20% { content:"Gene expression"; }
-	40% { content:"DNA Methylation"; }
-	60% { content:"ChIP-Seq"; }
-	80% { content:"Alignment"; }
-	90% { content: "Hi-C"; }
-	
-  }
-@-webkit-keyframes spintext2 {
-	0% { content:"Multi-Omics"; }
-	20% { content:"Gene expression"; }
-	40% { content:"DNA Methylation"; }
-	60% { content:"ChIP-Seq"; }
-	80% { content:"Alignment"; }
-	90% { content: "Hi-C"; }
-	
-  }
-@keyframes spintext2 {
+  @keyframes spintext2 {
 	0% { content:"Multi-Omics"; }
 	20% { content:"Gene expression"; }
 	40% { content:"DNA Methylation"; }
