@@ -1,0 +1,619 @@
+@font-face {   
+    font-family: "Londarina Outline";   
+    src: url(fonts/LondrinaOutline-Regular.ttf);  
+  }
+
+  @font-face {   
+    font-family: "Noto Serif Display";   
+    src: url(fonts/Noto_Serif_Display/NotoSerifDisplay-Italic-VariableFont_wdth\,wght.ttf); 
+  }
+
+  @font-face {   
+    font-family: "Roboto";   
+    src: url(fonts/Roboto/Roboto-Light.ttf); 
+  }
+
+  *,
+  *::before,
+  *::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+  }
+
+body{
+	color: white;
+	background: #212529;
+	overflow-x: hidden;
+	font-family:'Roboto';
+}
+
+#chromomap {
+	font-family: 'Londarina Outline';
+	font-size: 2.7vw;
+
+}
+
+.nav-bar{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	gap: 1rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	background-color: #424243;
+    z-index: 999 !important;
+	opacity: 0.8;
+	
+
+}
+.nav-bar li{
+	flex-grow: 0;
+	width: 100%;
+	text-align: center;
+	border:1px solid #424243;
+	border-radius: 7px;
+}
+
+.nav-bar a{
+	color: white;
+	text-decoration: none;
+	display: block;
+	width: 100%;
+	
+	
+}
+.nav-bar li:hover{
+	border:1px solid #8ED6FB;
+}
+
+.nav-bar .active {
+	border:1px solid #8ED6FB;
+}
+
+.nav-bar .cite {
+	background-color: #8ED6FB;
+	border:1px solid #8ED6FB;
+	
+}
+.nav-bar .cite a{
+	color: black;
+}
+
+#logo_holder{
+	position: absolute;
+	margin-left: 20%;
+	margin-right: 60%;
+	margin-top: 50px;
+}
+
+
+
+
+section {
+	position: relative;
+	border: none;
+  }
+
+  .divider{
+	  min-height: 700px;
+	  border: none;
+  }
+
+  @media (min-width: 40em){
+	  .container{
+		  padding: 7rem 0;
+	  }
+	  
+	  #logo_holder{
+		margin-left: 30%;
+		margin-right: 70%;
+	  }
+  }
+
+.container {
+	margin-inline: auto;
+	width: min(90%,70.5rem);
+	padding: 3rem 0;
+}
+
+.split {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	align-items: center;
+  justify-content: center;
+	
+}
+
+.split > div{
+	text-align: center;
+}
+
+.split2 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+@media (min-width: 40em){
+	.split{
+	flex-direction: column;
+	}
+	.split > * {
+		flex-basis: 100%;
+	}
+	.split > * + * {
+		margin-left: 2em;
+	}
+}
+
+h2{
+	position: relative;
+	font-size: 6rem;
+	letter-spacing: 5px;
+	color: #0e3742;
+	width: 100%;
+	text-align: center;
+	-webkit-box-reflect : below 1px linear-gradient(transparent , #0004);
+	line-height: 0.70em;
+	outline: none;
+	animation: blink 2s linear infinite;
+}
+
+@media (min-width: 40em){
+	h2{
+		letter-spacing: 15px;
+	}
+}
+
+h1{
+	position: relative;
+	font-size: 3rem;
+	letter-spacing: 2px;
+	
+}
+@keyframes animate{
+	0%,18%,20%,50.1%,60%,65.1%,80%,90.1%,92%{
+		color: #0e3742;
+		text-shadow: none;
+	}
+	18.1%,20.1%,30%,50%,60.1%,65%,80.1%,90%,92.1%,100%{
+		color: #fff;
+		text-shadow: 0 0 10px #03bcf4,
+		            0 0 20px #03bcf4,
+		            0 0 40px #03bcf4,
+		            0 0 80px #03bcf4,
+		            0 0 160px #03bcf4;
+
+	}
+}
+
+@keyframes blink{
+	0%,50%{
+		color: #0e3742;
+		text-shadow: none;
+	}
+	50.1%,100%{
+		color: #fff;
+		text-shadow: 0 0 10px #03bcf4,
+		            0 0 20px #03bcf4,
+		            0 0 40px #03bcf4,
+		            0 0 80px #03bcf4,
+		            0 0 160px #03bcf4;
+
+	}
+}
+
+.chrSVG{
+	
+	position: absolute;
+	margin-left: 60%;
+	margin-right: 40%;
+	margin-top: 10px;
+	
+}
+#chr_SVG{
+   stroke: url(#lg1);
+   fill: url(#lg1);
+   stroke-width: 0;
+   transform: scale(1);
+   stroke-dasharray: 170 172;
+   stroke-linecap: round;
+   filter: drop-shadow(0px 0px 10px rgba(247, 244, 244, 1));
+
+   border: solid rgb(102, 102, 102);
+	border-radius: 250px 180px 300px 150px;
+	border-width: 10px;
+            border-style: double;
+			width: 120px;
+			height: 90px;
+			
+}
+
+@media (min-width: 40em){
+	.chrSVG {
+		margin-left: 65%;
+		margin-right: 35%;	}
+		#chr_SVG{
+			width: 150px;
+			height: 100px;
+		}
+}
+
+#chr_1{
+	-webkit-animation:spin 4s linear infinite alternate;
+    -moz-animation:spin 4s linear infinite alternate;
+    animation:spin 4s linear infinite alternate;
+}
+
+@-moz-keyframes spin { 
+    100% { -moz-transform: rotate(45deg) translateX(30px);
+		
+	} 
+}
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: rotate(45deg) translateX(30px);
+		 } 
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: rotate(45deg) translateX(30px); 
+        transform:rotate(45deg) translateX(30px); 
+		
+    } 
+};  
+
+@-webkit-keyframes spin { 
+    100% { -webkit-transform: translateX(30px); } 
+}
+@keyframes spin { 
+    100% { 
+        -webkit-transform: translateX(30px); 
+        transform:translateX(30px); 
+    } 
+}
+
+#chr_2{
+	-webkit-animation:spin2 4s linear infinite alternate;
+    -moz-animation:spin2 4s linear infinite alternate;
+    animation:spin2 4s linear infinite alternate;
+}
+@-moz-keyframes spin2 { 
+    100% { -moz-transform: translateY(30px); } 
+}
+@-webkit-keyframes spin2 { 
+    100% { -webkit-transform: translateY(30px); } 
+}
+@keyframes spin2 { 
+    100% { 
+        -webkit-transform: translateY(30px); 
+        transform:translateY(30px); 
+    } 
+}
+
+#chr_3{
+	-webkit-animation:spin3 8s linear infinite alternate;
+    -moz-animation:spin3 8s linear infinite alternate;
+    animation:spin3 8s linear infinite alternate;
+}
+@-moz-keyframes spin3 { 
+    100% { -moz-transform: rotate(15deg); } 
+}
+@-webkit-keyframes spin3 { 
+    100% { -webkit-transform: rotate(15deg); } 
+}
+@keyframes spin3 { 
+    100% { 
+        -webkit-transform: rotate(15deg); 
+        transform:rotate(15deg); 
+    } 
+}
+
+#chr_4{
+	-webkit-animation:spin4 8s linear infinite alternate;
+    -moz-animation:spin4 8s linear infinite alternate;
+    animation:spin4 8s linear infinite alternate;
+}
+@-moz-keyframes spin4 { 
+    100% { -moz-transform: rotate(-15deg); } 
+}
+@-webkit-keyframes spin4 { 
+    100% { -webkit-transform: rotate(-15deg); } 
+}
+@keyframes spin4 { 
+    100% { 
+        -webkit-transform: rotate(-15deg); 
+        transform:rotate(-15deg); 
+    } 
+}
+
+@keyframes anime1 {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: 232;
+    }
+}
+
+.spacer {
+	height: 100%;
+	width: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+  }
+
+  .sec0 {
+	background-image: url('images/wavebg0.svg');
+	
+  }
+
+  .sec1 {
+	background-image: url('images/wavebg1.svg');
+  }
+  .sec2 {
+	background-image: url('images/wavebg2.svg');
+  }
+  .sec3 {
+	background-image: url('images/wavebg3.svg');
+  }
+  .sec4 {
+	background-image: url('images/wavebg4.svg');
+  }
+  .sec5 {
+	background-image: url('images/wavebg5.svg');
+  }
+
+  .custom-shape-divider-top-1647145034 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1647145034 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 144px;
+	filter: drop-shadow(0px 3px 1px rgba(243, 240, 240, 0.4));
+}
+
+.custom-shape-divider-top-1647145034 .shape-fill {
+    fill: #424243;
+}
+
+
+
+.frosted {
+	position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, .15);  
+ backdrop-filter: blur(10px);
+    
+	height: 400px;
+	width: 70%;
+	border-radius: 15px;
+	border: solid white 1px;
+	
+	
+}
+
+.forsted-parent{
+	position: relative;
+	align-items: center;
+  
+}
+
+.special_box{display:inline-flex;
+	font-family: 'Noto Serif Display';
+	flex-direction: column;
+	margin:2em 0 0 0;
+	border-radius:10px;
+	border:1px solid #8ED6FB;list-style:none;padding:0}
+	.special_box li{padding:20px 60px 20px 60px;display:flex;flex-direction:column;justify-content:center}
+	.special_box li:last-child{padding:20px 80px 20px 80px}.special_box li+li{border-left:1px solid #8ED6FB}
+ 
+	.my_imgg{width:50px;height:50px;}
+
+	.clinks{color:#78AF9F;}
+.clinks:hover{color:white;}
+
+.row1 {
+	display: flex;
+	padding: 15px;
+	gap:15px;
+}
+
+#btnn {
+	padding: 7px 15px;
+	background-color: #8ED6FB;
+	color: black;
+	text-decoration: none;
+	border-radius: 5px;
+
+}
+
+@media (min-width: 40em){
+	.special_box{
+		flex-direction: row;
+	}
+}
+
+.new_badge {
+	width: 100px;
+	height: 50px;
+	border: solid rgb(243, 243, 129);
+	border-radius: 50%;
+	background-color: rgb(243, 243, 129);
+	color: black;
+	font-size: 12px;
+	padding: 5px;
+	animation: newb 1s linear infinite alternate;
+}
+
+
+
+@keyframes newb { 
+    100% { 
+       padding: 6px;
+	   font-size: 13px;
+		
+    } 
+}  
+
+
+  
+  
+
+
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content */
+  .modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%;
+  }
+  
+  /* The Close Button */
+  .close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+  }
+
+
+  #spin1 {
+	color: yellow;
+	font-size: 25px;
+  }
+  #spin1:after {
+	content:"Genomic Features";
+	animation: spintext 35s linear infinite;
+  }
+
+  @keyframes spintext {
+	0% { content:"Genomic Features"; }
+	10% { content:"Genes"; }
+	20% { content:"Exons"; }
+	30% { content:"SNPs"; }
+	40% { content:"CNVs"; }
+	50% { content: "Methylated Loci"; }
+	60% { content: "TEs"; }
+	70% { content: "Promoters"; }
+	80% { content: "Enhancers"; }
+	90% { content: "SSR"; }
+  }
+
+  #spin2 {
+	color: rgb(0, 247, 255);
+	font-size: 25px;
+  }
+  #spin2:after {
+	content:"Multi-Omics";
+	animation: spintext2 30s linear infinite;
+  }
+
+  @keyframes spintext2 {
+	0% { content:"Multi-Omics"; }
+	20% { content:"Gene expression"; }
+	40% { content:"DNA Methylation"; }
+	60% { content:"ChIP-Seq"; }
+	80% { content:"Alignment"; }
+	90% { content: "Hi-C"; }
+	
+  }
+
+  .myBtn2 {
+	
+		/* background styles */
+		
+		display: inline-block;
+		padding: 5px 15px;
+		background-color: black; /*for compatibility with older browsers*/
+		background-image: linear-gradient(grey,black);
+	
+		/* text styles */
+		text-decoration: none;
+		color: #fff;
+		font-size: 15px;
+		font-family: sans-serif;
+		font-weight: 100;
+
+		border-radius: 5px;
+box-shadow: 0px 1px 4px -2px #333;
+text-shadow: 0px -1px #333;
+	
+  }
+
+ 
+
+.myBtn2:hover{
+	background: linear-gradient(black,grey);
+}
+
+
+#myBtn {
+	
+	/* background styles */
+	
+
+	padding: 5px 10px;
+	background-color: green; /*for compatibility with older browsers*/
+	background-image: linear-gradient(green,lightgreen);
+
+	
+	color: black;
+	font-size: 15px;
+	font-family: sans-serif;
+	font-weight: 100;
+
+	border-radius: 5px;
+box-shadow: 0px 1px 4px -2px #333;
+text-shadow: 0px -1px #333;
+
+}
+
+
+
+#myBtn:hover{
+background: linear-gradient(lightgreen,green);
+}
+
